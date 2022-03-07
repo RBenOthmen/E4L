@@ -1,0 +1,39 @@
+@font-face {
+  font-family: "poppins";
+  src: local("poppins"), url("./assets/fonts/Poppins-Black.ttf") format("truetype");
+}
+
+/*@font-face {*/
+/*  font-family: 'Material Icons';*/
+/*  font-style: normal;*/
+/*  font-weight: 400;*/
+/*  src: url(https://example.com/MaterialIcons-Regular.eot); !* For IE6-8 *!*/
+/*  src: local('Material Icons'),*/
+/*  local('MaterialIcons-Regular'),*/
+/*  url(https://example.com/MaterialIcons-Regular.woff2) format('woff2'),*/
+/*  url(https://example.com/MaterialIcons-Regular.woff) format('woff'),*/
+/*  url(https://example.com/MaterialIcons-Regular.ttf) format('truetype');*/
+/*}*/
+
+/* You can add global styles to this file, and also import other style files */
+.title_sign{
+  color: black;
+  text-align: center;
+  margin-top: 50px;
+}
+
+.button_sign{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form_sign{
+  width: 40%;
+  margin: auto;
+  display: block;
+  margin-top: 25px;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

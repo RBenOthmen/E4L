@@ -1,0 +1,29 @@
+<div class="container">
+  <h2 class="title_sign">Signing In</h2>
+  <div class="form_sign">
+
+    <form [formGroup]="loginForm" class="row g-3">
+
+      <!--    Full Name-->
+      <div class="form-group">
+        <input placeholder="Full name" formControlName="name" type="text" id="fName" name="fName" class="form-control">
+        <small *ngIf="name?.invalid && password?.touched" class="text-danger">name is
+          required</small>
+      </div>
+
+      <!--Password-->
+      <div class="form-group">
+        <input placeholder="Password" formControlName="password" type="password" id="password" name="password"
+               class="form-control">
+        <small *ngIf="password?.invalid && password?.touched" class="text-danger">password
+          is required</small>
+      </div>
+
+      <div class="button_sign">
+        <button pButton (click)="login()">Log In</button>
+      </div>
+
+    </form>
+
+  </div>
+</div>

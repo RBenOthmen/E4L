@@ -1,0 +1,59 @@
+<div class="container">
+  <h2 class="title_sign">Creating an Account</h2>
+  <div class="form_sign">
+
+    <form [formGroup]="registerForm" class="row g-3">
+
+      <!--    Full Name-->
+      <div class="form-group">
+        <input aria-label="" placeholder="Full name" formControlName="name" type="text" id="fName" name="fName" class="form-control">
+        <small *ngIf="name!.invalid && name?.touched" class="text-danger">name is required</small>
+        <small *ngIf="isEmpty(name!)"></small>
+      </div>
+
+      <!--    Email-->
+      <div class="form-group">
+        <input placeholder="Email" formControlName="email" type="text" id="email" name="email" class="form-control">
+        <small *ngIf="email?.invalid && email?.touched" class="text-danger">email is
+          required</small>
+      </div>
+
+      <!--Password-->
+      <div class="form-group">
+        <input placeholder="Password" formControlName="password" type="password" id="password" name="password"
+               class="form-control">
+        <small *ngIf="password?.invalid && password?.touched" class="text-danger">password
+          is required</small>
+      </div>
+
+      <!--Domain/Formation-->
+      <div class="form-group">
+        <input placeholder="Domain/Formation" formControlName="domain" type="text" id="domain" name="domain"
+               class="form-control">
+        <small *ngIf="domain?.invalid && domain?.touched" class="text-danger">domain is
+          required</small>
+      </div>
+
+      <!--Birthday-->
+      <div class="form-group">
+        <input placeholder="Birthday" formControlName="domain" type="date" id="birthday" name="birthday"
+               class="form-control">
+        <small *ngIf="birthday?.invalid && birthday?.touched" class="text-danger">birthday is
+          required</small>
+      </div>
+
+      <!--Phone Number-->
+      <div class="form-group">
+        <input placeholder="Phone number" formControlName="phone" type="number" id="phone" name="phone"
+               class="form-control">
+        <small *ngIf="phone?.invalid && phone?.touched" class="text-danger">phone is
+          required</small>
+      </div>
+
+      <div class="button_sign">
+        <button pButton (click)="register()">Create New Account</button>
+      </div>
+    </form>
+
+  </div>
+</div>

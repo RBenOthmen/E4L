@@ -21,6 +21,9 @@ import { SideBarComponent } from './side-bar/side-bar.component';
 import { MatSliderModule } from '@angular/material/slider';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {MatIconModule} from '@angular/material/icon';
+import { CategoryItemComponent } from './components/category-item/category-item.component';
+import { LessonItemComponent } from './components/lesson-item/lesson-item.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 
 
@@ -34,6 +37,9 @@ import {MatIconModule} from '@angular/material/icon';
     NavBarComponent,
     FooterComponent,
     SideBarComponent,
+    CategoryItemComponent,
+    LessonItemComponent,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,

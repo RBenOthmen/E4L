@@ -1,0 +1,11 @@
+<div class="category">
+    <h2> {{category}} - {{value}}%</h2>
+</div>
+<div *ngFor="let lesson of lessons">
+    <div *ngIf="lesson.category == category" >
+        <app-lesson-item [lesson]="lesson"></app-lesson-item>
+    </div>
+</div>
+
+
+

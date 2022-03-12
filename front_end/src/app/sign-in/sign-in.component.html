@@ -3,7 +3,6 @@
   <div class="form_sign">
 
     <form [formGroup]="loginForm" class="row g-3" (submit)="signIn()">
-
       <!--    Full Name-->
       <div class="form-group">
         <input placeholder="Username" formControlName="name" type="text" id="fName" name="fName" class="form-control">
@@ -26,8 +25,12 @@
       <div class="button_sign">
         <button pButton type="submit" [disabled]="!loginForm.valid">Log In</button>
       </div>
-
     </form>
+
+    <br>
+    <div class="button_sign">
+      <button class="p-button" (click)="goToSignup()">SIGN UP</button>
+    </div>
 
   </div>
 </div>

@@ -18,6 +18,10 @@ export class SignInComponent implements OnInit {
     private router :Router) {
   }
 
+  goToSignup() {
+    this.router.navigate(['/signup'])
+  }
+
   ngOnInit(): void {
     this.loginForm = new FormGroup({
       "name": new FormControl(null, [Validators.required, Validators.minLength(4)]),
@@ -28,6 +32,7 @@ export class SignInComponent implements OnInit {
   login() {
     console.log(this.loginForm.value);
     this.loginForm.reset();
+    this.router.navigate(['/']);
   }
 
   get name() {
@@ -50,12 +55,12 @@ export class SignInComponent implements OnInit {
       response => {
         if (response && response.access) {
           localStorage.setItem('token', response.access);
-          this.router.navigate(['/']); 
+          this.router.navigate(['/']);
         }
       });
-      
-     
-    
+
+
+
   }
 
 }

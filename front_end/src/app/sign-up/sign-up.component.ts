@@ -23,6 +23,10 @@ export class SignUpComponent implements OnInit {
     private router :Router) {
   }
 
+  goToSignin() {
+    this.router.navigate(['/login'])
+  }
+
   ngOnInit(): void {
     this.registerForm = new FormGroup({
       "first_name": new FormControl(null, [Validators.required, Validators.minLength(4)]),
@@ -56,16 +60,14 @@ export class SignUpComponent implements OnInit {
       email : this.email?.value,
       password : this.password?.value,
       username : this.username?.value,
-      
-
     };
 
     this.authService.signup(user).subscribe( {
       next : response => {
 
         console.log(response)
- 
-        this.router.navigate(['/login']); 
+
+        this.router.navigate(['/login']);
       },
         error : (err : AppError) => {
          if (err instanceof BadInput)
@@ -74,6 +76,7 @@ export class SignUpComponent implements OnInit {
        }
       });
     this.registerForm.reset();
+    this.router.navigate(['/']);
   }
 
   get first_name() {
@@ -118,6 +121,6 @@ export class SignUpComponent implements OnInit {
       this.isToggled = false;
     else if (this.user?.value == 'student')
       this.isToggled = true;
-    
+
   }
 }

@@ -7,19 +7,19 @@
       <!--    Full Name-->
       <div class="form-group">
         <input aria-label="" placeholder="First name" formControlName="first_name" type="text" id="first_name" name="first_name" class="form-control">
-        <small *ngIf="first_name!.invalid && first_name?.touched" class="text-danger">name is required</small>
+        <small *ngIf="first_name!.invalid && first_name?.touched" class="text-danger">first name is required</small>
         <small *ngIf="isEmpty(first_name!)"></small>
       </div>
 
       <div class="form-group">
         <input aria-label="" placeholder="Last name" formControlName="last_name" type="text" id="last_name" name="last_name" class="form-control">
-        <small *ngIf="last_name!.invalid && last_name?.touched" class="text-danger">name is required</small>
+        <small *ngIf="last_name!.invalid && last_name?.touched" class="text-danger">last name is required</small>
         <small *ngIf="isEmpty(last_name!)"></small>
       </div>
 
       <div class="form-group">
         <input aria-label="" placeholder="Username" formControlName="username" type="text" id="username" name="username" class="form-control">
-        <small *ngIf="username!.invalid && username?.touched" class="text-danger">name is required</small>
+        <small *ngIf="username!.invalid && username?.touched" class="text-danger">username is required</small>
         <small *ngIf="isEmpty(username!)"></small>
       </div>
 
@@ -55,9 +55,28 @@
         <small *ngIf="phone?.invalid && phone?.touched" class="text-danger">phone is
           required</small>
       </div>
+      <span >
+        <div>
+          <input type="radio" id="student" name="user" value="student" formControlName="user" checked (click)="onToggle()"
+                >
+          <label for="student"> Student</label>
+        </div>
+        
+        <div>
+          <input type="radio" id="teacher" name="user" value="teacher" formControlName="user" (click)="onToggle()">
+          <label for="teacher"> Teacher</label>
+        </div>
+      </span>
+
+      
+      <div class="form-group" *ngIf="isToggled">
+        <input aria-label="" placeholder="Formations/Diplomes" formControlName="formation" type="text" id="formation" name="formation" class="form-control">
+        <small *ngIf="formation!.invalid && formation?.touched" class="text-danger">formation is required</small>
+        <small *ngIf="isEmpty(formation!)"></small>
+      </div>
 
       <div class="button_sign">
-        <button pButton>Create New Account</button>
+        <button pButton [disabled]="!registerForm.valid">Create New Account</button>
       </div>
     </form>
 

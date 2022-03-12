@@ -14,7 +14,7 @@ import { BadInput } from '../exceptions/BadInput';
   styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent implements OnInit {
-
+  isToggled : boolean = false;
   registerForm!: FormGroup;
   users!: User[];
 
@@ -31,7 +31,9 @@ export class SignUpComponent implements OnInit {
       "email": new FormControl(null, [Validators.required, Validators.email]),
       "password": new FormControl(null, [Validators.required, Validators.minLength(4)]),
       "birthday": new FormControl(null, Validators.required),
-      "phone": new FormControl(null, [Validators.required, Validators.min(10000000), Validators.max(99999999)])
+      "phone": new FormControl(null, [Validators.required, Validators.min(10000000), Validators.max(99999999)]),
+      "user": new FormControl(null, Validators.required),
+      "formation": new FormControl(null, [Validators.required, Validators.minLength(4)]),
     })
   }
 
@@ -101,5 +103,21 @@ export class SignUpComponent implements OnInit {
 
   get birthday() {
     return this.registerForm.get('birthday');
+  }
+
+  get user(){
+    return this.registerForm.get('user');
+  }
+
+  get formation(){
+    return this.registerForm.get('formation');
+  }
+
+  onToggle() {
+    if (this.user?.value == 'teacher')
+      this.isToggled = false;
+    else if (this.user?.value == 'student')
+      this.isToggled = true;
+    
   }
 }

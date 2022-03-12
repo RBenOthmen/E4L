@@ -14,6 +14,12 @@ class ProfesseurSerializer(serializers.ModelSerializer):
         fields =['id', 'nom', 'prenom', 'email', 'telephone', 'date_naissance']
 
 class LessonSerializer(serializers.ModelSerializer):
+    eleve_id = serializers.IntegerField()
+    class Meta:
+        model = Lesson
+        fields =['id', 'title', 'category' , 'eleve_id']
+
+class LessonEleveSerializer(serializers.ModelSerializer):
     class Meta:
         model = Lesson
         fields =['id', 'title', 'category']

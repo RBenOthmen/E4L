@@ -18,13 +18,13 @@ const httpOptions = {
 })
 export class LessonsService {
 
-  private url = 'http://localhost:5000/dashboard/eleves/';
+  private url = 'http://localhost:8000/dashboard/eleves/';
   constructor(
     private http : HttpClient
   ) { }
 
   getLessons() : Observable<Lesson[]>{
-    return this.http.get<Lesson[]>('http://localhost:5000/dashboard/lessons/',httpOptions)
+    return this.http.get<Lesson[]>('http://localhost:8000/dashboard/lessons/',httpOptions)
     .pipe(
       catchError(this.handleError)
   );

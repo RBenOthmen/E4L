@@ -5,7 +5,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from django.db.models import Count
-from .serializers import EleveSerializer, LessonSerializer,ProfesseurSerializer
+from .serializers import EleveSerializer, LessonEleveSerializer, LessonSerializer,ProfesseurSerializer
 from dashboard import serializers
 from .models import Eleve, Lesson, Professeur
 from rest_framework.mixins import ListModelMixin, CreateModelMixin, RetrieveModelMixin, UpdateModelMixin
@@ -34,7 +34,7 @@ class ProfesseurViewSet(ModelViewSet):
 
 class LessonEleveViewSet(ModelViewSet):
     
-    serializer_class = LessonSerializer
+    serializer_class = LessonEleveSerializer
 
     def get_queryset(self, ):     
         return Lesson.objects.filter(eleve_id=self.kwargs['eleve_pk'])

@@ -24,7 +24,7 @@
       </div>
 
       <div class="button_sign">
-        <button pButton type="submit">Log In</button>
+        <button pButton type="submit" [disabled]="!loginForm.valid">Log In</button>
       </div>
 
     </form>

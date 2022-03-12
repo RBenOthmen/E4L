@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 import { User } from '../interfaces/user';
 import { NotFoundError } from '../exceptions/not-found-error';
 import { AppError } from '../exceptions/AppError';
+import { Router } from '@angular/router';
 
 
 
@@ -20,9 +21,10 @@ const httpOptions = {
 })
 export class AuthService {
 
-  private url = 'http://localhost:5000/auth/';
+  private url = 'http://localhost:8000/auth/';
   constructor(
-    private http : HttpClient
+    private http : HttpClient,
+    private router :Router
   ) { }
 
   login(credentials : User) : Observable<User> {
@@ -56,17 +58,20 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('token');
+    this.router.navigate(['login']);
   }
 
   isLoggedIn() {
-    /*const helper = new JwtHelperService();
+    /*const helper = new JwtHelperService();*/
 
     let token = localStorage.getItem('token');
-
+    console.log(token)
     if (!token)
       return false;
+    return true;
     
-    const isExpired = helper.isTokenExpired(token);
+    
+    /*const isExpired = helper.isTokenExpired(token);
 
     return !isExpired;*/
   }

@@ -1,7 +1,9 @@
 <div class="container blue topBotomBordersOut">
-  <a routerLink="/">HOME</a>
-  <a routerLink="login">LOGIN</a>
-  <a routerLink="signup">SIGN UP</a>
+  <a routerLink="/" >Home</a>
+  <a routerLink="dashboard" *ngIf="authService.isLoggedIn()">Lessons</a>
+  <a routerLink="login" *ngIf="!authService.isLoggedIn()">Login</a>
+  <a routerLink="signup" *ngIf="!authService.isLoggedIn()">Signup</a>
+  <a routerLink="signup" *ngIf="authService.isLoggedIn()" (click)="authService.logout()">Logout</a>
 </div>
 
 

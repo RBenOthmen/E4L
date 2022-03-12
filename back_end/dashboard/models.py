@@ -1,11 +1,11 @@
+from django.conf import settings
 from django.db import models
 
 class Eleve (models.Model):
-    prenom = models.CharField(max_length=255)
-    nom = models.CharField(max_length=255)
-    telephone = models.CharField(max_length=255)
-    date_naissance = models.DateField(null=True, blank=True)
-    email = models.EmailField(unique=True)
+    phone = models.CharField(max_length=255)
+    birth_date = models.DateField(null=True, blank=True)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
 
 class Professeur (models.Model):
     prenom = models.CharField(max_length=255)

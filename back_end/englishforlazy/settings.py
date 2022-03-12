@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -39,8 +40,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
+    'djoser',
     'debug_toolbar',
-    'dashboard'
+    'dashboard',
+    'core'
+    
 ]
 
 MIDDLEWARE = [
@@ -146,4 +150,24 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
+AUTH_USER_MODEL = 'core.User'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+SIMPLE_JWT = {
+   'AUTH_HEADER_TYPES': ('JWT',),
+   'ACCESS_TOKEN_LIFETIME': timedelta(days=1)
+}
+
+DJOSER = {
+    'SERIALIZERS' : {
+        'user_create' : 'core.serializers.UserCreateSerializer',
+        'current_user' : 'core.serializers.UserSerializer'
+    }
+}
 

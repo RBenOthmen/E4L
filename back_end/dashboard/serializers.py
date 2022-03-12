@@ -7,10 +7,6 @@ from rest_framework import serializers
 
 from dashboard.models import Eleve, Lesson, Professeur
 
-class EleveSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Eleve
-        fields =['id', 'nom', 'prenom', 'email', 'telephone', 'date_naissance']
 
 class ProfesseurSerializer(serializers.ModelSerializer):
     class Meta:
@@ -26,6 +22,12 @@ class LessonSerializer(serializers.ModelSerializer):
         eleve_id = self.context['eleve_id']
         return Lesson.create(eleve_id , **validated_data)
 
+class EleveSerializer(serializers.ModelSerializer):
+    user_id = serializers.IntegerField()
+
+    class Meta:
+        model = Eleve
+        fields = ['id', 'user_id', 'phone', 'birth_date']
 
 
 

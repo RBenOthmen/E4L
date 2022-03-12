@@ -1,6 +1,10 @@
 export interface User {
   id?: number,
-  fullName: string,
-  email:string,
-  password: string
+  first_name?: string,
+  last_name?:string,
+  password?: string,
+  username ?: string,
+  email ?: string,
+  refresh?: string,
+    access?:string
 }

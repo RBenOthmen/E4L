@@ -2,13 +2,25 @@
   <h2 class="title_sign">Creating an Account</h2>
   <div class="form_sign">
 
-    <form [formGroup]="registerForm" class="row g-3">
+    <form [formGroup]="registerForm" class="row g-3" (submit)="register()">
 
       <!--    Full Name-->
       <div class="form-group">
-        <input aria-label="" placeholder="Full name" formControlName="name" type="text" id="fName" name="fName" class="form-control">
-        <small *ngIf="name!.invalid && name?.touched" class="text-danger">name is required</small>
-        <small *ngIf="isEmpty(name!)"></small>
+        <input aria-label="" placeholder="First name" formControlName="first_name" type="text" id="first_name" name="first_name" class="form-control">
+        <small *ngIf="first_name!.invalid && first_name?.touched" class="text-danger">name is required</small>
+        <small *ngIf="isEmpty(first_name!)"></small>
+      </div>
+
+      <div class="form-group">
+        <input aria-label="" placeholder="Last name" formControlName="last_name" type="text" id="last_name" name="last_name" class="form-control">
+        <small *ngIf="last_name!.invalid && last_name?.touched" class="text-danger">name is required</small>
+        <small *ngIf="isEmpty(last_name!)"></small>
+      </div>
+
+      <div class="form-group">
+        <input aria-label="" placeholder="Username" formControlName="username" type="text" id="username" name="username" class="form-control">
+        <small *ngIf="username!.invalid && username?.touched" class="text-danger">name is required</small>
+        <small *ngIf="isEmpty(username!)"></small>
       </div>
 
       <!--    Email-->
@@ -26,17 +38,11 @@
           is required</small>
       </div>
 
-      <!--Domain/Formation-->
-      <div class="form-group">
-        <input placeholder="Domain/Formation" formControlName="domain" type="text" id="domain" name="domain"
-               class="form-control">
-        <small *ngIf="domain?.invalid && domain?.touched" class="text-danger">domain is
-          required</small>
-      </div>
+      
 
       <!--Birthday-->
       <div class="form-group">
-        <input placeholder="Birthday" formControlName="domain" type="date" id="birthday" name="birthday"
+        <input placeholder="Birthday" formControlName="birthday" type="date" id="birthday" name="birthday"
                class="form-control">
         <small *ngIf="birthday?.invalid && birthday?.touched" class="text-danger">birthday is
           required</small>
@@ -51,7 +57,7 @@
       </div>
 
       <div class="button_sign">
-        <button pButton (click)="register()">Create New Account</button>
+        <button pButton>Create New Account</button>
       </div>
     </form>
 

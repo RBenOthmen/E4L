@@ -76,9 +76,14 @@
       </div>
 
       <div class="button_sign">
-        <button pButton [disabled]="!registerForm.valid">Create New Account</button>
+        <button pButton >Create New Account</button>
       </div>
     </form>
+
+    <br>
+    <div class="button_sign">
+      <button class="p-button" (click)="goToSignin()">LOGIN</button>
+    </div>
 
   </div>
 </div>

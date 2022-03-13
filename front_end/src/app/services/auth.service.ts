@@ -1,6 +1,9 @@
+import { Teacher } from './../interfaces/Teacher';
+import { Student } from './../interfaces/Student';
+
 import { BadInput } from '../exceptions/BadInput';
 import { Token } from './../interfaces/Token';
-import { Observable, map, tap, throwError, catchError } from 'rxjs';
+import { Observable, map, tap, throwError, catchError, BehaviorSubject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../interfaces/user';
@@ -20,21 +23,26 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AuthService {
+  private _LoggedIn = new BehaviorSubject<boolean>(false);
+  LoggedIn = this._LoggedIn.asObservable();
 
-  private url = 'http://localhost:8000/auth/';
-  constructor(
-    private http : HttpClient,
-    private router :Router
-  ) { }
+  private url = 'http://localhost:8000/';
+  constructor(private http : HttpClient) {
+      const token = localStorage.getItem('token');
+      this._LoggedIn.next(!!token);
+   }
 
   login(credentials : User) : Observable<User> {
     //let isLogin : boolean =false;
-    return this.http.post<User>(this.url + 'jwt/create/' , credentials , httpOptions);
-      /*.pipe(
-        tap(
-      })).subscribe();
-      console.log(isLogin)
-    return isLogin;*/
+    return this.http.post<User>(this.url + 'auth/jwt/create/' , credentials , httpOptions)
+      .pipe(
+        tap(response => {
+          if (response && response.access) {
+            this._LoggedIn.next(true);
+            localStorage.setItem('token', response.access);
+          }
+        })
+      );
   }
 
   signup(credentials : User) : Observable<User> {
@@ -44,35 +52,65 @@ export class AuthService {
       email : credentials.email,
       first_name : credentials.first_name,
       last_name : credentials.last_name
-
     }
-
-    console.log(user)
-    return this.http.post<User>(this.url + 'users/' , user , httpOptions)
+    
+    return this.http.post<User>(this.url + 'auth/users/' , user , httpOptions)
     .pipe(
-      catchError(this.handleError)
+      catchError(this.handleError),
+      tap(response => {
+        
+        credentials.user_id = response.id;
+        
+        if(credentials.type == "student")
+          this.createStudent(credentials)
+        else if (credentials.type == "teacher")
+          this.createTeacher(credentials)
+        
+      })
   );
+  }
+
+  createStudent(credentials : User) {
+    let student : Student = {
+      user_id : credentials.user_id,
+      phone : credentials.phone,
+      birth_date : credentials.birth_date,
+    }
+    this.http.post<User>(this.url + 'dashboard/eleves/' , student , httpOptions).subscribe(
+      response => console.log(response)
+    )
+  }
+
+  createTeacher(credentials : User) {
+    let teacher : Teacher = {
+      user_id : credentials.user_id,
+      phone : credentials.phone,
+      birth_date : credentials.birth_date,
+      formation : credentials.formation,
+    }
+    console.log(teacher)
+    this.http.post<User>(this.url + 'dashboard/professeurs/' , teacher , httpOptions).subscribe(
+      response => console.log(response)
+    )
   }
 
   
 
   logout() {
     localStorage.removeItem('token');
-    this.router.navigate(['login']);
+    
   }
 
   isLoggedIn() {
     /*const helper = new JwtHelperService();*/
-
     let token = localStorage.getItem('token');
-    console.log(token)
-    if (!token)
+    
+    if (!token){
       return false;
+    }
     return true;
     
-    
     /*const isExpired = helper.isTokenExpired(token);
-
     return !isExpired;*/
   }
 
@@ -84,9 +122,7 @@ export class AuthService {
     if (err.status == 404) {
       return throwError (() => new NotFoundError(err));
     }
-
-    
-      
+   
     return throwError(() => new AppError(err));
   }
 }

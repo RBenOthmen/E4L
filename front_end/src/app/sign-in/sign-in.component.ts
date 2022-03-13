@@ -14,13 +14,13 @@ export class SignInComponent implements OnInit {
 
   invalidLogin : boolean = false;
 
-  constructor(private authService : AuthService,
+  constructor(public authService : AuthService,
     private router :Router) {
   }
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
-      "name": new FormControl(null, [Validators.required, Validators.minLength(4)]),
+      "username": new FormControl(null, [Validators.required, Validators.minLength(4)]),
       "password": new FormControl(null, [Validators.required, Validators.minLength(4)])
     })
   }
@@ -30,8 +30,8 @@ export class SignInComponent implements OnInit {
     this.loginForm.reset();
   }
 
-  get name() {
-    return this.loginForm.get('name');
+  get username() {
+    return this.loginForm.get('username');
   }
 
   get password() {
@@ -42,20 +42,27 @@ export class SignInComponent implements OnInit {
   signIn() {
     //let credentials = this.loginForm.getRawValue()
     let credentials = {
-      username : this.loginForm.get('name')?.value,
+      username : this.loginForm.get('username')?.value,
       password : this.loginForm.get('password')?.value
     }
     let result = this.authService.login(credentials)
       .subscribe(
       response => {
-        if (response && response.access) {
-          localStorage.setItem('token', response.access);
           this.router.navigate(['/']); 
-        }
       });
-      
+    
+      if (this.authService.isLoggedIn()==false) {
+        
+        this.invalidLogin= true;
+      }
      
     
   }
+
+
+  goToSignup() {
+    this.router.navigate(['/signup'])
+  }
+  
 
 }

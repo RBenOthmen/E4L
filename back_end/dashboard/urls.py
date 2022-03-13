@@ -9,9 +9,10 @@ router = routers.DefaultRouter()
 router.register('eleves',views.EleveViewSet)
 router.register('professeurs',views.ProfesseurViewSet)
 router.register('lessons',views.LessonViewSet)
+router.register('progress',views.ProgressViewSet)
 
 eleves_router = routers.NestedDefaultRouter(router, 'eleves', lookup='eleve')
-eleves_router.register('lessons', views.LessonEleveViewSet, basename='eleve-lessons')
+eleves_router.register('progress', views.ProgressEleveViewSet, basename='eleve-progress')
 
 
 urlpatterns = router.urls + eleves_router.urls

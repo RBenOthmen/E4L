@@ -56,15 +56,14 @@ export class SignUpComponent implements OnInit {
       email : this.email?.value,
       password : this.password?.value,
       username : this.username?.value,
-      
-
+      phone : this.phone?.value,
+      birth_date : this.birthday?.value,
+      type : this.user?.value,
+      formation : this.formation?.value
     };
 
     this.authService.signup(user).subscribe( {
       next : response => {
-
-        console.log(response)
- 
         this.router.navigate(['/login']); 
       },
         error : (err : AppError) => {
@@ -119,5 +118,9 @@ export class SignUpComponent implements OnInit {
     else if (this.user?.value == 'student')
       this.isToggled = true;
     
+  }
+
+  goToSignin() {
+    this.router.navigate(['/login'])
   }
 }

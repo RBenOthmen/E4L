@@ -3,7 +3,7 @@
   <a routerLink="dashboard" *ngIf="authService.isLoggedIn()">Lessons</a>
   <a routerLink="login" *ngIf="!authService.isLoggedIn()">Login</a>
   <a routerLink="signup" *ngIf="!authService.isLoggedIn()">Signup</a>
-  <a routerLink="signup" *ngIf="authService.isLoggedIn()" (click)="authService.logout()">Logout</a>
+  <a routerLink="signup" *ngIf="authService.isLoggedIn()" (click)="logout()">Logout</a>
 </div>
 
 

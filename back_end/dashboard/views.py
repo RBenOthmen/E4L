@@ -5,9 +5,9 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from django.db.models import Count
-from .serializers import EleveSerializer, LessonEleveSerializer, LessonSerializer,ProfesseurSerializer
+from .serializers import EleveSerializer, LessonSerializer,ProfesseurSerializer, ProgressEleveSerializer, ProgressSerializer
 from dashboard import serializers
-from .models import Eleve, Lesson, Professeur
+from .models import Eleve, Lesson, Professeur, Progress
 from rest_framework.mixins import ListModelMixin, CreateModelMixin, RetrieveModelMixin, UpdateModelMixin
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from rest_framework.decorators import api_view,action
@@ -32,12 +32,16 @@ class ProfesseurViewSet(ModelViewSet):
     queryset = Professeur.objects.all()
     serializer_class = ProfesseurSerializer
 
-class LessonEleveViewSet(ModelViewSet):
+class ProgressViewSet(ModelViewSet):
+    queryset = Progress.objects.all()
+    serializer_class = ProgressSerializer
+
+class ProgressEleveViewSet(ModelViewSet):
     
-    serializer_class = LessonEleveSerializer
+    serializer_class = ProgressEleveSerializer
 
     def get_queryset(self, ):     
-        return Lesson.objects.filter(eleve_id=self.kwargs['eleve_pk'])
+        return Progress.objects.filter(eleve_id=self.kwargs['eleve_pk'])
 
     def get_serializer_context(self):
         return {'eleve_id':self.kwargs['eleve_pk']}

@@ -23,6 +23,10 @@ export class SignUpComponent implements OnInit {
     private router :Router) {
   }
 
+  goToSignin() {
+    this.router.navigate(['/login'])
+  }
+
   ngOnInit(): void {
     this.registerForm = new FormGroup({
       "first_name": new FormControl(null, [Validators.required, Validators.minLength(4)]),
@@ -73,6 +77,7 @@ export class SignUpComponent implements OnInit {
        }
       });
     this.registerForm.reset();
+    this.router.navigate(['/']);
   }
 
   get first_name() {
@@ -117,10 +122,8 @@ export class SignUpComponent implements OnInit {
       this.isToggled = false;
     else if (this.user?.value == 'student')
       this.isToggled = true;
-    
+
   }
 
-  goToSignin() {
-    this.router.navigate(['/login'])
-  }
+  
 }

@@ -38,7 +38,7 @@
           is required</small>
       </div>
 
-      
+
 
       <!--Birthday-->
       <div class="form-group">
@@ -61,14 +61,14 @@
                 >
           <label for="student"> Student</label>
         </div>
-        
+
         <div>
           <input type="radio" id="teacher" name="user" value="teacher" formControlName="user" (click)="onToggle()">
           <label for="teacher"> Teacher</label>
         </div>
       </span>
 
-      
+
       <div class="form-group" *ngIf="isToggled">
         <input aria-label="" placeholder="Formations/Diplomes" formControlName="formation" type="text" id="formation" name="formation" class="form-control">
         <small *ngIf="formation!.invalid && formation?.touched" class="text-danger">formation is required</small>
@@ -84,6 +84,5 @@
     <div class="button_sign">
       <button class="p-button" (click)="goToSignin()">LOGIN</button>
     </div>
-
   </div>
 </div>

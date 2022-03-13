@@ -18,6 +18,10 @@ export class SignInComponent implements OnInit {
     private router :Router) {
   }
 
+  goToSignup() {
+    this.router.navigate(['/signup'])
+  }
+
   ngOnInit(): void {
     this.loginForm = new FormGroup({
       "username": new FormControl(null, [Validators.required, Validators.minLength(4)]),
@@ -28,6 +32,7 @@ export class SignInComponent implements OnInit {
   login() {
     console.log(this.loginForm.value);
     this.loginForm.reset();
+    this.router.navigate(['/']);
   }
 
   get username() {
@@ -60,9 +65,7 @@ export class SignInComponent implements OnInit {
   }
 
 
-  goToSignup() {
-    this.router.navigate(['/signup'])
-  }
   
+
 
 }

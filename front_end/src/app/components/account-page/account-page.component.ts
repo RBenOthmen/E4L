@@ -17,7 +17,10 @@ export class AccountPageComponent implements OnInit {
   profileForm!: FormGroup;
   users!: User[];
 
-  constructor(private authService : AuthService,
+  currentUser : User = {
+  }
+
+  constructor(public authService : AuthService,
     private router :Router) {
   }
 
@@ -36,7 +39,16 @@ export class AccountPageComponent implements OnInit {
       "phone": new FormControl(null, [Validators.required, Validators.min(10000000), Validators.max(99999999)]),
       "user": new FormControl(null, Validators.required),
       "formation": new FormControl(null, [Validators.required, Validators.minLength(4)]),
-    })
+    });
+    this.authService.getUserDetails()
+    .subscribe(
+      response => {
+        this.currentUser.email = response.email;
+        this.currentUser.username = response.username;
+      }
+    )
+
+    console.log(this.authService.currentUser.email)
   }
 
   isEmpty(word: any): boolean {
@@ -56,7 +68,7 @@ export class AccountPageComponent implements OnInit {
       first_name : this.first_name?.value,
       last_name : this.last_name?.value,
       email : this.email?.value,
-      password : this.password?.value,
+      password : this.currentPassword?.value,
       username : this.username?.value,
       phone : this.phone?.value,
       birth_date : this.birthday?.value,
@@ -94,8 +106,16 @@ export class AccountPageComponent implements OnInit {
     return this.profileForm.get('email');
   }
 
-  get password() {
+  get currentPassword() {
     return this.profileForm.get('password');
+  }
+
+  get newPassword() {
+    return this.profileForm.get('newPassword');
+  }
+
+  get confirmPassword() {
+    return this.profileForm.get('confirmPassword');
   }
 
 

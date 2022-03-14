@@ -1,6 +1,6 @@
 import { Teacher } from './../interfaces/Teacher';
 import { Student } from './../interfaces/Student';
-
+import { JwtHelperService } from "@auth0/angular-jwt";
 import { BadInput } from '../exceptions/BadInput';
 import { Token } from './../interfaces/Token';
 import { Observable, map, tap, throwError, catchError, BehaviorSubject } from 'rxjs';
@@ -24,8 +24,17 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AuthService {
+  
   private _LoggedIn = new BehaviorSubject<boolean>(false);
   LoggedIn = this._LoggedIn.asObservable();
+
+  helper = new JwtHelperService();
+
+  currentUser : User = {
+    email : '',
+    username : ''
+  }
+
 
   private url = 'http://localhost:8000/';
   constructor(private http : HttpClient) {
@@ -39,7 +48,9 @@ export class AuthService {
       .pipe(
         catchError(this.handleError),
         tap(response => {
+          const decodedToken = this.helper.decodeToken(response.access);
           if (response && response.access) {
+            this.getUserDetails();
             this._LoggedIn.next(true);
             localStorage.setItem('token', response.access);
           }
@@ -96,30 +107,52 @@ export class AuthService {
     )
   }
 
-  getCurrentUser() {
-    const token = localStorage.removeItem('token');
-    
 
+  getUserDetails() : Observable<User> {
+    let token = localStorage.getItem('token');
+    console.log(token)
+    let Authorization = {
+      headers: new HttpHeaders({
+        'Content-Type' : 'application/json',
+        'Authorization' : 'JWT '+token
+      }),
+    }
+
+    return this.http.get<User>(this.url + 'auth/users/me' , Authorization)
+    .pipe(
+      tap( response => {
+        this.currentUser.email = response.email;
+        this.currentUser.username = response.username;
+      }
+      )
+    )
+    /*.subscribe(response => {
+      console.log('getUserDetails')
+      console.log(token)
+      console.log(response)
+     
+    })*/
   }
 
+  
   
 
   logout() {
     localStorage.removeItem('token');
+    this.currentUser = {
+      email : '',
+      username : ''
+    }
     this._LoggedIn.next(false);
   }
 
   isLoggedIn() {
-    /*const helper = new JwtHelperService();*/
-    let token = localStorage.getItem('token');
-    
+    const token = localStorage.getItem('token');
     if (!token){
       return false;
     }
-    return true;
-    
-    /*const isExpired = helper.isTokenExpired(token);
-    return !isExpired;*/
+    const isExpired = this.helper.isTokenExpired(token);
+    return !isExpired;
   }
 
   private handleError(err : Response) {

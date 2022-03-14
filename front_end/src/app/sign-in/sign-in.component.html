@@ -18,9 +18,9 @@
           is required</small>
       </div>
 
-      <div *ngIf="authService.isLoggedIn()">
-        <p>Incorrect username/password</p>
-      </div>
+      
+
+      <small class="text-danger" *ngIf="invalidLogin">Incorrect username/password</small>
 
       <div class="button_sign">
         <button pButton type="submit" [disabled]="!loginForm.valid">Log In</button>

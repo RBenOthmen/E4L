@@ -1,8 +1,10 @@
 <div class="container blue topBotomBordersOut">
   <a routerLink="/" >Home</a>
   <a routerLink="dashboard" *ngIf="authService.isLoggedIn()">Lessons</a>
+  <a routerLink="profile" *ngIf="authService.isLoggedIn()">Profile</a>
   <a routerLink="login" *ngIf="!authService.isLoggedIn()">Login</a>
   <a routerLink="signup" *ngIf="!authService.isLoggedIn()">Signup</a>
+  <a routerLink="profile" *ngIf="!authService.isLoggedIn()">Profile</a>
   <a routerLink="signup" *ngIf="authService.isLoggedIn()" (click)="logout()">Logout</a>
 </div>
 

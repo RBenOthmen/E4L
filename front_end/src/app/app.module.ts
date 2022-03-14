@@ -24,6 +24,8 @@ import {MatIconModule} from '@angular/material/icon';
 import { CategoryItemComponent } from './components/category-item/category-item.component';
 import { LessonItemComponent } from './components/lesson-item/lesson-item.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { ProfilePageComponent } from './components/profile-page/profile-page.component';
+import { AccountPageComponent } from './components/account-page/account-page.component';
 
 
 
@@ -40,6 +42,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     CategoryItemComponent,
     LessonItemComponent,
     DashboardComponent,
+    ProfilePageComponent,
+    AccountPageComponent,
   ],
   imports: [
     BrowserModule,

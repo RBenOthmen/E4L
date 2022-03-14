@@ -1,6 +1,8 @@
+import { Unauthorized } from './../exceptions/Unauthorized';
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import { Router } from '@angular/router';
+import { AppError } from '../exceptions/AppError';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -45,21 +47,22 @@ export class SignInComponent implements OnInit {
 
 
   signIn() {
-    //let credentials = this.loginForm.getRawValue()
+    
     let credentials = {
       username : this.loginForm.get('username')?.value,
       password : this.loginForm.get('password')?.value
     }
-    let result = this.authService.login(credentials)
-      .subscribe(
-      response => {
+    this.authService.login(credentials)
+      .subscribe({
+        next : response => {
           this.router.navigate(['/']); 
-      });
-    
-      if (this.authService.isLoggedIn()==false) {
-        
-        this.invalidLogin= true;
-      }
+        }
+        ,error : (err : AppError) => {
+          if (err instanceof Unauthorized)
+          this.invalidLogin= true;
+          else throw err;
+        }
+       });
      
     
   }

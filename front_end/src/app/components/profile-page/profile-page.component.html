@@ -1,0 +1,34 @@
+<div class="container">
+    
+    <h2 >Profile Settings</h2>
+        <div class="setting">
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+                <a class="nav-link"  [class.active]="modeView == 'account'" (click)="modeView = 'account'">Account</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [class.active]="modeView == 'photo'" (click)="modeView = 'photo'">Photo</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [class.active]="modeView == 'languages'" (click)="modeView = 'languages'">Languages</a>
+            </li>
+        </ul>
+        
+        <div class="form">
+            <div [ngSwitch]="modeView">
+                <div *ngSwitchCase="'account'">
+                    <app-account-page></app-account-page>
+                </div>
+                <div *ngSwitchCase="'photo'">Photo view</div>
+                <div *ngSwitchCase="'languages'">Languages view</div>
+                <div *ngSwitchDefault>Otherwise</div>
+            </div>
+        </div>
+    
+        
+      </div>
+    
+        
+</div>
+
+

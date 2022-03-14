@@ -10,6 +10,7 @@ import { User } from '../interfaces/user';
 import { NotFoundError } from '../exceptions/not-found-error';
 import { AppError } from '../exceptions/AppError';
 import { Router } from '@angular/router';
+import { Unauthorized } from '../exceptions/Unauthorized';
 
 
 
@@ -36,6 +37,7 @@ export class AuthService {
     //let isLogin : boolean =false;
     return this.http.post<User>(this.url + 'auth/jwt/create/' , credentials , httpOptions)
       .pipe(
+        catchError(this.handleError),
         tap(response => {
           if (response && response.access) {
             this._LoggedIn.next(true);
@@ -94,11 +96,17 @@ export class AuthService {
     )
   }
 
+  getCurrentUser() {
+    const token = localStorage.removeItem('token');
+    
+
+  }
+
   
 
   logout() {
     localStorage.removeItem('token');
-    
+    this._LoggedIn.next(false);
   }
 
   isLoggedIn() {
@@ -121,6 +129,10 @@ export class AuthService {
 
     if (err.status == 404) {
       return throwError (() => new NotFoundError(err));
+    }
+
+    if (err.status == 401) {
+      return throwError (() => new Unauthorized(err));
     }
    
     return throwError(() => new AppError(err));

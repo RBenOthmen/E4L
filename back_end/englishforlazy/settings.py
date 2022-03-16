@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'dashboard',
     'core'
-    
+
 ]
 
 MIDDLEWARE = [
@@ -57,8 +57,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
-    
-   
+
+
 ]
 
 INTERNAL_IPS = [
@@ -101,8 +101,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'englishforlazy',
         'HOST': 'localhost',
-        'USER': 'root',
-        'PASSWORD': 'W@jdi1999'
+        'USER': 'user_e4l',
+        'PASSWORD': '09/11/99'
     }
 }
 

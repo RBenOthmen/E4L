@@ -31,12 +31,6 @@ export class SignInComponent implements OnInit {
     })
   }
 
-  login() {
-    console.log(this.loginForm.value);
-    this.loginForm.reset();
-    this.router.navigate(['/']);
-  }
-
   get username() {
     return this.loginForm.get('username');
   }
@@ -47,7 +41,7 @@ export class SignInComponent implements OnInit {
 
 
   signIn() {
-    
+
     let credentials = {
       username : this.loginForm.get('username')?.value,
       password : this.loginForm.get('password')?.value
@@ -55,7 +49,7 @@ export class SignInComponent implements OnInit {
     this.authService.login(credentials)
       .subscribe({
         next : response => {
-          this.router.navigate(['/']); 
+          this.router.navigate(['/']);
         }
         ,error : (err : AppError) => {
           if (err instanceof Unauthorized)
@@ -63,12 +57,12 @@ export class SignInComponent implements OnInit {
           else throw err;
         }
        });
-     
-    
+
+
   }
 
 
-  
+
 
 
 }

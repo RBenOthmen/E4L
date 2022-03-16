@@ -12,7 +12,7 @@ class ProfesseurSerializer(serializers.ModelSerializer):
     user_id = serializers.IntegerField()
     class Meta:
         model = Professeur
-        fields =fields = ['id', 'user_id', 'phone', 'birth_date', 'formation']
+        fields  = ['id', 'user_id', 'phone', 'birth_date', 'formation']
 
 class LessonSerializer(serializers.ModelSerializer):
     

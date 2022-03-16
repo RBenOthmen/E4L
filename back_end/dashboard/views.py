@@ -31,6 +31,7 @@ class EleveViewSet(CreateModelMixin, RetrieveModelMixin, UpdateModelMixin, Gener
 class ProfesseurViewSet(ModelViewSet):
     queryset = Professeur.objects.all()
     serializer_class = ProfesseurSerializer
+  
 
 class ProgressViewSet(ModelViewSet):
     queryset = Progress.objects.all()

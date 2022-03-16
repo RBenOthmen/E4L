@@ -1,0 +1,12 @@
+Backend:
+virtual env location : C:\Users\ramib\.virtualenvs\back_end-2XXmCDm2
+install dependencies : pipenv install
+installing django : pipenv install django
+commit migrations : python manage.py makemigrations
+run migrations to db : python manage.py migrate
+run : python manage.py runserver
+
+
+Frontend:
+run : ng serve
+install dependencies : npm install

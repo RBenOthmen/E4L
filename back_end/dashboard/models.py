@@ -24,7 +24,6 @@ class Lesson (models.Model):
         max_length=2, choices=CATEGORY_CHOICES)
 
 class Professeur (models.Model):
-    formation = models.CharField(max_length=255)
     phone = models.CharField(max_length=255)
     birth_date = models.DateField(null=True, blank=True)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

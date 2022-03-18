@@ -34,14 +34,14 @@ footer span
   color: #AAA;
 }
 
-div.container
+div.navcontainer
 {
   font-family: Raleway;
   margin: 0 auto;
   padding: 1em 3em;
   text-align: center;
 }
-div.container a
+div.navcontainer a
 {
   color: #FFF;
   text-decoration: none;

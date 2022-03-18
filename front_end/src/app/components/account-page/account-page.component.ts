@@ -34,21 +34,25 @@ export class AccountPageComponent implements OnInit {
       "last_name": new FormControl(null, [Validators.required, Validators.minLength(4)]),
       "username": new FormControl(null, [Validators.required, Validators.minLength(4)]),
       "email": new FormControl(null, [Validators.required, Validators.email]),
-      "password": new FormControl(null, [Validators.required, Validators.minLength(4)]),
+      "currentPassword": new FormControl(null, [Validators.required, Validators.minLength(4)]),
+      "newPassword": new FormControl(null, [Validators.required, Validators.minLength(4)]),
+      "confirmPassword": new FormControl(null, [Validators.required, Validators.minLength(4)]),
       "birthday": new FormControl(null, Validators.required),
       "phone": new FormControl(null, [Validators.required, Validators.min(10000000), Validators.max(99999999)]),
       "user": new FormControl(null, Validators.required),
-      "formation": new FormControl(null, [Validators.required, Validators.minLength(4)]),
+     
     });
     this.authService.getUserDetails()
     .subscribe(
       response => {
         this.currentUser.email = response.email;
         this.currentUser.username = response.username;
+        this.currentUser.first_name = response.first_name;
+        this.currentUser.last_name = response.last_name;
       }
     )
 
-    console.log(this.authService.currentUser.email)
+    // console.log(this.authService.currentUser.email)
   }
 
   isEmpty(word: any): boolean {
@@ -73,7 +77,7 @@ export class AccountPageComponent implements OnInit {
       phone : this.phone?.value,
       birth_date : this.birthday?.value,
       type : this.user?.value,
-      formation : this.formation?.value
+ 
     };
 
     this.authService.signup(user).subscribe( {
@@ -131,9 +135,7 @@ export class AccountPageComponent implements OnInit {
     return this.profileForm.get('user');
   }
 
-  get formation(){
-    return this.profileForm.get('formation');
-  }
+
 
   onToggle() {
     if (this.user?.value == 'teacher')

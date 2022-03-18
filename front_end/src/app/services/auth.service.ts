@@ -25,8 +25,8 @@ const httpOptions = {
 })
 export class AuthService {
   
-  private _LoggedIn = new BehaviorSubject<boolean>(false);
-  LoggedIn = this._LoggedIn.asObservable();
+  // private _LoggedIn = new BehaviorSubject<boolean>(false);
+  // LoggedIn = this._LoggedIn.asObservable();
 
   helper = new JwtHelperService();
 
@@ -38,8 +38,8 @@ export class AuthService {
 
   private url = 'http://localhost:8000/';
   constructor(private http : HttpClient) {
-      const token = localStorage.getItem('token');
-      this._LoggedIn.next(!!token);
+      // const token = localStorage.getItem('token');
+      // this._LoggedIn.next(!!token);
    }
 
   login(credentials : User) : Observable<User> {
@@ -51,7 +51,7 @@ export class AuthService {
           const decodedToken = this.helper.decodeToken(response.access);
           if (response && response.access) {
             this.getUserDetails();
-            this._LoggedIn.next(true);
+            // this._LoggedIn.next(true);
             localStorage.setItem('token', response.access);
           }
         })
@@ -64,7 +64,8 @@ export class AuthService {
       password : credentials.password,
       email : credentials.email,
       first_name : credentials.first_name,
-      last_name : credentials.last_name
+      last_name : credentials.last_name,
+      role : credentials.type == "teacher" ? 'T' : 'S'
     }
     
     return this.http.post<User>(this.url + 'auth/users/' , user , httpOptions)
@@ -99,7 +100,6 @@ export class AuthService {
       user_id : credentials.user_id,
       phone : credentials.phone,
       birth_date : credentials.birth_date,
-      formation : credentials.formation,
     }
     console.log(teacher)
     this.http.post<User>(this.url + 'dashboard/professeurs/' , teacher , httpOptions).subscribe(
@@ -143,7 +143,7 @@ export class AuthService {
       email : '',
       username : ''
     }
-    this._LoggedIn.next(false);
+    // this._LoggedIn.next(false);
   }
 
   isLoggedIn() {
@@ -157,7 +157,12 @@ export class AuthService {
 
   private handleError(err : Response) {
     if (err.status == 400) {
+      console.log(err)
+
+      console.log(err.json)
+      console.log(err)
       return throwError (() => new BadInput(err));
+      
     }
 
     if (err.status == 404) {

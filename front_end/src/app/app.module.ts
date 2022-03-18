@@ -26,6 +26,12 @@ import { LessonItemComponent } from './components/lesson-item/lesson-item.compon
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ProfilePageComponent } from './components/profile-page/profile-page.component';
 import { AccountPageComponent } from './components/account-page/account-page.component';
+import { PasswordComponent } from './formComponents/password/password.component';
+import { TeacherListComponent } from './components/teacher-list/teacher-list.component';
+
+import { UserItemComponent } from './components/user-item/user-item.component';
+
+
 
 
 
@@ -44,6 +50,9 @@ import { AccountPageComponent } from './components/account-page/account-page.com
     DashboardComponent,
     ProfilePageComponent,
     AccountPageComponent,
+    PasswordComponent,
+    UserItemComponent,
+    TeacherListComponent,
   ],
   imports: [
     BrowserModule,

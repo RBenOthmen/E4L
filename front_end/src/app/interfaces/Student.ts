@@ -3,5 +3,6 @@ export interface Student {
     user_id? : number,
     phone? : string,
     birth_date? : Date,
+    role ?:string;
   }
   

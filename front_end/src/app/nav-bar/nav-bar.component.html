@@ -1,10 +1,11 @@
-<div class="container blue topBotomBordersOut">
+<div class="navcontainer blue topBotomBordersOut">
   <a routerLink="/" >Home</a>
   <a routerLink="dashboard" *ngIf="authService.isLoggedIn()">Lessons</a>
+  <a routerLink="settings" *ngIf="authService.isLoggedIn()">Settings</a>
   <a routerLink="profile" *ngIf="authService.isLoggedIn()">Profile</a>
+  <a routerLink="teachers" *ngIf="authService.isLoggedIn()">teachers</a>
   <a routerLink="login" *ngIf="!authService.isLoggedIn()">Login</a>
   <a routerLink="signup" *ngIf="!authService.isLoggedIn()">Signup</a>
-  <a routerLink="profile" *ngIf="!authService.isLoggedIn()">Profile</a>
   <a routerLink="signup" *ngIf="authService.isLoggedIn()" (click)="logout()">Logout</a>
 </div>
 

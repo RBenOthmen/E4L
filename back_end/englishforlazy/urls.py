@@ -22,6 +22,7 @@ import dashboard
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('dashboard/', include('dashboard.urls')),
+    path('core/', include('core.urls')),
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.jwt')),
     path('__debug__/', include(debug_toolbar.urls)),

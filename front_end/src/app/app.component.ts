@@ -9,7 +9,7 @@ import { AuthService } from './services/auth.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-
+  title = 'E4L';
   constructor(public authService :AuthService) {
 
   }

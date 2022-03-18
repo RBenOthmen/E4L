@@ -1,7 +1,16 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css");
 .form-control.ng-touched.ng-invalid {
   border:1px solid red;
 }
 
 .form-control.ng-touched.ng-valid {
   border:1px solid green;
+}
+
+.form_sign {
+  border-radius: 10px;
+  margin-top: 10px;
+  padding: 20px;
+  box-shadow: rgb(17, 12, 46, 0.15) 0px
+    48px 100px 0px;
 }

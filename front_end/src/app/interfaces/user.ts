@@ -11,5 +11,5 @@ export interface User {
     phone ? : string,
     birth_date? : Date,
     type ? : string,
-    formation ?: string
+    role ?: string
 }

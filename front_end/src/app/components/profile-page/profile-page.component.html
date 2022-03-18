@@ -1,34 +1,40 @@
-<div class="container">
-    
-    <h2 >Profile Settings</h2>
-        <div class="setting">
-        <ul class="nav nav-pills">
-            <li class="nav-item">
-                <a class="nav-link"  [class.active]="modeView == 'account'" (click)="modeView = 'account'">Account</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" [class.active]="modeView == 'photo'" (click)="modeView = 'photo'">Photo</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" [class.active]="modeView == 'languages'" (click)="modeView = 'languages'">Languages</a>
-            </li>
-        </ul>
-        
-        <div class="form">
-            <div [ngSwitch]="modeView">
-                <div *ngSwitchCase="'account'">
-                    <app-account-page></app-account-page>
+<div class="appcontainer">
+    <div class="profilecontainer">
+        <div class="header">
+            <div>
+                <img class="item__img" src="../../assets/images/user-icon.png" width="100" alt="">
+            </div>
+            <div class="sub-item">
+                <h2>{{ currentUser.first_name }}</h2>
+                <h2>{{ currentUser.last_name }}</h2>
+            </div>    
+        </div>
+        <div class="profileprogress">
+
+            <div class="progressitem">
+                <h2>A1</h2>
+                <div class="progress">
+                    <div class="progress-bar w-75" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+            </div>
+            <div class="progressitem">
+                <h2>A1</h2>
+                <div class="progress">
+                    <div class="progress-bar w-75" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
-                <div *ngSwitchCase="'photo'">Photo view</div>
-                <div *ngSwitchCase="'languages'">Languages view</div>
-                <div *ngSwitchDefault>Otherwise</div>
+            </div>
+            <div class="progressitem">
+                <h2>A1</h2>
+                <div class="progress">
+                    <div class="progress-bar w-75" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+            </div>
+            <div class="progressitem">
+                <h2>A1</h2>
+                <div class="progress">
+                    <div class="progress-bar w-75" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
             </div>
         </div>
-    
-        
-      </div>
-    
-        
+    </div>
 </div>
-
-

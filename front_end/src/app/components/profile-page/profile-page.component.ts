@@ -17,7 +17,22 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./profile-page.component.css']
 })
 export class ProfilePageComponent implements OnInit {
+  currentUser : User = {
+  }
+
+  constructor(public authService : AuthService) {
+  }
+
   ngOnInit(): void {
+    this.authService.getUserDetails()
+    .subscribe(
+      response => {
+        this.currentUser.email = response.email;
+        this.currentUser.username = response.username;
+        this.currentUser.first_name = response.first_name;
+        this.currentUser.last_name = response.last_name;
+      }
+    )
     
   }
   modeView ='account';

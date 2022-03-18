@@ -101,8 +101,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'englishforlazy',
         'HOST': 'localhost',
-        'USER': 'user_e4l',
-        'PASSWORD': '09/11/99'
+        'USER': 'root',
+        'PASSWORD': 'W@jdi1999'
     }
 }
 

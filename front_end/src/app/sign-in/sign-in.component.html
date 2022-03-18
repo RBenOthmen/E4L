@@ -1,7 +1,7 @@
 <div class="container">
-  <h2 class="title_sign">Signing In</h2>
+  
   <div class="form_sign">
-
+    <h2 class="title_sign">Signing In</h2>
     <form [formGroup]="loginForm" class="row g-3" (submit)="signIn()">
       <!--    Full Name-->
       <div class="form-group">
@@ -18,14 +18,16 @@
           is required</small>
       </div>
 
-      
-
       <small class="text-danger" *ngIf="invalidLogin">Incorrect username/password</small>
+
+      <small class="text-danger" *ngIf="serverOffline">Server offline, reconnecting ...</small>
 
       <div class="button_sign">
         <button pButton type="submit" [disabled]="!loginForm.valid">Log In</button>
       </div>
     </form>
+
+
 
     <br>
     <div class="button_sign">

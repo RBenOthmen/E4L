@@ -16,7 +16,9 @@ import { AppError } from '../exceptions/AppError';
 export class SignUpComponent implements OnInit {
   isToggled : boolean = false;
   registerForm!: FormGroup;
-  users!: User[];
+  showPassword : string = "password";
+  invalidSignup : boolean = false;
+  serverOffline : boolean = false;
 
   constructor(private userService: UserService,
     private authService : AuthService,
@@ -36,17 +38,11 @@ export class SignUpComponent implements OnInit {
       "password": new FormControl(null, [Validators.required, Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&\"\'()-_çà=]*')]),
       "birthday": new FormControl(null, [Validators.required, Validators.pattern('^(?:0[1-9]|[12]\d|3[01])([\/.-])(?:0[1-9]|1[012])\\1(?:19|20)\d\d$')]),
       "phone": new FormControl(null, [Validators.required, Validators.min(10000000), Validators.max(99999999)]),
-      "formation": new FormControl(null, [Validators.required, Validators.minLength(4)]),
+      
       "user" : new FormControl(null, Validators.required),
     })
   }
 
-  inputControl(name:string):string{
-    if(name.length < 3){
-      return ""
-    }
-    return ""
-  }
 
   // begin getters
   get first_name() {
@@ -77,8 +73,9 @@ export class SignUpComponent implements OnInit {
     return this.registerForm.get('phone');
   }
 
-  get formation(){
-    return this.registerForm.get('formation');
+
+  get passwordStatus(){
+    return this.registerForm.get('passwordStatus');
   }
 
   get user(){
@@ -86,17 +83,6 @@ export class SignUpComponent implements OnInit {
   }
   // end getters
 
-  isEmpty(word: any): boolean {
-    //console.log(word, "le type est", typeof word)
-    if (word.valueOf().length == 0) {
-      //console.log(word, " is empty")
-      return true;
-    } else {
-      //console.log(" length = ", word.valueOf().length)
-      //console.log(word.valueOf())
-      return false;
-    }
-  }
 
   // onToggle() {if (this.user?.value == 'teacher')
   //     this.isToggled = false;
@@ -104,9 +90,36 @@ export class SignUpComponent implements OnInit {
   //     this.isToggled = true;
   // }
 
+  togglePassword() {
+    if (this.showPassword == 'password')
+      this.showPassword = 'text';
+    else if (this.showPassword == 'text')
+    this.showPassword = 'password';
+  }
+
 
   register() {
-    let user : User = {
+    let user : User = this.getUser();
+
+    this.authService.signup(user).subscribe( {
+      next : response => {
+        this.registerForm.reset();
+        this.router.navigate(['/login']);
+      },
+        error : (err : AppError) => {
+         if (err instanceof BadInput){
+          console.log(err)
+          this.invalidSignup = true;
+         }
+         else {
+           this.serverOffline = true;
+         }
+       }
+      }); 
+  }
+
+  getUser() : User{
+    return  {
       first_name : this.first_name?.value,
       last_name : this.first_name?.value,
       email : this.email?.value,
@@ -115,21 +128,7 @@ export class SignUpComponent implements OnInit {
       phone : this.phone?.value,
       birth_date : this.birthday?.value,
       type : this.user?.value,
-      formation : this.formation?.value
     };
-
-    this.authService.signup(user).subscribe( {
-      next : response => {
-        this.router.navigate(['/login']);
-      },
-        error : (err : AppError) => {
-         if (err instanceof BadInput)
-           alert('bad input')
-         else throw err;
-       }
-      });
-    this.registerForm.reset();
-    this.router.navigate(['/']);
   }
 
 

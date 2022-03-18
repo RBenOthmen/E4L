@@ -1,7 +1,8 @@
-<div class="container">
-  <h2 class="title_sign">Creating an Account</h2>
-  <div class="form_sign">
 
+<div class="container">
+  
+  <div class="form_sign">
+    <h2 class="title_sign">Creating an Account</h2>
     <form [formGroup]="registerForm" class="row g-3" (submit)="register()">
       <!--    Full Name-->
       <div class="form-group">
@@ -23,9 +24,10 @@
       </div>
       <!--Password-->
       <div class="form-group">
-        <input placeholder="Password" formControlName="password" type="password" id="password" name="password"
+          <input placeholder="Password" formControlName="password" [type]="showPassword" id="password" name="password"
                class="form-control">
         <small *ngIf="password?.invalid && password?.touched" class="text-danger">Minimum eight characters, at least one uppercase letter, one lowercase letter and one number</small>
+        <p><input type="checkbox" id="passwordStatus" name="passwordStatus" (click)="togglePassword()"> Show Password</p>
       </div>
       <!--Birthday-->
       <div class="form-group">
@@ -51,6 +53,10 @@
           <label for="teacher"> Teacher</label>
         </div>
       </span>
+
+      <small class="text-danger" *ngIf="invalidSignup">This username or email is already used !</small>
+
+      <small class="text-danger" *ngIf="serverOffline">Server offline, reconnecting ...</small>
 
       <div class="button_sign">
         <button pButton >Create New Account</button>

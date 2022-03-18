@@ -12,7 +12,8 @@ from rest_framework.mixins import ListModelMixin, CreateModelMixin, RetrieveMode
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from rest_framework.decorators import api_view,action
 
-class EleveViewSet(CreateModelMixin, RetrieveModelMixin, UpdateModelMixin, GenericViewSet):
+#class EleveViewSet(CreateModelMixin, RetrieveModelMixin, UpdateModelMixin, GenericViewSet):
+class EleveViewSet(ModelViewSet):
     queryset = Eleve.objects.all()
     serializer_class = EleveSerializer
 

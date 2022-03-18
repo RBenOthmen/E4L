@@ -11,9 +11,8 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./sign-in.component.css']
 })
 export class SignInComponent implements OnInit {
-
   loginForm!: FormGroup;
-
+  serverOffline : boolean = false;
   invalidLogin : boolean = false;
 
   constructor(public authService : AuthService,
@@ -40,6 +39,7 @@ export class SignInComponent implements OnInit {
   }
 
 
+
   signIn() {
 
     let credentials = {
@@ -54,7 +54,9 @@ export class SignInComponent implements OnInit {
         ,error : (err : AppError) => {
           if (err instanceof Unauthorized)
           this.invalidLogin= true;
-          else throw err;
+          else {
+            this.serverOffline = true;
+          }
         }
        });
 

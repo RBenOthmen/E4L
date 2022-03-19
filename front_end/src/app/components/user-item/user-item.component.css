@@ -1,51 +1,27 @@
 
-   
-   .card{
-    background-color: #f4f3f3;
-    width: 300px;
-    /* height: 450px; */
-    text-align: center;
-    /* margin: 20%; */
-    border-radius: 10px;
-   }
-   
-   .card-background{
-    background: linear-gradient(to right, #009688, #4CAF50);
-    height: 120px;
-    width: 100%;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-   }
-   
-   .card-image{
-    border-radius: 50%;
-    width: 120px;
-    height: auto;
-    position: relative;
-    top: 50px;
-    border: 6px solid #f4f3f3;
-   }
-   
-   .card-info{
-    margin-top: 80px;
-    padding: 10px;
-   }
-   
-   .fab{
-    color: grey;
-    font-size: 24px;
-    margin: 15px;
-    cursor: pointer;
-   }
-   
-   .fab:hover{
-    color: #524b4b;
-   }
-   
-   h1{
-    color: #009688; 
-   }
-   
-   p{
-    color: grey;
-   }
+
+.profile {
+   text-align: center;
+   padding: 20px;
+   max-width: 200px;
+   box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+.profile_image {
+   max-width: 150px;
+   max-height: 150px;
+   object-fit: cover;
+   margin: 0 auto 20px auto;
+   border-radius: 50%;
+   display: block;
+}
+
+.profile_name {
+   font : 1.2em;
+   font-weight: bold;
+}
+
+.profile_email{
+   margin-bottom: 20px;
+}
+

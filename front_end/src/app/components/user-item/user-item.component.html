@@ -1,29 +1,8 @@
 
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
-integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
-
-<div class="card">
-    <div class="card-background">
-
-        <img class="item__img" src="../../assets/images/user-icon.png"  alt=""
-            class="card-image">
-
-    </div>
-    <div class="card-info">
-
-        <h1>{{teacher.first_name}} {{teacher.last_name}}</h1>
-        
-    </div>
-    <div class="card-social-icons">
-
-
-        <i class="fab fa-instagram"></i>
-        <i class="fab fa-youtube"></i>
-        <i class="fab fa-facebook-square"></i>
-
-    </div>
-</div>
-
-
-
+   <div class="profile">
+         <img src="../../assets/images/user-icon.png"  alt="" class="profile_image">
+         <div class="profile_name">{{teacher.first_name}} {{teacher.last_name}}</div>
+         <div class="profile_email">{{teacher.email}}</div>
+         <button class="btn btn-primary">View Profile</button>
+   </div>

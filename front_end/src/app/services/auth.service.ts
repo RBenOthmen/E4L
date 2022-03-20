@@ -24,7 +24,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AuthService {
-  
+
   // private _LoggedIn = new BehaviorSubject<boolean>(false);
   // LoggedIn = this._LoggedIn.asObservable();
 
@@ -67,19 +67,19 @@ export class AuthService {
       last_name : credentials.last_name,
       role : credentials.type == "teacher" ? 'T' : 'S'
     }
-    
+
     return this.http.post<User>(this.url + 'auth/users/' , user , httpOptions)
     .pipe(
       catchError(this.handleError),
       tap(response => {
-        
+
         credentials.user_id = response.id;
-        
+
         if(credentials.type == "student")
           this.createStudent(credentials)
         else if (credentials.type == "teacher")
           this.createTeacher(credentials)
-        
+
       })
   );
   }
@@ -130,12 +130,12 @@ export class AuthService {
       console.log('getUserDetails')
       console.log(token)
       console.log(response)
-     
+
     })*/
   }
 
-  
-  
+
+
 
   logout() {
     localStorage.removeItem('token');
@@ -156,13 +156,14 @@ export class AuthService {
   }
 
   private handleError(err : Response) {
+    console.log(err)
     if (err.status == 400) {
       console.log(err)
 
       console.log(err.json)
       console.log(err)
       return throwError (() => new BadInput(err));
-      
+
     }
 
     if (err.status == 404) {
@@ -172,7 +173,22 @@ export class AuthService {
     if (err.status == 401) {
       return throwError (() => new Unauthorized(err));
     }
-   
+
     return throwError(() => new AppError(err));
   }
+
+  updateUser(user : User):Observable<User>{
+    let token = localStorage.getItem('token');
+    console.log(token)
+    let authorization = {
+      headers: new HttpHeaders({
+        'Content-Type' : 'application/json',
+        'Authorization' : 'JWT '+token
+      }),
+    }
+
+    return this.http.patch<User>(this.url+"auth/users/me/", user, authorization).pipe(
+      catchError(this.handleError));
+  }
+
 }

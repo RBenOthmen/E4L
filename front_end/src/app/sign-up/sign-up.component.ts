@@ -35,10 +35,9 @@ export class SignUpComponent implements OnInit {
       "last_name": new FormControl(null, [Validators.required, Validators.minLength(3), Validators.pattern('([a-zA-Z ]+)')]),
       "username": new FormControl(null, [Validators.required, Validators.minLength(3), Validators.pattern('(^[a-zA-Z ]+[0-9]*)')]),
       "email": new FormControl(null, [Validators.required, Validators.email]),
-      "password": new FormControl(null, [Validators.required, Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&\"\'()-_çà=]*')]),
-      "birthday": new FormControl(null, [Validators.required, Validators.pattern('^(?:0[1-9]|[12]\d|3[01])([\/.-])(?:0[1-9]|1[012])\\1(?:19|20)\d\d$')]),
+      "password": new FormControl(null, [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')]),
+      "birthday": new FormControl(null, [Validators.required, Validators.pattern('[0-9]{4}-[0-9]{2}-[0-9]{2}')]),
       "phone": new FormControl(null, [Validators.required, Validators.min(10000000), Validators.max(99999999)]),
-      
       "user" : new FormControl(null, Validators.required),
     })
   }
@@ -115,7 +114,7 @@ export class SignUpComponent implements OnInit {
            this.serverOffline = true;
          }
        }
-      }); 
+      });
   }
 
   getUser() : User{

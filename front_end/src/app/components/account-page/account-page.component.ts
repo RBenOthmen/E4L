@@ -40,7 +40,7 @@ export class AccountPageComponent implements OnInit {
       "birthday": new FormControl(null, Validators.required),
       "phone": new FormControl(null, [Validators.required, Validators.min(10000000), Validators.max(99999999)]),
       "user": new FormControl(null, Validators.required),
-     
+
     });
     this.authService.getUserDetails()
     .subscribe(
@@ -69,29 +69,15 @@ export class AccountPageComponent implements OnInit {
 
   save() {
     let user : User = {
-      first_name : this.first_name?.value,
-      last_name : this.last_name?.value,
       email : this.email?.value,
-      password : this.currentPassword?.value,
-      username : this.username?.value,
-      phone : this.phone?.value,
-      birth_date : this.birthday?.value,
-      type : this.user?.value,
- 
     };
-
-    this.authService.signup(user).subscribe( {
+    this.authService.updateUser(user).subscribe({
       next : response => {
-         
       },
         error : (err : AppError) => {
-         if (err instanceof BadInput)
-           alert('bad input')
-         else throw err;
+          console.log(err)
        }
-      });
-    
-    
+    });
   }
 
   get first_name() {

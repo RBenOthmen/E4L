@@ -50,34 +50,84 @@ export class AccountPageComponent implements OnInit {
         this.currentUser.first_name = response.first_name;
         this.currentUser.last_name = response.last_name;
       }
-    )
-
-    // console.log(this.authService.currentUser.email)
+    );
   }
 
   isEmpty(word: any): boolean {
-    //console.log(word, "le type est", typeof word)
     if (word.valueOf().length == 0) {
-      //console.log(word, " is empty")
       return true;
     } else {
-      //console.log(" length = ", word.valueOf().length)
-      //console.log(word.valueOf())
       return false;
     }
   }
 
-  save() {
+  updatePassword() : void {
+
+    this.authService.changePassword({
+      current_password : this.currentPassword?.value,
+      new_password : this.newPassword?.value,
+    }).subscribe({
+      next : response => {
+        console.log("password success");
+      },
+        error : (err : AppError) => {
+          console.log(err);
+       }
+   });
+  }
+
+  updateUsername() : void {
+    
+    this.authService.changeUsername({
+      current_password : this.currentPassword?.value,
+      new_username : this.username?.value,
+    }).subscribe({
+      next : response => {
+        console.log("username success")
+      },
+        error : (err : AppError) => {
+          console.log(err)
+       }
+   });
+  }
+
+  updateUser() : void {
     let user : User = {
       email : this.email?.value,
     };
     this.authService.updateUser(user).subscribe({
       next : response => {
+        console.log("update success")
       },
         error : (err : AppError) => {
           console.log(err)
        }
     });
+  }
+
+  save() {
+
+    if (!!this.newPassword?.value) {
+      if (this.newPassword?.value == this.confirmPassword?.value) {
+        this.updatePassword()
+      }
+    }
+
+    if (this.username?.value != this.currentUser.username) {
+      if (!!this.currentPassword?.value) {
+        this.updateUsername()
+      }
+    }
+
+    if (this.email?.value != this.currentUser.email) {
+      if (!!this.currentPassword?.value) {
+        console.log(this.email?.value)
+        console.log(this.currentUser.email)
+        console.log(this.email?.value != this.currentUser.email)
+        this.updateUser()
+      }
+    }
+    
   }
 
   get first_name() {
@@ -97,7 +147,7 @@ export class AccountPageComponent implements OnInit {
   }
 
   get currentPassword() {
-    return this.profileForm.get('password');
+    return this.profileForm.get('currentPassword');
   }
 
   get newPassword() {

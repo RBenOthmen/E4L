@@ -30,6 +30,7 @@ import { PasswordComponent } from './formComponents/password/password.component'
 import { TeacherListComponent } from './components/teacher-list/teacher-list.component';
 
 import { UserItemComponent } from './components/user-item/user-item.component';
+import { TeacherProfileComponent } from './components/teacher-profile/teacher-profile.component';
 
 
 
@@ -53,6 +54,7 @@ import { UserItemComponent } from './components/user-item/user-item.component';
     PasswordComponent,
     UserItemComponent,
     TeacherListComponent,
+    TeacherProfileComponent,
   ],
   imports: [
     BrowserModule,

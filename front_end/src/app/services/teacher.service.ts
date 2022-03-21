@@ -27,6 +27,13 @@ export class TeacherService {
     private http : HttpClient
   ) { }
 
+  getTeacher(id : string) : Observable<Teacher>{
+    return this.http.get<Teacher>(this.urlUser + '/' + id ,httpOptions)
+    .pipe(
+      catchError(this.handleError)
+  );
+  }
+
   getTeachers() : Observable<Teacher[]>{
     return this.http.get<Teacher[]>(this.urlUser,httpOptions)
     .pipe(

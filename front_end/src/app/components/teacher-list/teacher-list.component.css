@@ -7,7 +7,7 @@
 @media(max-width: 500px) {
     .list-container {
         grid-template-columns: 1fr;
-        justify-content: center;
+        
     }
 }
 

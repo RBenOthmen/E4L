@@ -1,6 +1,8 @@
 import { TeacherService } from './../../services/teacher.service';
 import { Component, OnInit } from '@angular/core';
 import { Teacher } from 'src/app/interfaces/Teacher';
+import { AppError } from 'src/app/exceptions/AppError';
+import { NotFoundError } from 'src/app/exceptions/not-found-error';
 
 @Component({
   selector: 'app-teacher-list',
@@ -14,10 +16,14 @@ export class TeacherListComponent implements OnInit {
   constructor(private teacherService : TeacherService) { }
 
   ngOnInit(): void {
-    this.teacherService.getTeachers().subscribe(result => {
-      this.teachers = result
-      console.log(this.teachers)})
-    
+    this.teacherService.getTeachers().subscribe({
+      next: result => this.teachers = result
+      ,error : (err : AppError) => {
+        if (err instanceof NotFoundError){
+         console.log(err)
+        }
+      }
+    });
   }
 
 }

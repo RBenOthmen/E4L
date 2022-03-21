@@ -14,7 +14,7 @@ class User(AbstractUser):
         (TASKMANAGER_CHOICE, 'TaskManager'),
     ]
     email = models.EmailField(unique=True)
-    # phone = models.CharField(max_length=255)
-    # birth_date = models.DateField(null=True, blank=True)
+    phone = models.CharField(max_length=255)
+    birth_date = models.DateField()
     role = models.CharField(
         max_length=2, choices=ROLE_CHOICES)

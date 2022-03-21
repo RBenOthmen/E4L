@@ -16,7 +16,7 @@
     </div>-->
 
     <div class="form-group">
-      <input aria-label="" [value]="authService.currentUser.username" placeholder="Username" formControlName="username"
+      <input aria-label="" value="{{authService.currentUser.username}}" placeholder="Username" formControlName="username"
         type="text" id="username" name="username" class="form-control">
       <small *ngIf="username!.invalid && username?.touched" class="text-danger">username is required</small>
       <small *ngIf="isEmpty(username!)"></small>
@@ -24,7 +24,7 @@
 
     <!--    Email-->
     <div class="form-group">
-      <input placeholder="Email" [value]="authService.currentUser.email" formControlName="email" type="text" id="email"
+      <input placeholder="Email" value="{{authService.currentUser.email}}" formControlName="email" type="text" id="email"
         name="email" class="form-control">
       <small *ngIf="email?.invalid && email?.touched" class="text-danger">email is
         required</small>

@@ -1,5 +1,16 @@
 
+.right {
+  margin-left: auto;
+}
 
+.items{
+  display: flex;
+}
+
+.navbar-nav {
+  display: flex;
+  justify-content: space-between;
+}
 @import 'https://fonts.googleapis.com/css?family=Raleway';
 
 html, body

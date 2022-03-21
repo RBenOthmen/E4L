@@ -3,8 +3,8 @@ from django.db import models
 
 
 class Eleve (models.Model):
-    phone = models.CharField(max_length=255)
-    birth_date = models.DateField(null=True, blank=True)
+    #phone = models.CharField(max_length=255)
+    #birth_date = models.DateField(null=True, blank=True)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     #lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, related_name='eleves', null=True)
 
@@ -24,8 +24,8 @@ class Lesson (models.Model):
         max_length=2, choices=CATEGORY_CHOICES)
 
 class Professeur (models.Model):
-    phone = models.CharField(max_length=255)
-    birth_date = models.DateField(null=True, blank=True)
+    #phone = models.CharField(max_length=255)
+    #birth_date = models.DateField(null=True, blank=True)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     
 class Progress (models.Model):

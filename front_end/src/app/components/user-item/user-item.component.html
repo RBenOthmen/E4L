@@ -4,5 +4,9 @@
          <img src="../../assets/images/user-icon.png"  alt="" class="profile_image">
          <div class="profile_name">{{teacher.first_name}} {{teacher.last_name}}</div>
          <div class="profile_email">{{teacher.email}}</div>
-         <button class="btn btn-primary">View Profile</button>
+         <a [routerLink]="['/teachers',teacher.id]">
+               <button class="btn btn-primary">
+                     View Profile
+            </button>
+            </a>
    </div>

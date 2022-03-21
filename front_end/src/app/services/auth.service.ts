@@ -65,52 +65,39 @@ export class AuthService {
       email : credentials.email,
       first_name : credentials.first_name,
       last_name : credentials.last_name,
-      role : credentials.type == "teacher" ? 'T' : 'S'
-    }
+      role : credentials.type == "teacher" ? 'T' : 'S',
+      phone : credentials.phone,
+      birth_date : credentials.birth_date,
+    };
 
     return this.http.post<User>(this.url + 'auth/users/' , user , httpOptions)
     .pipe(
       catchError(this.handleError),
       tap(response => {
-
-        credentials.user_id = response.id;
-
-        if(credentials.type == "student")
-          this.createStudent(credentials)
-        else if (credentials.type == "teacher")
-          this.createTeacher(credentials)
+        if (credentials.type == "teacher") {
+          credentials.user_id = response.id;
+          // this.createTeacher(credentials)
+        }
+          
 
       })
   );
   }
 
-  createStudent(credentials : User) {
-    let student : Student = {
-      user_id : credentials.user_id,
-      phone : credentials.phone,
-      birth_date : credentials.birth_date,
-    }
-    this.http.post<User>(this.url + 'dashboard/eleves/' , student , httpOptions).subscribe(
-      response => console.log(response)
-    )
-  }
+
 
   createTeacher(credentials : User) {
     let teacher : Teacher = {
       user_id : credentials.user_id,
-      phone : credentials.phone,
-      birth_date : credentials.birth_date,
     }
-    console.log(teacher)
     this.http.post<User>(this.url + 'dashboard/professeurs/' , teacher , httpOptions).subscribe(
-      response => console.log(response)
+      
     )
   }
 
 
   getUserDetails() : Observable<User> {
     let token = localStorage.getItem('token');
-    console.log(token)
     let Authorization = {
       headers: new HttpHeaders({
         'Content-Type' : 'application/json',
@@ -123,15 +110,13 @@ export class AuthService {
       tap( response => {
         this.currentUser.email = response.email;
         this.currentUser.username = response.username;
+        this.currentUser.first_name = response.first_name;
+        this.currentUser.last_name = response.last_name;
+        this.currentUser.phone = response.phone;
+        this.currentUser.birth_date = response.birth_date;
       }
       )
-    )
-    /*.subscribe(response => {
-      console.log('getUserDetails')
-      console.log(token)
-      console.log(response)
-
-    })*/
+    );
   }
 
 
@@ -158,12 +143,7 @@ export class AuthService {
   private handleError(err : Response) {
     console.log(err)
     if (err.status == 400) {
-      console.log(err)
-
-      console.log(err.json)
-      console.log(err)
       return throwError (() => new BadInput(err));
-
     }
 
     if (err.status == 404) {
@@ -179,15 +159,41 @@ export class AuthService {
 
   updateUser(user : User):Observable<User>{
     let token = localStorage.getItem('token');
-    console.log(token)
     let authorization = {
       headers: new HttpHeaders({
         'Content-Type' : 'application/json',
         'Authorization' : 'JWT '+token
       }),
     }
+    console.log(user)
 
-    return this.http.patch<User>(this.url+"auth/users/me/", user, authorization).pipe(
+    return this.http.put<User>(this.url+"auth/users/me/", user, authorization).pipe(
+      catchError(this.handleError));
+  }
+
+  changePassword(user : any):Observable<User>{
+    let token = localStorage.getItem('token');
+    let authorization = {
+      headers: new HttpHeaders({
+        'Content-Type' : 'application/json',
+        'Authorization' : 'JWT '+token
+      }),
+    }
+    console.log(user)
+    return this.http.post<User>(this.url+"auth/users/set_password/", user, authorization).pipe(
+      catchError(this.handleError));
+  }
+
+  changeUsername(user : any):Observable<User>{
+    let token = localStorage.getItem('token');
+    let authorization = {
+      headers: new HttpHeaders({
+        'Content-Type' : 'application/json',
+        'Authorization' : 'JWT '+token
+      }),
+    }
+    console.log(user)
+    return this.http.post<User>(this.url+"auth/users/set_username/", user, authorization).pipe(
       catchError(this.handleError));
   }
 

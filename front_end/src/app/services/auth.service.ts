@@ -157,7 +157,7 @@ export class AuthService {
     return throwError(() => new AppError(err));
   }
 
-  updateUser(user : User):Observable<User>{
+  updateUser(data : any):Observable<User>{
     let token = localStorage.getItem('token');
     let authorization = {
       headers: new HttpHeaders({
@@ -165,9 +165,9 @@ export class AuthService {
         'Authorization' : 'JWT '+token
       }),
     }
-    console.log(user)
+    console.log(data)
 
-    return this.http.put<User>(this.url+"auth/users/me/", user, authorization).pipe(
+    return this.http.patch<User>(this.url+"auth/users/me/", data, authorization).pipe(
       catchError(this.handleError));
   }
 

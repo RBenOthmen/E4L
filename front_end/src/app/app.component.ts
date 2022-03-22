@@ -1,4 +1,5 @@
-import {Component} from '@angular/core';
+import { LoaderService } from './services/loader.service';
+import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import { AuthService } from './services/auth.service';
 
@@ -8,10 +9,17 @@ import { AuthService } from './services/auth.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   title = 'E4L';
-  constructor(public authService :AuthService) {
+  // loading : boolean =false;
+  showLoader$ = this.loaderService.loadingAction$;
+  constructor(public authService :AuthService,
+    private loaderService : LoaderService) {
 
+  }
+
+  ngOnInit(): void {
+   
   }
 
 }

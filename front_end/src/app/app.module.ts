@@ -31,6 +31,7 @@ import { TeacherListComponent } from './components/teacher-list/teacher-list.com
 
 import { UserItemComponent } from './components/user-item/user-item.component';
 import { TeacherProfileComponent } from './components/teacher-profile/teacher-profile.component';
+import { SpinnerComponent } from './components/spinner/spinner.component';
 
 
 
@@ -55,6 +56,7 @@ import { TeacherProfileComponent } from './components/teacher-profile/teacher-pr
     UserItemComponent,
     TeacherListComponent,
     TeacherProfileComponent,
+    SpinnerComponent,
   ],
   imports: [
     BrowserModule,

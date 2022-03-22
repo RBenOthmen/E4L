@@ -12,10 +12,11 @@
 
       <!--Password-->
       <div class="form-group">
-        <input placeholder="Password" formControlName="password" type="password" id="password" name="password"
+        <input placeholder="Password" formControlName="password" [type]="showPassword" id="password" name="password"
                class="form-control">
         <small *ngIf="password?.invalid && password?.touched" class="text-danger">password
           is required</small>
+          <p><input type="checkbox" id="passwordStatus" name="passwordStatus" (click)="togglePassword()"> Show Password</p>
       </div>
 
       <small class="text-danger" *ngIf="invalidLogin">Incorrect username/password</small>
@@ -23,7 +24,13 @@
       <small class="text-danger" *ngIf="serverOffline">Server offline, reconnecting ...</small>
 
       <div class="button_sign">
-        <button pButton type="submit" [disabled]="!loginForm.valid">Log In</button>
+        <button pButton type="submit" [disabled]="!loginForm.valid">
+          Log In
+          <!-- <div *ngIf="!(showLoader$ | async)">Log In</div>
+          <div *ngIf="showLoader$ | async as showLoader">
+            <app-spinner *ngIf="showLoader"></app-spinner>
+          </div> -->
+        </button>
       </div>
     </form>
 

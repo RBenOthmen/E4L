@@ -12,7 +12,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./account-page.component.css']
 })
 export class AccountPageComponent implements OnInit {
-
+  showPassword : string = "password";
   isToggled : boolean = false;
   profileForm!: FormGroup;
   users!: User[];
@@ -49,9 +49,15 @@ export class AccountPageComponent implements OnInit {
         this.currentUser.username = response.username;
         this.currentUser.first_name = response.first_name;
         this.currentUser.last_name = response.last_name;
+        this.currentUser.password = response.password;
       }
     );
+    console.log(this.authService.currentUser.first_name)
+    document.getElementById('first_name')?.setAttribute(<string>this.authService.currentUser.first_name, '');
+    // document.getElementById("first_name").innerHTML = <string>this.authService.currentUser.first_name;
   }
+
+
 
   isEmpty(word: any): boolean {
     if (word.valueOf().length == 0) {
@@ -91,11 +97,15 @@ export class AccountPageComponent implements OnInit {
    });
   }
 
-  updateUser() : void {
+  updateUser(data : any) : void {
     let user : User = {
+      first_name : this.first_name?.value,
+      last_name : this.last_name?.value,
       email : this.email?.value,
+      birth_date : this.birthday?.value,
+      phone : this.email?.value,
     };
-    this.authService.updateUser(user).subscribe({
+    this.authService.updateUser(data).subscribe({
       next : response => {
         console.log("update success")
       },
@@ -106,6 +116,8 @@ export class AccountPageComponent implements OnInit {
   }
 
   save() {
+    // document.getElementById("first_name").innerHTML = <string>this.authService.currentUser.first_name;
+    console.log(this.authService.currentUser.first_name)
 
     if (!!this.newPassword?.value) {
       if (this.newPassword?.value == this.confirmPassword?.value) {
@@ -120,15 +132,41 @@ export class AccountPageComponent implements OnInit {
     }
 
     if (this.email?.value != this.currentUser.email) {
-      if (!!this.currentPassword?.value) {
-        console.log(this.email?.value)
-        console.log(this.currentUser.email)
-        console.log(this.email?.value != this.currentUser.email)
-        this.updateUser()
-      }
+      this.updateUser({email : this.email?.value});
     }
+
+    if (this.first_name?.value !== this.currentUser.first_name) {
+      this.updateUser({first_name : this.first_name?.value});
+    }
+
+    if (this.last_name?.value !== this.currentUser.last_name) {
+      this.updateUser({last_name : this.last_name?.value});
+    }
+
+    if (this.phone?.value !== this.currentUser.phone) {
+      this.updateUser({phone : this.phone?.value});
+    }
+
+    if (this.birthday?.value !== this.currentUser.birth_date) {
+      this.updateUser({birth_date : this.birthday?.value});
+    }
+
+    // if (this.email?.value !== this.currentUser.email ||
+    //   this.first_name?.value !== this.currentUser.first_name ||
+    //   this.last_name?.value !== this.currentUser.last_name ||
+    //   this.phone?.value !== this.currentUser.phone ||
+    //   this.birthday?.value !== this.currentUser.birth_date) {
+    //   if (!!this.currentPassword?.value) {
+    //     console.log(this.email?.value)
+    //     console.log(this.currentUser.email)
+    //     console.log(this.email?.value != this.currentUser.email)
+    //     this.updateUser()
+    //   }
+    // }
     
   }
+
+  
 
   get first_name() {
     return this.profileForm.get('first_name');
@@ -171,14 +209,15 @@ export class AccountPageComponent implements OnInit {
     return this.profileForm.get('user');
   }
 
+  // updateName() {
+  //   this.first_name.setValue('Nancy');
+  // }
 
-
-  onToggle() {
-    if (this.user?.value == 'teacher')
-      this.isToggled = false;
-    else if (this.user?.value == 'student')
-      this.isToggled = true;
-
+  togglePassword() {
+    if (this.showPassword == 'password')
+      this.showPassword = 'text';
+    else if (this.showPassword == 'text')
+    this.showPassword = 'password';
   }
 
 }

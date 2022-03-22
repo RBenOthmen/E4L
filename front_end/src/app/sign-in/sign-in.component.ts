@@ -1,3 +1,4 @@
+import { LoaderService } from './../services/loader.service';
 import { Unauthorized } from './../exceptions/Unauthorized';
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
@@ -11,12 +12,15 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./sign-in.component.css']
 })
 export class SignInComponent implements OnInit {
+  showPassword : string = "password";
   loginForm!: FormGroup;
   serverOffline : boolean = false;
   invalidLogin : boolean = false;
+  showLoader$ = this.loaderService.loadingAction$;
 
   constructor(public authService : AuthService,
-    private router :Router) {
+    private router :Router,
+    private loaderService : LoaderService) {
   }
 
   goToSignup() {
@@ -41,7 +45,7 @@ export class SignInComponent implements OnInit {
 
 
   signIn() {
-
+    // this.loaderService.showLoader();
     let credentials = {
       username : this.loginForm.get('username')?.value,
       password : this.loginForm.get('password')?.value
@@ -49,12 +53,14 @@ export class SignInComponent implements OnInit {
     this.authService.login(credentials)
       .subscribe({
         next : response => {
+          
           this.router.navigate(['/']);
         }
         ,error : (err : AppError) => {
-          if (err instanceof Unauthorized)
+          if (err instanceof Unauthorized) {
+          // this.loaderService.hideLoader();
           this.invalidLogin= true;
-          else {
+          } else {
             this.serverOffline = true;
           }
         }
@@ -64,7 +70,12 @@ export class SignInComponent implements OnInit {
   }
 
 
-
+  togglePassword() {
+    if (this.showPassword == 'password')
+      this.showPassword = 'text';
+    else if (this.showPassword == 'text')
+    this.showPassword = 'password';
+  }
 
 
 }

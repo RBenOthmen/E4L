@@ -1,3 +1,4 @@
+import { LoaderService } from './../services/loader.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -7,10 +8,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
-  constructor(private router:Router) { }
+  loading : boolean =true;
+  constructor(private router:Router,
+    private loaderService : LoaderService) { }
 
   ngOnInit(): void {
+
+    // this.loaderService.hideLoader();
   }
 
   goToSignup() {

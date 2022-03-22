@@ -1,3 +1,4 @@
+import { SpinnerComponent } from './components/spinner/spinner.component';
 import { ProfilePageComponent } from './components/profile-page/profile-page.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import {NgModule} from '@angular/core';
@@ -21,6 +22,7 @@ const routes: Routes = [
   {path: 'settings', component: AccountPageComponent},
   {path: 'teachers', component: TeacherListComponent},
   {path: 'teachers/:id', component: TeacherProfileComponent},
+  {path: 'spinner', component: SpinnerComponent},
 ];
 
 @NgModule({

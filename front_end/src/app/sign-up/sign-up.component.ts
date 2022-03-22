@@ -15,8 +15,8 @@ import { AppError } from '../exceptions/AppError';
 })
 export class SignUpComponent implements OnInit {
   isToggled : boolean = false;
-  registerForm!: FormGroup;
   showPassword : string = "password";
+  registerForm!: FormGroup;
   invalidSignup : boolean = false;
   serverOffline : boolean = false;
 

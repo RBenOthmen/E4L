@@ -6,14 +6,14 @@
 
     <div class="form-group">
       <div>First name :</div>
-      <input aria-label=""  placeholder="First name" formControlName="first_name" type="text" id="first_name" name="first_name" class="form-control">
+      <input aria-label="" [value]="currentUser.first_name" placeholder="First name" formControlName="first_name" type="text" id="first_name" name="first_name" class="form-control">
       <small *ngIf="first_name!.invalid && first_name?.touched" class="text-danger">first name is required</small>
       <small *ngIf="isEmpty(first_name!)"></small>
     </div>
 
     <div class="form-group">
       <div>Last name :</div>
-      <input aria-label="" value="{{authService.currentUser.last_name}}" placeholder="Last name" formControlName="last_name" type="text" id="last_name" name="last_name" class="form-control">
+      <input aria-label="" [value]="currentUser.last_name" placeholder="Last name" formControlName="last_name" type="text" id="last_name" name="last_name" class="form-control">
       <small *ngIf="last_name!.invalid && last_name?.touched" class="text-danger">last name is required</small>
       <small *ngIf="isEmpty(last_name!)"></small>
     </div>
@@ -29,7 +29,7 @@
     <!--    Email-->
     <div class="form-group">
       <div>Email :</div>
-      <input placeholder="Email" value="{{authService.currentUser.email}}" formControlName="email" type="text" id="email"
+      <input placeholder="Email" [value]="currentUser.email" formControlName="email" type="text" id="email"
         name="email" class="form-control">
       <small *ngIf="email?.invalid && email?.touched" class="text-danger">email is
         required</small>
@@ -37,7 +37,7 @@
 
     <div class="form-group">
       <div>Birthday :</div>
-      <input placeholder="Birthday" value="{{authService.currentUser.birth_date}}" formControlName="birthday" type="date" id="birthday" name="birthday"
+      <input placeholder="Birthday" [value]="currentUser.birth_date" formControlName="birthday" type="date" id="birthday" name="birthday"
              class="form-control">
       <small *ngIf="birthday?.invalid && birthday?.touched" class="text-danger">birthday is
         required</small>
@@ -46,7 +46,7 @@
 
     <div class="form-group">
       <div>Phone number :</div>
-      <input placeholder="Phone number" value="{{authService.currentUser.phone}}" formControlName="phone" type="number" id="phone" name="phone"
+      <input placeholder="Phone number" [value]="currentUser.phone" formControlName="phone" type="number" id="phone" name="phone"
              class="form-control">
       <small *ngIf="phone?.invalid && phone?.touched" class="text-danger">phone is
         required</small>
@@ -55,11 +55,13 @@
 
     <div class="form-group">
       <div>Current password :</div>
-      <input placeholder="Current Password" formControlName="currentPassword" [type]="showPassword" id="currentPassword"
+      <input value="" placeholder="Current Password" formControlName="currentPassword" [type]="showPassword" id="currentPassword"
         name="currentPassword" class="form-control">
       <small *ngIf="currentPassword?.invalid && currentPassword?.touched" class="text-danger">Current password
         is required</small>
     </div>
+
+    <div><input type="checkbox" id="passwordStatus" name="passwordStatus" (click)="togglePassword()"> Show Password</div>
 
     <div class="form-group">
       <div>New password :</div>
@@ -76,8 +78,6 @@
       <small *ngIf="confirmPassword?.invalid && confirmPassword?.touched" class="text-danger">password
         is required</small>
     </div>
-
-    <div><input type="checkbox" id="passwordStatus" name="passwordStatus" (click)="togglePassword()"> Show Password</div>
 
     <div>
       <button class="btn btn-success" (click)="save()">Save</button>

@@ -50,6 +50,8 @@ export class AccountPageComponent implements OnInit {
         this.currentUser.first_name = response.first_name;
         this.currentUser.last_name = response.last_name;
         this.currentUser.password = response.password;
+        this.currentUser.birth_date = response.birth_date;
+        this.currentUser.phone = response.phone;
       }
     );
     console.log(this.authService.currentUser.first_name)
@@ -83,7 +85,7 @@ export class AccountPageComponent implements OnInit {
   }
 
   updateUsername() : void {
-    
+    console.log("username value" + this.username?.value)
     this.authService.changeUsername({
       current_password : this.currentPassword?.value,
       new_username : this.username?.value,
@@ -163,10 +165,10 @@ export class AccountPageComponent implements OnInit {
     //     this.updateUser()
     //   }
     // }
-    
+
   }
 
-  
+
 
   get first_name() {
     return this.profileForm.get('first_name');

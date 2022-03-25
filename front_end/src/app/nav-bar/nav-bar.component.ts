@@ -21,6 +21,7 @@ export class NavBarComponent implements OnInit {
       let route : string | null = params.get('id');
       console.log(route)
     });*/
+    
   }
 
   logout() {

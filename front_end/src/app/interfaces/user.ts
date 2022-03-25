@@ -7,6 +7,7 @@ export interface User {
   username ?: string,
   email ?: string,
   refresh ?: string,
+  token ?:string,
     access ?:string
     phone ? : string,
     birth_date? : Date,

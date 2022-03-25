@@ -165,9 +165,17 @@ SIMPLE_JWT = {
 }
 
 DJOSER = {
+    #"SEND_ACTIVATION_EMAIL": True, # create si is_active = true si is_active = false 
+    #"ACTIVATION_URL": "activate/{uid}/{token}", 
     'SERIALIZERS' : {
         'user_create' : 'core.serializers.UserCreateSerializer',
         'current_user' : 'core.serializers.UserSerializer'
     }
 }
 
+# EMAIL_BACKEND = "django.core.mail.backends.smtp.EamilBackend"
+# EMAIL_HOST = 'localhost'
+# EMAIL_HOST_USER = ''
+# EMAIL_HOST_PASSWORD = ''
+# EMAIL_PORT = 2525
+# DEFAULT_FROM_EMAIL = 'wajdibejaoui26@gmail.com'

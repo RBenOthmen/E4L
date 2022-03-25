@@ -4,6 +4,17 @@
   <div class="form_sign">
     <h2 class="title_sign">Creating an Account</h2>
     <form [formGroup]="registerForm" class="row g-3" (submit)="register()">
+      <span >
+        <div>
+          <input type="radio" id="student" name="user" value="student" formControlName="user" checked>
+          <label for="student"> Student</label>
+        </div>
+      
+        <div>
+          <input type="radio" id="teacher" name="user" value="teacher" formControlName="user">
+          <label for="teacher"> Teacher</label>
+        </div>
+      </span>
       <!--    Full Name-->
       <div class="form-group">
         <input aria-label="" placeholder="First name" formControlName="first_name" type="text" id="first_name" name="first_name" class="form-control">
@@ -42,17 +53,6 @@
         <small *ngIf="phone?.invalid && phone?.touched" class="text-danger">Enter a valid phone number</small>
       </div>
 
-      <span >
-        <div>
-          <input type="radio" id="student" name="user" value="student" formControlName="user" checked>
-          <label for="student"> Student</label>
-        </div>
-
-        <div>
-          <input type="radio" id="teacher" name="user" value="teacher" formControlName="user">
-          <label for="teacher"> Teacher</label>
-        </div>
-      </span>
 
       <small class="text-danger" *ngIf="invalidSignup">This username or email is already used !</small>
 

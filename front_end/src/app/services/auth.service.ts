@@ -74,6 +74,8 @@ export class AuthService {
     .pipe(
       catchError(this.handleError),
       tap(response => {
+        console.log(response)
+        console.log(response.access)
         if (credentials.type == "teacher") {
           credentials.user_id = response.id;
           // this.createTeacher(credentials)

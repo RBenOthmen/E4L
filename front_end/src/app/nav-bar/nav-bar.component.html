@@ -103,20 +103,29 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <!-- Home -->
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" routerLink="/">Home</a>
+          <a class="nav-link active" aria-current="page" routerLink="/">
+            <i class="fa fa-home fa-2x" aria-hidden="true"></i>
+          </a>
         </li>
+        <!-- Dashboard -->
         <li class="nav-item">
-          <a class="nav-link" routerLink="/dashboard">Dashboard</a>
+          <a class="nav-link" routerLink="/dashboard">
+            <i class="fa fa-graduation-cap fa-2x" aria-hidden="true"></i>
+          </a>
         </li>
+        <!-- Teachers -->
         <li class="nav-item">
-          <a class="nav-link" routerLink="teachers">Teachers</a>
+          <a class="nav-link" routerLink="teachers">
+            <i class="fa fa-users fa-2x" aria-hidden="true"></i>
+          </a>
         </li>
       </ul>
       <ul class="navbar-nav">
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Settings
+          <a class="nav-link dropdown" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fa fa-solid fa-align-justify fa-2x"></i>
           </a>
           <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" routerLink="profile"><i class="bi bi-person"></i> Profile</a></li>
@@ -126,7 +135,7 @@
           </ul>
         </li>
       </ul>
-      
+
     </div>
   </div>
 </nav>

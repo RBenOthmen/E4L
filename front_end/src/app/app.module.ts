@@ -32,14 +32,11 @@ import { UserItemComponent } from './components/user-item/user-item.component';
 import { TeacherProfileComponent } from './components/teacher-profile/teacher-profile.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 
-
-
 import {CheckboxModule} from 'primeng/checkbox';
 import {ButtonModule} from 'primeng/button';
 import {PasswordModule} from 'primeng/password';
 import {ToastModule} from 'primeng/toast';
 import { ActivateEmailComponent } from './components/activate-email/activate-email.component';
-
 
 
 @NgModule({

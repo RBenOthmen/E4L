@@ -8,11 +8,10 @@ import {SignUpComponent} from './sign-up/sign-up.component';
 import {SignInComponent} from './sign-in/sign-in.component';
 import {HomeComponent} from './home/home.component';
 import {NavBarComponent} from './nav-bar/nav-bar.component';
-import {ButtonModule} from 'primeng/button';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {InputTextModule} from "primeng/inputtext";
 import {MenubarModule} from 'primeng/menubar';
-import {MenuItem} from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import {User} from "./models/User";
 import {UserService} from "./services/user.service";
 import { FooterComponent } from './footer/footer.component';
@@ -35,6 +34,11 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
 
 
 
+import {CheckboxModule} from 'primeng/checkbox';
+import {ButtonModule} from 'primeng/button';
+import {PasswordModule} from 'primeng/password';
+import {ToastModule} from 'primeng/toast';
+import { ActivateEmailComponent } from './components/activate-email/activate-email.component';
 
 
 
@@ -57,6 +61,7 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
     TeacherListComponent,
     TeacherProfileComponent,
     SpinnerComponent,
+    ActivateEmailComponent,
   ],
   imports: [
     BrowserModule,
@@ -72,8 +77,14 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
     MatSliderModule,
     NoopAnimationsModule,
     MatIconModule,
+    PasswordModule,
+    CheckboxModule,
+    ToastModule,
   ],
-  providers: [UserService],
+  providers: [
+    UserService,
+    MessageService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from datetime import timedelta
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -165,17 +166,38 @@ SIMPLE_JWT = {
 }
 
 DJOSER = {
-    #"SEND_ACTIVATION_EMAIL": True, # create si is_active = true si is_active = false 
-    #"ACTIVATION_URL": "activate/{uid}/{token}", 
+    "SEND_ACTIVATION_EMAIL": True, # create si is_active = true si is_active = false 
+    "ACTIVATION_URL": "activate/{uid}/{token}",
+    'EMAIL': {
+            'activation': 'core.email.ActivationEmail'
+    },
     'SERIALIZERS' : {
         'user_create' : 'core.serializers.UserCreateSerializer',
         'current_user' : 'core.serializers.UserSerializer'
     }
 }
 
-# EMAIL_BACKEND = "django.core.mail.backends.smtp.EamilBackend"
-# EMAIL_HOST = 'localhost'
-# EMAIL_HOST_USER = ''
-# EMAIL_HOST_PASSWORD = ''
-# EMAIL_PORT = 2525
-# DEFAULT_FROM_EMAIL = 'wajdibejaoui26@gmail.com'
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = 'smtp.gmail.com' #gmail host
+EMAIL_HOST_USER = 'testenglishforlazy@gmail.com'
+EMAIL_HOST_PASSWORD = 'backendtest'
+EMAIL_PORT = 587 # gmail port
+DEFAULT_FROM_EMAIL = 'wajdibejaoui50@gmail.com'
+EMAIL_USE_TLS = True
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]

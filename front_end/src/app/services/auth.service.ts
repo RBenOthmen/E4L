@@ -1,3 +1,6 @@
+import { Forbidden } from './../exceptions/Forbidden';
+import { NoContent } from './../exceptions/NoContent';
+import { Activate } from './../interfaces/Activate';
 import { Teacher } from './../interfaces/Teacher';
 import { Student } from './../interfaces/Student';
 import { JwtHelperService } from "@auth0/angular-jwt";
@@ -11,6 +14,7 @@ import { NotFoundError } from '../exceptions/not-found-error';
 import { AppError } from '../exceptions/AppError';
 import { Router } from '@angular/router';
 import { Unauthorized } from '../exceptions/Unauthorized';
+
 
 
 
@@ -86,6 +90,14 @@ export class AuthService {
   );
   }
 
+  // return either 204 no content || 400 bad request || 403 forbidden
+  activateAccount(uid : string , token : string) : Observable<Activate> {
+    return this.http.post<Activate>(this.url + 'auth/users/activation/' , {uid : uid , token : token} , httpOptions)
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+
 
 
   createTeacher(credentials : User) {
@@ -142,23 +154,7 @@ export class AuthService {
     return !isExpired;
   }
 
-  private handleError(err : Response) {
-    console.log(err)
-    if (err.status == 400) {
-      return throwError (() => new BadInput(err));
-    }
-
-    if (err.status == 404) {
-      return throwError (() => new NotFoundError(err));
-    }
-
-    if (err.status == 401) {
-      return throwError (() => new Unauthorized(err));
-    }
-
-    return throwError(() => new AppError(err));
-  }
-
+  
   updateUser(data : any):Observable<User>{
     let token = localStorage.getItem('token');
     let authorization = {
@@ -171,7 +167,7 @@ export class AuthService {
 
     return this.http.patch<User>(this.url+"auth/users/me/", data, authorization).pipe(
       catchError(this.handleError));
-  }
+    }
 
   changePassword(user : any):Observable<User>{
     let token = localStorage.getItem('token');
@@ -184,8 +180,8 @@ export class AuthService {
     console.log(user)
     return this.http.post<User>(this.url+"auth/users/set_password/", user, authorization).pipe(
       catchError(this.handleError));
-  }
-
+    }
+    
   changeUsername(user : any):Observable<User>{
     let token = localStorage.getItem('token');
     let authorization = {
@@ -199,4 +195,28 @@ export class AuthService {
       catchError(this.handleError));
   }
 
+  private handleError(err : Response) {
+    console.log(err)
+    if (err.status == 400) {
+      return throwError (() => new BadInput(err));
+    }
+  
+    if (err.status == 404) {
+      return throwError (() => new NotFoundError(err));
+    }
+  
+    if (err.status == 401) {
+      return throwError (() => new Unauthorized(err));
+    }
+
+    if (err.status == 204) {
+      return throwError (() => new NoContent(err));
+    }
+
+    if (err.status == 403) {
+      return throwError (() => new Forbidden(err));
+    }
+  
+    return throwError(() => new AppError(err));
+  }
 }

@@ -3,14 +3,14 @@
   <div class="form_sign">
     <h2 class="title_sign">Signing In</h2>
     <form [formGroup]="loginForm" class="row g-3" (submit)="signIn()">
-      <!--    Full Name-->
+
       <div class="form-group">
         <input placeholder="Username" formControlName="username" type="text" id="username" name="username" class="form-control">
         <small *ngIf="username?.invalid && password?.touched" class="text-danger">username is
           required</small>
       </div>
 
-      <!--Password-->
+
       <div class="form-group">
         <input placeholder="Password" formControlName="password" [type]="showPassword" id="password" name="password"
                class="form-control">
@@ -23,13 +23,14 @@
 
       <small class="text-danger" *ngIf="serverOffline">Server offline, reconnecting ...</small>
 
+    
+
+    
+
       <div class="button_sign">
-        <button pButton type="submit" [disabled]="!loginForm.valid">
+        <button pButton type="submit"  class="w-full">
           Log In
-          <!-- <div *ngIf="!(showLoader$ | async)">Log In</div>
-          <div *ngIf="showLoader$ | async as showLoader">
-            <app-spinner *ngIf="showLoader"></app-spinner>
-          </div> -->
+
         </button>
       </div>
     </form>
@@ -43,3 +44,5 @@
 
   </div>
 </div>
+
+

@@ -1,3 +1,4 @@
+import { ActivateEmailComponent } from './components/activate-email/activate-email.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { ProfilePageComponent } from './components/profile-page/profile-page.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -23,6 +24,7 @@ const routes: Routes = [
   {path: 'teachers', component: TeacherListComponent},
   {path: 'teachers/:id', component: TeacherProfileComponent},
   {path: 'spinner', component: SpinnerComponent},
+  {path: 'activate/:uid/:token', component: ActivateEmailComponent},
 ];
 
 @NgModule({

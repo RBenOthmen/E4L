@@ -1,3 +1,4 @@
+import { TasksComponent } from './todolist/tasks/tasks.component';
 import { ActivateEmailComponent } from './components/activate-email/activate-email.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { ProfilePageComponent } from './components/profile-page/profile-page.component';
@@ -10,6 +11,8 @@ import {SignUpComponent} from "./sign-up/sign-up.component";
 import { AccountPageComponent } from './components/account-page/account-page.component';
 import { TeacherListComponent } from './components/teacher-list/teacher-list.component';
 import { TeacherProfileComponent } from './components/teacher-profile/teacher-profile.component';
+import { PasswordResetComponent } from './components/password-reset/password-reset.component';
+import { PasswordResetConfirmComponent } from './components/password-reset-confirm/password-reset-confirm.component';
 
 
 const routes: Routes = [
@@ -24,7 +27,10 @@ const routes: Routes = [
   {path: 'teachers', component: TeacherListComponent},
   {path: 'teachers/:id', component: TeacherProfileComponent},
   {path: 'spinner', component: SpinnerComponent},
+  {path: 'password-reset', component: PasswordResetComponent},
+  {path: 'password-reset/:uid/:token', component: PasswordResetConfirmComponent},
   {path: 'activate/:uid/:token', component: ActivateEmailComponent},
+  {path: 'tasks', component: TasksComponent},
 ];
 
 @NgModule({

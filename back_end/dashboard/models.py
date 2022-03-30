@@ -23,10 +23,18 @@ class Lesson (models.Model):
     category = models.CharField(
         max_length=2, choices=CATEGORY_CHOICES)
 
+
+
 class Professeur (models.Model):
     #phone = models.CharField(max_length=255)
     #birth_date = models.DateField(null=True, blank=True)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    
+class Task (models.Model):
+    title = models.CharField(max_length=255)
+    date = models.DateField()
+    is_completed = models.BooleanField(default=False)
+    professeur = models.ForeignKey(Professeur, on_delete=models.CASCADE)
     
 class Progress (models.Model):
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)

@@ -6,7 +6,7 @@
 
       <div class="form-group">
         <input placeholder="Username" formControlName="username" type="text" id="username" name="username" class="form-control">
-        <small *ngIf="username?.invalid && password?.touched" class="text-danger">username is
+        <small *ngIf="username?.invalid && username?.touched" class="text-danger">username is
           required</small>
       </div>
 
@@ -42,7 +42,9 @@
       <button class="p-button" (click)="goToSignup()">SIGN UP</button>
     </div>
 
+    <a (click)="passwordReset()">Forget your password ?</a>
+
   </div>
 </div>
 
-
+<p-toast></p-toast>

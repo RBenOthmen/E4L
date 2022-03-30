@@ -168,8 +168,12 @@ SIMPLE_JWT = {
 DJOSER = {
     "SEND_ACTIVATION_EMAIL": True, # create si is_active = true si is_active = false 
     "ACTIVATION_URL": "activate/{uid}/{token}",
+    "PASSWORD_RESET_CONFIRM_URL": "password-reset/{uid}/{token}",
+    "PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND" :True,
     'EMAIL': {
-            'activation': 'core.email.ActivationEmail'
+            'password_reset' : 'core.email.PasswordResetEmail',
+            'activation': 'core.email.ActivationEmail',
+            
     },
     'SERIALIZERS' : {
         'user_create' : 'core.serializers.UserCreateSerializer',

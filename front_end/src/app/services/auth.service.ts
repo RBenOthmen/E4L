@@ -195,6 +195,25 @@ export class AuthService {
       catchError(this.handleError));
   }
 
+
+  //sends recovery email to change password
+  // returns 204 no content || 400 bad request
+  resetPassword(email : string) {
+    console.log(email)
+    
+    return this.http.post<User>(this.url+"auth/users/reset_password/", {email:email}, httpOptions).pipe(
+      catchError(this.handleError));
+  }
+
+  //returns 204 no content || 400 bad request
+  resetPasswordConfirm(uid : string,token : string,new_password : string,re_new_password : string ) {
+    
+    return this.http.post<User>(this.url+"auth/users/reset_password_confirm/",
+     {uid : uid, token : token , new_password : new_password , re_new_password : re_new_password},
+     httpOptions).pipe(
+      catchError(this.handleError));
+  }
+
   private handleError(err : Response) {
     console.log(err)
     if (err.status == 400) {
@@ -209,9 +228,9 @@ export class AuthService {
       return throwError (() => new Unauthorized(err));
     }
 
-    if (err.status == 204) {
-      return throwError (() => new NoContent(err));
-    }
+    // if (err.status == 204) {
+    //   return throwError (() => new NoContent(err));
+    // }
 
     if (err.status == 403) {
       return throwError (() => new Forbidden(err));

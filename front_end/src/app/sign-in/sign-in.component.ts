@@ -1,3 +1,4 @@
+import { MessageService } from 'primeng/api';
 import { LoaderService } from './../services/loader.service';
 import { Unauthorized } from './../exceptions/Unauthorized';
 import {Component, OnInit} from '@angular/core';
@@ -8,10 +9,12 @@ import { AuthService } from '../services/auth.service';
 
 
 
+
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
-  styleUrls: ['./sign-in.component.css']
+  styleUrls: ['./sign-in.component.css'],
+  providers : [MessageService]
 })
 export class SignInComponent implements OnInit {
   showPassword : string = "password";
@@ -22,7 +25,8 @@ export class SignInComponent implements OnInit {
 
   constructor(public authService : AuthService,
     private router :Router,
-    private loaderService : LoaderService) {
+    private loaderService : LoaderService,
+    private messageService : MessageService) {
   }
 
   goToSignup() {
@@ -47,6 +51,7 @@ export class SignInComponent implements OnInit {
 
 
   signIn() {
+
     // this.loaderService.showLoader();
     let credentials = {
       username : this.loginForm.get('username')?.value,
@@ -55,6 +60,7 @@ export class SignInComponent implements OnInit {
     this.authService.login(credentials)
       .subscribe({
         next : response => {
+          
           
           this.router.navigate(['/']);
         }
@@ -71,13 +77,18 @@ export class SignInComponent implements OnInit {
 
   }
 
-
+  
+  passwordReset() {
+    this.router.navigate(['/password-reset']);
+  }
+  
+  
   togglePassword() {
     if (this.showPassword == 'password')
-      this.showPassword = 'text';
+    this.showPassword = 'text';
     else if (this.showPassword == 'text')
     this.showPassword = 'password';
   }
-
-
+  
+  
 }

@@ -1,0 +1,27 @@
+<div class="task-container">
+    <header>
+        <h1>{{title}}</h1>
+        <!-- *ngIf="hasRoute('/')" -->
+        <!-- <app-button 
+        color="{{showAddTask ? 'red' : 'green'}}" 
+        text="{{showAddTask ? 'Close' : 'Add'}}" 
+        (btnClick)="toggleAddTask()"></app-button>
+        <button 
+    [ngStyle]="{'background-color' : color}" 
+    class="btn" 
+    (click)="toggleAddTask()">{{text}}</button> -->
+    
+    <button class="btn"
+    [ngStyle]="{'background-color' : getColor() }"
+    (click)="toggleAddTask()">
+    {{buttonText}}
+    </button>
+    </header>
+    <app-add-task (onAddTask)="addTask($event)"></app-add-task>
+    <app-task-item *ngFor="let task of tasks" 
+    [task]="task"
+    (onDeleteTask)="deleteTask(task)"
+    (onToggleReminder)="toggleReminder(task)"></app-task-item>
+    
+    
+</div>

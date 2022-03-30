@@ -36,7 +36,16 @@ import {CheckboxModule} from 'primeng/checkbox';
 import {ButtonModule} from 'primeng/button';
 import {PasswordModule} from 'primeng/password';
 import {ToastModule} from 'primeng/toast';
+import {MessagesModule} from 'primeng/messages';
+import {MessageModule} from 'primeng/message';
+
 import { ActivateEmailComponent } from './components/activate-email/activate-email.component';
+import { PasswordResetComponent } from './components/password-reset/password-reset.component';
+import { PasswordResetConfirmComponent } from './components/password-reset-confirm/password-reset-confirm.component';
+import { AddTaskComponent } from './todolist/add-task/add-task.component';
+import { TaskItemComponent } from './todolist/task-item/task-item.component';
+import { TasksComponent } from './todolist/tasks/tasks.component';
+
 
 
 @NgModule({
@@ -59,6 +68,12 @@ import { ActivateEmailComponent } from './components/activate-email/activate-ema
     TeacherProfileComponent,
     SpinnerComponent,
     ActivateEmailComponent,
+    PasswordResetComponent,
+    PasswordResetConfirmComponent,
+    AddTaskComponent,
+    TaskItemComponent,
+    TasksComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -77,6 +92,8 @@ import { ActivateEmailComponent } from './components/activate-email/activate-ema
     PasswordModule,
     CheckboxModule,
     ToastModule,
+    MessagesModule,
+    MessageModule,
   ],
   providers: [
     UserService,

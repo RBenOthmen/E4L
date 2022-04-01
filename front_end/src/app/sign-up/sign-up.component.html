@@ -44,12 +44,12 @@
         <input placeholder="Password" formControlName="password" [type]="showPassword" id="password" name="password"
           class="form-control">
         <small *ngIf="password?.invalid && password?.touched" class="text-danger">Minimum eight characters, at least one
-          uppercase letter, one lowercase letter and one number</small>
+          uppercase letter, one lowercase letter, one number and one symbol</small>
         <p><input type="checkbox" id="passwordStatus" name="passwordStatus" (click)="togglePassword()"> Show Password
         </p>
       </div>
       <div class="form-group">
-        
+
         <p-password [toggleMask]="true" class="full-w" >
           <ng-template pTemplate="header">
             <h6>Pick a password</h6>

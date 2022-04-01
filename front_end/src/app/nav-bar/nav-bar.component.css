@@ -1,4 +1,47 @@
 
+.vertical-center {
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+nav ul a {
+  padding: 10px;
+}
+
+.icon-with-text {
+  text-align: center;
+}
+
+.settings-li:hover .icon span:nth-child(2) {
+  width: 100%;
+}
+
+.settings-li .icon{
+  width: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.settings-li .icon span{
+  background-color: white;
+  margin-bottom: 5px;
+  height: 2px;
+}
+
+.settings-li .icon span:first-child{
+  width: 100%;
+}
+.settings-li .icon span:nth-child(2){
+  width: 60%;
+  transition: 0.3s;
+}
+.settings-li .icon span:last-child{
+  width: 100%;
+}
+
+
 .right {
   margin-left: auto;
 }

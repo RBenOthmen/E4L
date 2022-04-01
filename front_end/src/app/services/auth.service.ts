@@ -1,19 +1,19 @@
 import { Forbidden } from './../exceptions/Forbidden';
+import { BadInput } from '../exceptions/BadInput';
+import { NotFoundError } from '../exceptions/not-found-error';
+import { Unauthorized } from '../exceptions/Unauthorized';
+import { AppError } from '../exceptions/AppError';
 import { NoContent } from './../exceptions/NoContent';
 import { Activate } from './../interfaces/Activate';
 import { Teacher } from './../interfaces/Teacher';
 import { Student } from './../interfaces/Student';
 import { JwtHelperService } from "@auth0/angular-jwt";
-import { BadInput } from '../exceptions/BadInput';
 import { Token } from './../interfaces/Token';
 import { Observable, map, tap, throwError, catchError, BehaviorSubject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../interfaces/user';
-import { NotFoundError } from '../exceptions/not-found-error';
-import { AppError } from '../exceptions/AppError';
 import { Router } from '@angular/router';
-import { Unauthorized } from '../exceptions/Unauthorized';
 
 
 
@@ -82,7 +82,7 @@ export class AuthService {
         console.log(response.access)
         if (credentials.type == "teacher") {
           credentials.user_id = response.id;
-          // this.createTeacher(credentials)
+          this.createTeacher(credentials)
         }
           
 
@@ -96,6 +96,21 @@ export class AuthService {
     .pipe(
       catchError(this.handleError)
     );
+  }
+
+
+  // return teacher info 
+  getCurrentTeacherInfo() : Observable<Teacher> {
+    let token = localStorage.getItem('token');
+    let Authorization = {
+      headers: new HttpHeaders({
+        'Content-Type' : 'application/json',
+        'Authorization' : 'JWT '+token
+      }),
+    }
+
+    return this.http.get<Teacher>(this.url + 'dashboard/professeurs/me/' , Authorization);
+
   }
 
 
@@ -119,7 +134,7 @@ export class AuthService {
       }),
     }
 
-    return this.http.get<User>(this.url + 'auth/users/me' , Authorization)
+    return this.http.get<User>(this.url + 'auth/users/me/' , Authorization)
     .pipe(
       tap( response => {
         this.currentUser.email = response.email;

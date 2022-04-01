@@ -3,6 +3,8 @@ from django.db import models
 from django.apps import apps
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import AbstractUser , BaseUserManager
+
+from dashboard.validators import validate_file_size
 # from rest_framework_simplejwt.tokens import RefreshToken
 
 # def _create_user(self, username, email, password, **extra_fields):
@@ -42,3 +44,7 @@ class User(AbstractUser):
     role = models.CharField(
         max_length=2, choices=ROLE_CHOICES)
     is_active = models.BooleanField(default=True)
+    image = models.ImageField(
+        upload_to = 'store/images',
+        validators=[validate_file_size],
+        null = True)

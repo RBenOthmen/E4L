@@ -53,10 +53,7 @@ export class SignInComponent implements OnInit {
   signIn() {
 
     // this.loaderService.showLoader();
-    let credentials = {
-      username : this.loginForm.get('username')?.value,
-      password : this.loginForm.get('password')?.value
-    }
+    let credentials = this.getCredentials()
     this.authService.login(credentials)
       .subscribe({
         next : response => {
@@ -76,6 +73,15 @@ export class SignInComponent implements OnInit {
 
 
   }
+
+  getCredentials() {
+    return {
+      username : this.loginForm.get('username')?.value,
+      password : this.loginForm.get('password')?.value
+    };
+  }
+
+  
 
   
   passwordReset() {

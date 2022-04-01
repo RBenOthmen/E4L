@@ -1,5 +1,8 @@
 from django.conf import settings
 from django.db import models
+from core.models import User
+from dashboard.validators import validate_file_size
+from django.core.validators import MinValueValidator, FileExtensionValidator
 
 
 class Eleve (models.Model):
@@ -32,12 +35,19 @@ class Professeur (models.Model):
     
 class Task (models.Model):
     title = models.CharField(max_length=255)
-    date = models.DateField()
+    start_date = models.DateField(auto_now=True)
+    end_date = models.DateField()
     is_completed = models.BooleanField(default=False)
     professeur = models.ForeignKey(Professeur, on_delete=models.CASCADE)
     
+
 class Progress (models.Model):
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
     eleve = models.ForeignKey(Eleve, on_delete=models.CASCADE)
     progression = models.PositiveIntegerField()
 
+class EleveImage(models.Model):
+    eleve = models.ForeignKey(Eleve, on_delete=models.CASCADE, related_name = 'images')
+    image = models.ImageField(
+        upload_to = 'store/images',
+        validators=[validate_file_size])

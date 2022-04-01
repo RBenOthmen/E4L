@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+import os
 from datetime import timedelta
 import os
 from pathlib import Path
@@ -44,6 +45,7 @@ INSTALLED_APPS = [
     'djoser',
     'debug_toolbar',
     'dashboard',
+    'task_management',
     'core'
 
 ]
@@ -103,7 +105,10 @@ DATABASES = {
         'NAME': 'englishforlazy',
         'HOST': 'localhost',
         'USER': 'root',
-        'PASSWORD': 'W@jdi1999'
+        'PASSWORD': 'W@jdi1999',
+        'OPTIONS': {
+         "init_command": "SET foreign_key_checks = 0;"
+    }
     }
 }
 
@@ -146,6 +151,10 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
@@ -166,7 +175,7 @@ SIMPLE_JWT = {
 }
 
 DJOSER = {
-    "SEND_ACTIVATION_EMAIL": True, # create si is_active = true si is_active = false 
+    "SEND_ACTIVATION_EMAIL": True, # create si is_active = true si is_active = false
     "ACTIVATION_URL": "activate/{uid}/{token}",
     "PASSWORD_RESET_CONFIRM_URL": "password-reset/{uid}/{token}",
     "PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND" :True,

@@ -4,13 +4,12 @@
         <input type="text" name="text" [(ngModel)]="text" id="text">
     </div>
     <div class="form-control">
-        <label for="day">Day & Time</label>
-        <input type="text" name="day" [(ngModel)]="day" id="day">
+        <label for="date">Date Limit</label>
+        <input type="date" name="date" [(ngModel)]="date" id="date">
     </div>
-    <div class="form-control form-control-check">
+    <!-- <div class="form-control form-control-check">
         <label for="reminder">Set Reminder</label>
         <input type="checkbox" name="reminder" [(ngModel)]="reminder" id="reminder">
-    </div>
-    {{text}}
+    </div> -->
     <input type="submit" value="Save Task" class="btn btn-block">
 </form>

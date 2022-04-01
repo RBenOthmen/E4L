@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { UiService } from 'src/app/services/ui.service';
 import { TaskService } from 'src/app/services/task.service';
 import { Task } from '../../interfaces/Task';
+import { AuthService } from 'src/app/services/auth.service';
 
 
 @Component({
@@ -15,31 +16,86 @@ export class TasksComponent implements OnInit {
   tasks : Task[] = [];
   color !: string;
   buttonText : string = 'Add';
-  title = 'Task Manager';
+  title = 'To do list';
+  id !: number;
   showAddTask : boolean = false;
   subscription !: Subscription;
-  constructor(private uiService : UiService,private router : Router, private taskService : TaskService) { 
+  constructor(private uiService : UiService,private router : Router, private taskService : TaskService,private authService : AuthService) { 
     this.subscription = this.uiService.onToggle().subscribe(value => this.showAddTask = value);
     
   }
 
   ngOnInit(): void {
-    this.taskService.getTasks().subscribe((tasks) => this.tasks = tasks);
+    let id : number = 0;
+    this.authService.getCurrentTeacherInfo().subscribe(
+      response => { 
+        id = <number>response.id
+        console.log('affich response '+id)
+        this.taskService.getTasks(id).subscribe((tasks) => this.tasks = tasks);
+    }
+    );
+    
     
   }
 
   deleteTask(task : Task) {
-    this.taskService.deleteTask(task).subscribe(() => this.tasks = 
-    this.tasks.filter(t => t.id !== task.id));
+    
+    let id : number =0;
+    this.authService.getCurrentTeacherInfo().subscribe(
+      response => { 
+        id = <number>response.id
+        console.log('delete task response '+id)
+        
+        this.taskService.deleteTask(task,id).subscribe(() => this.tasks = 
+        this.tasks.filter(t => t.id !== task.id));
+        console.log('task deleted')
+      });
   }
 
   toggleReminder(task : Task) {
-    task.reminder = !task.reminder;
-    this.taskService.updateTaskReminder(task).subscribe();
+    let id : number =0;
+    this.authService.getCurrentTeacherInfo().subscribe(
+      response => { 
+        id = <number>response.id
+        console.log('update task response '+id)
+        
+        console.log(task.is_completed)
+        task.is_completed = !task.is_completed;
+        console.log(task.is_completed)
+        this.taskService.updateTaskCompletion(task, id).subscribe();
+
+      });
   }
 
   addTask(task : Task) {
-    this.taskService.addTask(task).subscribe((task) => this.tasks.push(task));
+    let id : number =0;
+    this.authService.getCurrentTeacherInfo().subscribe(
+      response => { 
+        this.id = <number>response.id
+        console.log('add task response '+this.id)
+        this.taskService.addTask({title : task.title, end_date : task.end_date}, this.id).subscribe((task) => {
+          this.tasks.push(task)
+          console.log('task added')
+        });
+        
+      });
+      
+
+      
+    
+  }
+
+  getId() {
+    let id : number =0;
+    this.authService.getCurrentTeacherInfo().subscribe(
+      response => { 
+        id = <number>response.id
+        console.log('add task response '+this.id)
+        
+      }
+      );
+
+      return this.id;
   }
 
   toggleAddTask() {

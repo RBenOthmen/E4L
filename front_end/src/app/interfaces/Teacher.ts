@@ -7,5 +7,6 @@ export interface Teacher {
     phone ? : string,
     birth_date ? : Date,
     role ?:string;
+    
   }
   

@@ -1,16 +1,30 @@
 .task {
     background: #f4f4f4;
     margin: 5px;
-    padding: 10px 20px;
+    padding: 10px;
     cursor: pointer;
   }
   
-  .task.reminder {
+  .task.is_completed {
     border-left: 5px solid green;
+  }
+
+  .task.is_completed h3{
+    color: rgb(145, 142, 142);
+  }
+
+  .task.is_completed p{
+    color: rgb(145, 142, 142);
   }
   
   .task h3 {
     display: flex;
     align-items: center;
     justify-content: space-between;
+  }
+
+  .text{
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
   }

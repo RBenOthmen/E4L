@@ -12,6 +12,8 @@ from rest_framework.settings import api_settings
 from djoser.conf import settings
 from djoser.compat import get_user_email
 from djoser import signals
+from djoser import views
+from rest_framework.authtoken.models import Token
 
 from rest_framework_simplejwt import views
 
@@ -60,28 +62,8 @@ class TeacherViewSet(ModelViewSet):
     
     
 
-class UserViewSet(BaseUserViewSet):
-    serializer_class = settings.SERIALIZERS.user
-    queryset = User.objects.all()
-    permission_classes = settings.PERMISSIONS.user
-    token_generator = default_token_generator
-    lookup_field = settings.USER_ID_FIELD
 
-    def create(self, request, *args, **kwargs):
-        serializer = UserCreateSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        user_data = serializer.data
-        user = User.objects.get(email=user_data['email'])
-        refresh = RefreshToken.for_user(user)
-        token2 = default_token_generator.make_token(user)
-        #user_data['refresh'] = str(refresh)
-        user_data['access'] = str(refresh.access_token)
-        # print(token2)
-        # newdict={'token':token2}
-        # newdict.update(serializer.data)
-        return Response(user_data, status=status.HTTP_201_CREATED, headers=headers)
+
 
 
 

@@ -18,3 +18,14 @@
   width: 100%;
 }
 
+.hypertext {
+  color: blue;
+  cursor: pointer;
+}
+
+input[type=text],
+input[type=number],
+input[type=password] {
+  border-color: rgb(112, 111, 111);
+}
+

@@ -1,9 +1,9 @@
+<!-- authService.isLoggedIn() -->
+<app-nav-bar *ngIf="showNavBar()"></app-nav-bar>
 
-<app-nav-bar *ngIf="authService.isLoggedIn()"></app-nav-bar>
-
-<div *ngIf="showLoader$ | async as showLoader">
+<!-- <div *ngIf="showLoader$ | async as showLoader">
     <app-spinner *ngIf="showLoader"></app-spinner>
-</div>
+</div> -->
 
 <router-outlet></router-outlet>
 

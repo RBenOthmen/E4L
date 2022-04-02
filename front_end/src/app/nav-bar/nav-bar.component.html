@@ -95,50 +95,44 @@
 
 
 
-<nav class="navbar navbar-expand navbar-dark bg-dark">
+<!-- <nav class="navbar navbar-expand navbar-dark bg-dark">
   <div class="container-fluid">
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
-        <!-- Logo -->
+
         <li>
           <a class="navbar-brand" href="#">
             <i class="bi bi-vinyl-fill fa-2x"></i>
           </a>
         </li>
-        <!-- Home -->
+
         <li>
           <a href="#" class="nav-link text-secondary">
-            <div class="icon-with-text">
-              <i class="bi bi-house-door fa-2x"></i>
-              <p>Home</p>
-            </div>
+
+              Home
           </a>
         </li>
-        <!-- Dashboard -->
+
         <li>
           <a href="#" class="nav-link text-white">
-            <div class="icon-with-text">
-              <i class="bi bi-book-half fa-2x"></i>
-              <p>Dashboard</p>
-            </div>
+    
+              Dashboard
           </a>
         </li>
-        <!-- Teachers -->
+
         <li>
           <a href="#" class="nav-link text-white">
-            <div class="icon-with-text">
-              <i class="bi bi-people fa-2x"></i>
-              <p>Teachers</p>
-            </div>
+
+              Teachers
           </a>
         </li>
       </ul>
 
       <ul class="navbar-nav">
-        <!-- Settings -->
+
         <li class="nav-item dropdown settings-li">
           <a class="nav-link dropdown" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <!-- <i class="bi bi-border-width fa-2x"></i> -->
+
             <span class="icon">
               <span></span>
               <span></span>
@@ -154,6 +148,66 @@
         </li>
       </ul>
 
+    </div>
+  </div>
+</nav> -->
+
+<!-- /////////////////////////////////////////////////////////////////////////////// -->
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Logo</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li>
+          <a routerLink="/" class="nav-link text-white">
+
+              Home
+          </a>
+        </li>
+        <!-- Dashboard -->
+        <li >
+          <a routerLink="dashboard" class="nav-link text-white">
+    
+              Dashboard
+          </a>
+        </li>
+        <!-- Teachers -->
+        <li>
+          <a routerLink="teachers" class="nav-link text-white">
+
+              Teachers
+          </a>
+        </li>
+
+        <li *ngIf="authService.isLoggedIn()">
+          <a routerLink="tasks" class="nav-link text-white" >
+
+              Todolist
+          </a>
+        </li>
+      </ul>
+      <div class="text-end" *ngIf="!authService.isLoggedIn()">
+        <button type="button" class="btn btn-outline-light me-2" routerLink="login">Login</button>
+        <button type="button" class="btn btn-warning" routerLink="signup">Sign-up</button>
+      </div>
+      <ul class="navbar-nav" *ngIf="authService.isLoggedIn()">
+        <!-- Settings -->
+        <li class="nav-item dropdown settings-li">
+          <a class="nav-link text-white dropdown" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Settings
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" routerLink="profile"><i class="bi bi-person"></i> Profile</a></li>
+            <li><a class="dropdown-item" routerLink="settings"><i class="bi bi-gear"></i> Account</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" (click)="logout()"><i class="bi bi-power"></i> Logout</a></li>
+          </ul>
+        </li>
+      </ul>
     </div>
   </div>
 </nav>

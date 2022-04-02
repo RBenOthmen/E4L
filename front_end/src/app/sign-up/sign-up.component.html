@@ -16,18 +16,21 @@
       </span>
       <!--    Full Name-->
       <div class="form-group">
+        <label for="first_name">First name:</label>
         <input aria-label="" placeholder="First name" formControlName="first_name" type="text" id="first_name"
           name="first_name" class="form-control">
         <small *ngIf="first_name!.invalid && first_name?.touched" class="text-danger">First name should be at least 3
           caracters</small>
       </div>
       <div class="form-group">
+        <label for="last_name">Last name:</label>
         <input aria-label="" placeholder="Last name" formControlName="last_name" type="text" id="last_name"
           name="last_name" class="form-control">
         <small *ngIf="last_name!.invalid && last_name?.touched" class="text-danger">Last name should be at least 3
           caracters</small>
       </div>
       <div class="form-group">
+        <label for="username">Username:</label>
         <input aria-label="" placeholder="Username" formControlName="username" type="text" id="username" name="username"
           class="form-control">
         <small *ngIf="username!.invalid && username?.touched" class="text-danger">name should be at least 3
@@ -35,12 +38,14 @@
       </div>
       <!--    Email-->
       <div class="form-group">
+        <label for="email">Email:</label>
         <input placeholder="Email" formControlName="email" type="text" id="email" name="email" class="form-control">
         <small *ngIf="email?.invalid && email?.touched" class="text-danger">Email should be at this form
-          "rami@gmail.com"</small>
+          "example@email.com"</small>
       </div>
       <!--Password-->
       <div class="form-group">
+        <label for="password">Password:</label>
         <input placeholder="Password" formControlName="password" [type]="showPassword" id="password" name="password"
           class="form-control">
         <small *ngIf="password?.invalid && password?.touched" class="text-danger">Minimum eight characters, at least one
@@ -48,34 +53,18 @@
         <p><input type="checkbox" id="passwordStatus" name="passwordStatus" (click)="togglePassword()"> Show Password
         </p>
       </div>
-      <div class="form-group">
-
-        <p-password [toggleMask]="true" class="full-w" >
-          <ng-template pTemplate="header">
-            <h6>Pick a password</h6>
-          </ng-template>
-          <ng-template pTemplate="footer">
-
-            <p class="mt-2">Suggestions</p>
-            <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
-              <li>At least one lowercase</li>
-              <li>At least one uppercase</li>
-              <li>At least one numeric</li>
-              <li>Minimum 8 characters</li>
-            </ul>
-          </ng-template>
-        </p-password>
-      </div>
-
+    
 
       <!--Birthday-->
       <div class="form-group">
+        <label for="birthday">Birthday:</label>
         <input placeholder="Birthday" formControlName="birthday" type="date" id="birthday" name="birthday"
           class="form-control">
         <small *ngIf="birthday?.invalid && birthday?.touched" class="text-danger">Enter a valid birthday</small>
       </div>
       <!--Phone Number-->
       <div class="form-group">
+        <label for="phone">Phone number:</label>
         <input placeholder="Phone number" formControlName="phone" type="number" id="phone" name="phone"
           class="form-control">
         <small *ngIf="phone?.invalid && phone?.touched" class="text-danger">Enter a valid phone number</small>
@@ -93,7 +82,7 @@
 
     <br>
     <div class="button_sign">
-      <button class="p-button" (click)="goToSignin()">LOGIN</button>
+      Already have an account<a (click)="goToSignin()"><div class="hypertext">Login</div></a>
     </div>
   </div>
 </div>

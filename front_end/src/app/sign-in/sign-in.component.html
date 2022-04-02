@@ -5,6 +5,7 @@
     <form [formGroup]="loginForm" class="row g-3" (submit)="signIn()">
 
       <div class="form-group">
+        <label for="username">Username:</label>
         <input placeholder="Username" formControlName="username" type="text" id="username" name="username" class="form-control">
         <small *ngIf="username?.invalid && username?.touched" class="text-danger">username is
           required</small>
@@ -12,6 +13,7 @@
 
 
       <div class="form-group">
+        <label for="password">Password:</label>
         <input placeholder="Password" formControlName="password" [type]="showPassword" id="password" name="password"
                class="form-control">
         <small *ngIf="password?.invalid && password?.touched" class="text-danger">password
@@ -24,7 +26,7 @@
       <small class="text-danger" *ngIf="serverOffline">Server offline, reconnecting ...</small>
 
     
-
+      <a (click)="passwordReset()"><div class="hypertext">Forget your password ?</div></a>
     
 
       <div class="button_sign">
@@ -39,10 +41,10 @@
 
     <br>
     <div class="button_sign">
-      <button class="p-button" (click)="goToSignup()">SIGN UP</button>
+      Dont have an account yet !<a (click)="goToSignup()"><div class="hypertext">Signup</div></a>
     </div>
 
-    <a (click)="passwordReset()">Forget your password ?</a>
+    
 
   </div>
 </div>

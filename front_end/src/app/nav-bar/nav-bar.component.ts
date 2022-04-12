@@ -10,6 +10,7 @@ import { AuthService } from '../services/auth.service';
 })
 export class NavBarComponent implements OnInit {
 
+  lang!:string;
   constructor(public authService :AuthService,
     private route : ActivatedRoute,
     private router :Router) { }
@@ -21,12 +22,19 @@ export class NavBarComponent implements OnInit {
       let route : string | null = params.get('id');
       console.log(route)
     });*/
-    
+    this.lang= localStorage.getItem('lang') || 'en';
   }
 
   logout() {
     this.authService.logout()
     this.router.navigate(['login']);
+  }
+
+  changeLang(lang : any) {
+    console.log(lang.target.value);
+    let language = lang.target.value;
+    localStorage.setItem('lang',language);
+    window.location.reload();
   }
 
   

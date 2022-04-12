@@ -165,46 +165,57 @@
         <li>
           <a routerLink="/" class="nav-link text-white">
 
-              Home
+            {{ 'home' | translate }}
           </a>
         </li>
         <!-- Dashboard -->
         <li >
           <a routerLink="dashboard" class="nav-link text-white">
     
-              Dashboard
+            {{ 'lessons' | translate }}
           </a>
         </li>
         <!-- Teachers -->
         <li>
           <a routerLink="teachers" class="nav-link text-white">
 
-              Teachers
+            {{ 'teachers' | translate }}
           </a>
         </li>
 
         <li *ngIf="authService.isLoggedIn()">
           <a routerLink="tasks" class="nav-link text-white" >
 
-              Todolist
+            {{ 'todolist' | translate }}
           </a>
         </li>
       </ul>
+      <div class="row">
+        <div class="col-9">
+          <div class="col-3">
+            <select name="" id="" class="custom-select" (change)="changeLang($event)">
+              <option value="en" [selected]="lang == 'en'">English</option>
+              <option value="fr" [selected]="lang == 'fr'">Francais</option>
+              <option value="ar" [selected]="lang == 'ar'">Arabic</option>
+            </select>
+          </div>
+        </div>
+      </div>
       <div class="text-end" *ngIf="!authService.isLoggedIn()">
-        <button type="button" class="btn btn-outline-light me-2" routerLink="login">Login</button>
-        <button type="button" class="btn btn-warning" routerLink="signup">Sign-up</button>
+        <button type="button" class="btn btn-outline-light me-2" routerLink="login">{{ 'login' | translate }}</button>
+        <button type="button" class="btn btn-warning" routerLink="signup">{{ 'signup' | translate }}</button>
       </div>
       <ul class="navbar-nav" *ngIf="authService.isLoggedIn()">
         <!-- Settings -->
         <li class="nav-item dropdown settings-li">
           <a class="nav-link text-white dropdown" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Settings
+            {{ 'settings' | translate}}
           </a>
           <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" routerLink="profile"><i class="bi bi-person"></i> Profile</a></li>
-            <li><a class="dropdown-item" routerLink="settings"><i class="bi bi-gear"></i> Account</a></li>
+            <li><a class="dropdown-item" routerLink="profile"><i class="bi bi-person"></i> {{ 'profile' | translate}}</a></li>
+            <li><a class="dropdown-item" routerLink="settings"><i class="bi bi-gear"></i> {{ 'account' | translate}}</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" (click)="logout()"><i class="bi bi-power"></i> Logout</a></li>
+            <li><a class="dropdown-item" (click)="logout()"><i class="bi bi-power"></i> {{ 'logout' | translate}}</a></li>
           </ul>
         </li>
       </ul>

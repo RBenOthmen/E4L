@@ -54,9 +54,9 @@ export class AuthService {
         tap(response => {
           const decodedToken = this.helper.decodeToken(response.access);
           if (response && response.access) {
-            this.getUserDetails();
             // this._LoggedIn.next(true);
             localStorage.setItem('token', response.access);
+            this.getUserDetails().subscribe();
           }
         })
       );
@@ -133,7 +133,7 @@ export class AuthService {
         'Authorization' : 'JWT '+token
       }),
     }
-
+    console.log('im here')
     return this.http.get<User>(this.url + 'auth/users/me/' , Authorization)
     .pipe(
       tap( response => {
@@ -143,6 +143,7 @@ export class AuthService {
         this.currentUser.last_name = response.last_name;
         this.currentUser.phone = response.phone;
         this.currentUser.birth_date = response.birth_date;
+        this.currentUser.role = response.role;
       }
       )
     );

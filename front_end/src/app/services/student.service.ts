@@ -6,6 +6,8 @@ import { AppError } from '../exceptions/AppError';
 import { BadInput } from '../exceptions/BadInput';
 import { NotFoundError } from '../exceptions/not-found-error';
 import { User } from '../interfaces/user';
+import { Unauthorized } from '../exceptions/Unauthorized';
+import { Forbidden } from '../exceptions/Forbidden';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -17,7 +19,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class StudentService {
-  private url = 'http://localhost:8000/dashboard/eleves';
+  private url = 'http://localhost:8000/core/students/';
   constructor(private http : HttpClient) { }
 
   signup(credentials : Student) : Observable<Student> {
@@ -32,15 +34,37 @@ export class StudentService {
   );
   }
 
-  private handleError(err : Response) {
+  getStudents() : Observable<Student[]>{
+    return this.http.get<Student[]>(this.url,httpOptions)
+    .pipe(
+      catchError(this.handleError)
+  );
+  }
+
+
+
+    private handleError(err : Response) {
+    console.log(err)
     if (err.status == 400) {
       return throwError (() => new BadInput(err));
     }
-
+  
     if (err.status == 404) {
       return throwError (() => new NotFoundError(err));
     }
-   
+  
+    if (err.status == 401) {
+      return throwError (() => new Unauthorized(err));
+    }
+
+    // if (err.status == 204) {
+    //   return throwError (() => new NoContent(err));
+    // }
+
+    if (err.status == 403) {
+      return throwError (() => new Forbidden(err));
+    }
+  
     return throwError(() => new AppError(err));
   }
 }

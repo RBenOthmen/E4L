@@ -40,7 +40,7 @@ class User(AbstractUser):
     ]
     email = models.EmailField(unique=True)
     phone = models.CharField(max_length=255)
-    birth_date = models.DateField()
+    birth_date = models.DateField(null=True)
     role = models.CharField(
         max_length=2, choices=ROLE_CHOICES)
     is_active = models.BooleanField(default=True)

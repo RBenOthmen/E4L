@@ -1,0 +1,30 @@
+{
+    "settings":"Réglages",
+    "profile":"Profil",
+    "account":"Compte",
+    "logout":"Se déconnecter",
+    "login":"Connexion",
+    "signup":"S'inscrire",
+    "todolist":"Liste à faire",
+    "teachers":"Professeurs",
+    "lessons":"Cours",
+    "home":"Accueil",
+
+    "signingin":"Connectez-vous",
+    "username":"Nom d'utilisateur",
+    "password":"Mot de passe",
+    "showpassword":"Montrer le mot de passe",
+    "forgetyourpassword":"Mot de passe oublié",
+    "dontHaveAnAccountYet":"Vous n'avez pas encore de compte",
+
+    "creatingAnAccount":"Créer un compte",
+    "student":"élève",
+    "teacher":"professeur",
+    "firstname":"Prénom",
+    "lastname":"Nom de famille",
+    "email":"E-mail",
+    "birthday":"Date d'anniversaire",
+    "phonenumber":"Numéro de téléphone",
+    "createNewAccount":"Créer un nouveau compte",
+    "alreadyHaveAnAccount":"Vous avez déjà un compte"
+}

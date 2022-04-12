@@ -8,7 +8,7 @@ from . import views
 router = routers.DefaultRouter()
 router.register('users',views.CustomUserViewSet) #localhost;8000/core/users GET
 router.register('teachers',views.TeacherViewSet, basename='teacher') #localhost/core/teachers
-
+router.register('students',views.StudentViewSet, basename='student') #localhost/core/students
 
 urlpatterns = router.urls 
 

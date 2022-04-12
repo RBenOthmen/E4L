@@ -13,6 +13,8 @@ import { TeacherListComponent } from './components/teacher-list/teacher-list.com
 import { TeacherProfileComponent } from './components/teacher-profile/teacher-profile.component';
 import { PasswordResetComponent } from './components/password-reset/password-reset.component';
 import { PasswordResetConfirmComponent } from './components/password-reset-confirm/password-reset-confirm.component';
+import { ChatComponent } from './components/chat/chat.component';
+import { MessengerComponent } from './Messenger/messenger/messenger.component';
 
 
 const routes: Routes = [
@@ -31,6 +33,7 @@ const routes: Routes = [
   {path: 'password-reset/:uid/:token', component: PasswordResetConfirmComponent},
   {path: 'activate/:uid/:token', component: ActivateEmailComponent},
   {path: 'tasks', component: TasksComponent},
+  {path: 'chat', component: MessengerComponent},
 ];
 
 @NgModule({

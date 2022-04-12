@@ -3,6 +3,7 @@ import {Component, OnInit} from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -17,7 +18,10 @@ export class AppComponent implements OnInit{
 
   constructor(public authService :AuthService,
               private loaderService : LoaderService,
-              private router : Router) {
+              private router : Router,
+              private translateService : TranslateService) {
+    this.translateService.setDefaultLang('en');
+    this.translateService.use(localStorage.getItem('lang') || 'en');
 
   }
 

@@ -1,24 +1,24 @@
 <div class="container">
   
   <div class="form_sign">
-    <h2 class="title_sign">Signing In</h2>
+    <h2 class="title_sign">{{ 'signingin' | translate }}</h2>
     <form [formGroup]="loginForm" class="row g-3" (submit)="signIn()">
 
       <div class="form-group">
-        <label for="username">Username:</label>
-        <input placeholder="Username" formControlName="username" type="text" id="username" name="username" class="form-control">
+        <label for="username">{{ 'username' | translate }}:</label>
+        <input placeholder="{{ 'username' | translate }}" formControlName="username" type="text" id="username" name="username" class="form-control">
         <small *ngIf="username?.invalid && username?.touched" class="text-danger">username is
           required</small>
       </div>
 
 
       <div class="form-group">
-        <label for="password">Password:</label>
-        <input placeholder="Password" formControlName="password" [type]="showPassword" id="password" name="password"
+        <label for="password">{{ 'password' | translate }}:</label>
+        <input placeholder="{{ 'password' | translate }}" formControlName="password" [type]="showPassword" id="password" name="password"
                class="form-control">
         <small *ngIf="password?.invalid && password?.touched" class="text-danger">password
           is required</small>
-          <p><input type="checkbox" id="passwordStatus" name="passwordStatus" (click)="togglePassword()"> Show Password</p>
+          <p><input type="checkbox" id="passwordStatus" name="passwordStatus" (click)="togglePassword()"> {{ 'showpassword' | translate }}</p>
       </div>
 
       <small class="text-danger" *ngIf="invalidLogin">Incorrect username/password</small>
@@ -26,12 +26,12 @@
       <small class="text-danger" *ngIf="serverOffline">Server offline, reconnecting ...</small>
 
     
-      <a (click)="passwordReset()"><div class="hypertext">Forget your password ?</div></a>
+      <a (click)="passwordReset()"><div class="hypertext">{{ 'forgetyourpassword' | translate }} ?</div></a>
     
 
       <div class="button_sign">
         <button pButton type="submit"  class="w-full">
-          Log In
+          {{ 'login' | translate }}
 
         </button>
       </div>
@@ -41,7 +41,7 @@
 
     <br>
     <div class="button_sign">
-      Dont have an account yet !<a (click)="goToSignup()"><div class="hypertext">Signup</div></a>
+      {{ 'dontHaveAnAccountYet' | translate }} !<a (click)="goToSignup()"><div class="hypertext">{{ 'signup' | translate }}</div></a>
     </div>
 
     

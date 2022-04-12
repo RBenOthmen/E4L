@@ -1,0 +1,33 @@
+<div class="screen chat-screen">
+    <div class="header">
+        <div class="logo">Conversation</div>
+        <button id="exit-chat" (click)="exit()">Exit</button>
+    </div>
+    <div class="messages">
+        <div *ngFor="let item of messages">
+            <!-- *ngIf="item.type =='sent'" -->
+            <div class="message my-message" *ngIf="">
+                <div>
+                    <div class="name">You</div>
+                    <div id="currentUser" class="text">{{ item.message }}</div>
+                </div>
+            </div>
+            <!-- <div class="update">
+                    abc is joined the conversation
+                </div> -->
+            <!-- <div class="message other-message" *ngIf="item.type =='received'">
+                <div>
+                    <div class="name">{{ item.username }}</div>
+                    <div class="text">{{ item.message }}</div>
+                </div>
+            </div>
+        </div> -->
+
+
+    </div>
+    <div class="typebox">
+        <input type="text" id="message-input" #msg>
+        <button id="send-message" (click)="sendMsg(msg.value)">Send</button>
+    </div>
+
+</div>

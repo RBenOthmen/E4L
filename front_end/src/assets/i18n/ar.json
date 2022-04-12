@@ -1,0 +1,30 @@
+{
+    "settings":"إعدادات",
+    "profile":"الملف الشخصي",
+    "account":"الحساب",
+    "logout":"تسجيل خروج",
+    "login":"تسجيل الدخول",
+    "signup":"انشاء حساب",
+    "todolist":"عمل قائمة",
+    "teachers":"معلمون",
+    "lessons":"الدروس",
+    "home":"ترحيب",
+
+    "signingin":"تسجيل الدخول",
+    "username":"اسم االمستخدم",
+    "password":"كلمه السر",
+    "showpassword":"عرض كلمة المرور",
+    "forgetyourpassword":"نسيت كلمة المرور",
+    "dontHaveAnAccountYet":"لا تملك حسابا حتى الآن",
+
+    "creatingAnAccount":"إنشاء حساب",
+    "student":"تلميذ",
+    "teacher":"معلم",
+    "firstname":"الاسم الأول",
+    "lastname":"اسم العائلة",
+    "email":"البريد الإلكتروني",
+    "birthday":"تاريخ الميلاد",
+    "phonenumber":"رقم الهاتف",
+    "createNewAccount":"انشاء حساب جديد",
+    "alreadyHaveAnAccount":"هل لديك حساب"
+}

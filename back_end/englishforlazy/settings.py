@@ -45,8 +45,9 @@ INSTALLED_APPS = [
     'djoser',
     'debug_toolbar',
     'dashboard',
-    'task_management',
-    'core'
+    'core',
+    'chat',
+    'channels',
 
 ]
 
@@ -214,3 +215,12 @@ TEMPLATES = [
         },
     },
 ]
+
+ASGI_APPLICATION = "englishforlazy.asgi.application"
+
+CHANNEL_LAYERS = {
+    "default" :  {
+        "BACKEND" : "channels.layers.InMemoryChannelLayer"
+    }
+}
+

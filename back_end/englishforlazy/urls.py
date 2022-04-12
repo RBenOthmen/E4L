@@ -22,7 +22,6 @@ import dashboard
 from django.contrib import admin
 from django.urls import path
 from django.urls.conf import include
-from task_management import views
 from rest_framework import routers
 
 
@@ -32,6 +31,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('dashboard/', include('dashboard.urls')),
     path('core/', include('core.urls')),
+    path('chat/', include('chat.urls')),
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.jwt')),
     path('__debug__/', include(debug_toolbar.urls)),

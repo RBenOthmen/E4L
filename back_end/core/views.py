@@ -59,6 +59,13 @@ class TeacherViewSet(ModelViewSet):
 
     def get_queryset(self ):     
         return User.objects.filter(role="T")
+
+class StudentViewSet(ModelViewSet):
+   
+    serializer_class = UserSerializer
+
+    def get_queryset(self ):     
+        return User.objects.filter(role="S")
     
     
 

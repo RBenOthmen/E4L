@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -27,6 +27,8 @@ import { ProfilePageComponent } from './components/profile-page/profile-page.com
 import { AccountPageComponent } from './components/account-page/account-page.component';
 import { PasswordComponent } from './formComponents/password/password.component';
 import { TeacherListComponent } from './components/teacher-list/teacher-list.component';
+import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 import { UserItemComponent } from './components/user-item/user-item.component';
 import { TeacherProfileComponent } from './components/teacher-profile/teacher-profile.component';
@@ -45,8 +47,13 @@ import { PasswordResetConfirmComponent } from './components/password-reset-confi
 import { AddTaskComponent } from './todolist/add-task/add-task.component';
 import { TaskItemComponent } from './todolist/task-item/task-item.component';
 import { TasksComponent } from './todolist/tasks/tasks.component';
+import { MessengerComponent } from './Messenger/messenger/messenger.component';
+import { MessengerWindowComponent } from './Messenger/messenger-window/messenger-window.component';
+import { MessengerUserItemComponent } from './Messenger/messenger-user-item/messenger-user-item.component';
 
-
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
 
 @NgModule({
   declarations: [
@@ -73,6 +80,9 @@ import { TasksComponent } from './todolist/tasks/tasks.component';
     AddTaskComponent,
     TaskItemComponent,
     TasksComponent,
+    MessengerComponent,
+    MessengerWindowComponent,
+    MessengerUserItemComponent,
     
   ],
   imports: [
@@ -94,10 +104,18 @@ import { TasksComponent } from './todolist/tasks/tasks.component';
     ToastModule,
     MessagesModule,
     MessageModule,
+    TranslateModule.forRoot({
+      loader: {
+          provide: TranslateLoader,
+          useFactory: HttpLoaderFactory,
+          deps: [HttpClient]
+      }
+  }),
   ],
   providers: [
     UserService,
-    MessageService
+    MessageService,
+    HttpClient,
   ],
   bootstrap: [AppComponent]
 })

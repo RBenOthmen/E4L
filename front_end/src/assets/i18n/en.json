@@ -1,0 +1,35 @@
+{
+    "settings":"Settings",
+    "profile":"Profile",
+    "account":"Account",
+    "logout":"Logout",
+    "login":"Login",
+    "signup":"Signup",
+    "todolist":"ToDoList",
+    "teachers":"Teachers",
+    "lessons":"Lessons",
+    "home":"Home",
+    
+    "signingin":"Signing In",
+    "username":"Username",
+    "password":"Password",
+    "showpassword":"Show Password",
+    "forgetyourpassword":"Forget your password",
+    "dontHaveAnAccountYet":"Dont have an account yet",
+
+    "creatingAnAccount":"Creating an Account",
+    "student":"Student",
+    "teacher":"Teacher",
+    "firstname":"First name",
+    "lastname":"Last name",
+    "email":"Email",
+    "birthday":"Birthday",
+    "phonenumber":"Phone number",
+    "createNewAccount":"Create New Account",
+    "alreadyHaveAnAccount":"Already have an account"
+    
+
+    
+
+    
+}

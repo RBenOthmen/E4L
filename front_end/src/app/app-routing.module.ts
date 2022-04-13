@@ -13,8 +13,12 @@ import { TeacherListComponent } from './components/teacher-list/teacher-list.com
 import { TeacherProfileComponent } from './components/teacher-profile/teacher-profile.component';
 import { PasswordResetComponent } from './components/password-reset/password-reset.component';
 import { PasswordResetConfirmComponent } from './components/password-reset-confirm/password-reset-confirm.component';
-import { ChatComponent } from './components/chat/chat.component';
 import { MessengerComponent } from './Messenger/messenger/messenger.component';
+
+import { UserDetailsComponent } from './components/admin-components/user-details/user-details.component';
+import { AdminStudentsComponent } from './components/admin-students/admin-students.component';
+import { AdminTeachersListComponent } from './components/admin-teachers-list/admin-teachers-list.component';
+import { AdminComponent } from './components/admin/admin.component';
 
 
 const routes: Routes = [
@@ -34,6 +38,11 @@ const routes: Routes = [
   {path: 'activate/:uid/:token', component: ActivateEmailComponent},
   {path: 'tasks', component: TasksComponent},
   {path: 'chat', component: MessengerComponent},
+  { path: 'admin', component: AdminComponent},
+  { path: 'admin-teachers', component: AdminTeachersListComponent},
+  { path: 'admin-students', component: AdminStudentsComponent},
+  { path: 'user-details', component: UserDetailsComponent},
+  { path: 'app-admin', component: AdminComponent},
 ];
 
 @NgModule({

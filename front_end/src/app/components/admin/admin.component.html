@@ -1,0 +1,59 @@
+<form [formGroup]="createUserForm" class="row g-3">
+  <div class="form-group">
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>First Name</th>
+        <th>Last name</th>
+        <th>Email</th>
+        <th>Password</th>
+        <th>Birthdate</th>
+        <th>Phone number</th>
+      </tr>
+    </thead>
+    <td><input id="username" type="text" class="form-control" /></td>
+    <td><input id="first_name" type="text" class="form-control" /></td>
+    <td><input id="last_name" type="text" class="form-control" /></td>
+    <td><input id="email" type="text" class="form-control" /></td>
+    <td><input id="password" type="text" class="form-control" /></td>
+    <td><input id="birthday" type="text" class="form-control" /></td>
+    <td><input id="phone" type="text" class="form-control" /></td>
+    <td><button class="btn btn-primary" (click)="createUser()">Add Student</button></td>
+  </div>
+  <button class="btn btn-info" (click)="getStudents()">
+    Show All Students
+  </button>
+</form>
+
+<!-- --------------------------------------------------------------------------------- -->
+<hr />
+
+<form [formGroup]="createTeacherForm" class="row g-3">
+  <div class="form-group">
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>First Name</th>
+        <th>Last name</th>
+        <th>Email</th>
+        <th>Password</th>
+        <th>Birthdate</th>
+        <th>Phone Number</th>
+        <th>LinkedIn</th>
+      </tr>
+    </thead>
+    <td><input id="username" type="text" class="form-control" /></td>
+    <td><input id="first_name" type="text" class="form-control" /></td>
+    <td><input id="last_name" type="text" class="form-control" /></td>
+    <td><input id="email" type="text" class="form-control" /></td>
+    <td><input id="password" type="text" class="form-control" /></td>
+    <td><input id="birthdate" type="text" class="form-control" /></td>
+    <td><input id="phone" type="text" class="form-control" /></td>
+    <td><input id="linkedIn" type="text" class="form-control" /></td>
+    <td><button class="btn btn-primary" (click)="createTeacher()">Add Teacher</button></td>
+    <td></td>
+  </div>
+  <button class="btn btn-info" (click)="getTeachers()">
+    Show All Teachers
+  </button>
+</form>

@@ -1,0 +1,28 @@
+<div class="admin-container">
+      <div class="row col-md-6 col-md-offset-2 custyle">
+        <table class="table table-striped custab">
+          <thead>
+            <tr>
+              <th>First Name</th>
+              <th>Last name</th>
+              <th>Email</th>
+              <th>Phone Number</th>
+              <th>Birthday</th>
+              <!-- <th>LinkedIn</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let teacher of teachers">
+              <td><input id="first_name" value="{{teacher.first_name}}" type='text'></td>
+              <td><input id="last_name" value="{{teacher.last_name}}" type='text'></td>
+              <td><input id="email" value="{{teacher.email}}" type='text'></td>
+              <td><input id="phone" value="{{teacher.phone}}" type='text'></td>
+              <td><input id="birth_date" value="{{teacher.birth_date}}" type='text'></td>
+              <!-- <td><input id="linkedin" value="{{teacher.linkedin}}" type='text'></td> -->
+              <td><button class="btn btn-warning" (click)="updateTeacher(teacher)">Update</button></td>
+              <td><button class="btn btn-danger" (click)="deleteTeacher(teacher)">Delete</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+</div>

@@ -51,6 +51,13 @@ import { MessengerComponent } from './Messenger/messenger/messenger.component';
 import { MessengerWindowComponent } from './Messenger/messenger-window/messenger-window.component';
 import { MessengerUserItemComponent } from './Messenger/messenger-user-item/messenger-user-item.component';
 
+import { AdminComponent } from './components/admin/admin.component';
+import { AdminTeachersListComponent } from './components/admin-teachers-list/admin-teachers-list.component';
+import { AdminStudentsComponent } from './components/admin-students/admin-students.component';
+import { UserDetailsComponent } from './components/admin-components/user-details/user-details.component';
+import { CalendarComponent } from './components/calendar/calendar.component';
+import { LinkToClickComponent } from './components/calendar/link-to-click/link-to-click.component';
+
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
@@ -83,7 +90,13 @@ export function HttpLoaderFactory(http: HttpClient) {
     MessengerComponent,
     MessengerWindowComponent,
     MessengerUserItemComponent,
-    
+    AdminComponent,
+    AdminTeachersListComponent,
+    AdminStudentsComponent,
+    UserDetailsComponent,
+    CalendarComponent,
+    LinkToClickComponent
+
   ],
   imports: [
     BrowserModule,

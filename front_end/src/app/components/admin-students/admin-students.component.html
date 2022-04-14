@@ -1,4 +1,4 @@
-<div class="table-container">
+<div class="admin-container">
   <button class="btn btn-primary" (click)="addUser(student)">
     Add
   </button>
@@ -15,7 +15,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let student of students">
+          <tr *ngFor="let student of students" [@adminStudent]>
             <td>
               <!-- <input
                 id="first_name"
@@ -40,7 +40,7 @@
               <!-- <input
                 id="birth_date"
                 value="{{ student.birth_date }}"
-                type="text" 
+                type="text"
               /> -->
               {{ student.birth_date }}
             </td>

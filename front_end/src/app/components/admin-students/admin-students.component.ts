@@ -8,11 +8,29 @@ import { AdminService } from 'src/app/services/admin.service';
 import { NotFoundError } from 'src/app/exceptions/not-found-error';
 import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { User } from 'src/app/interfaces/user';
+import { style, transition, trigger, useAnimation, animate } from '@angular/animations';
+import { bounceOutLeftAnimation, fadeInAnimation } from 'src/app/animations';
 
 @Component({
   selector: 'app-admin-students',
   templateUrl: './admin-students.component.html',
   styleUrls: ['./admin-students.component.css'],
+  animations: [
+    trigger('adminStudent', [
+      transition(':enter', [
+        useAnimation(fadeInAnimation, {
+          params: {
+            duration: '400ms',
+          },
+        }),
+      ]),
+      transition(':leave', [
+        style({ backgroundColor: 'red' }),
+        animate(350),
+        useAnimation(bounceOutLeftAnimation),
+      ]),
+    ]),
+  ],
 })
 export class AdminStudentsComponent implements OnInit {
   students!: Student[];
@@ -69,7 +87,7 @@ export class AdminStudentsComponent implements OnInit {
       data : user
     }).afterClosed().subscribe(
       val => {
-        if (val === "Update") 
+        if (val === "Update")
           console.log()
       }
     );
@@ -80,7 +98,7 @@ export class AdminStudentsComponent implements OnInit {
       width : '30%'
     }).afterClosed().subscribe(
       val => {
-        if (val === "Add") 
+        if (val === "Add")
           console.log()
       }
     );

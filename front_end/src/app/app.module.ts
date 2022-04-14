@@ -57,6 +57,7 @@ import { AdminComponent } from './components/admin/admin.component';
 import { AdminTeachersListComponent } from './components/admin-teachers-list/admin-teachers-list.component';
 import { AdminStudentsComponent } from './components/admin-students/admin-students.component';
 import { UserDetailsComponent } from './components/admin-components/user-details/user-details.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -91,7 +92,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MessengerWindowComponent,
     MessengerUserItemComponent,
     LanguageSelecteurComponent,
-    
+
     AdminComponent,
     AdminTeachersListComponent,
     AdminStudentsComponent,
@@ -127,6 +128,7 @@ export function HttpLoaderFactory(http: HttpClient) {
           deps: [HttpClient]
       }
   }),
+  BrowserAnimationsModule,
   ],
   providers: [
     UserService,

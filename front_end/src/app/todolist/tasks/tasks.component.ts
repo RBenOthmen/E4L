@@ -15,7 +15,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class TasksComponent implements OnInit {
   tasks : Task[] = [];
   color !: string;
-  buttonText : string = 'Add';
+  buttonText : string = 'add';
   title = 'To do list';
   id !: number;
   showAddTask : boolean = false;
@@ -101,9 +101,9 @@ export class TasksComponent implements OnInit {
   toggleAddTask() {
     this.uiService.toggleAddTask();
     if (this.showAddTask == false) {
-      this.buttonText = 'Add';
+      this.buttonText = 'add';
     } else {
-      this.buttonText = 'Close';
+      this.buttonText = 'close';
     }
  }
 

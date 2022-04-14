@@ -1,20 +1,18 @@
 <div class="task-container">
     <header>
-        <h1>{{title}}</h1>
-        <!-- *ngIf="hasRoute('/')" -->
-        <!-- <app-button 
-        color="{{showAddTask ? 'red' : 'green'}}" 
-        text="{{showAddTask ? 'Close' : 'Add'}}" 
-        (btnClick)="toggleAddTask()"></app-button>
-        <button 
-    [ngStyle]="{'background-color' : color}" 
-    class="btn" 
-    (click)="toggleAddTask()">{{text}}</button> -->
+        <h1>{{"todolist" | translate}}</h1>
     
     <button class="btn"
     [ngStyle]="{'background-color' : getColor() }"
     (click)="toggleAddTask()">
-    {{buttonText}}
+    <div *ngIf="buttonText == 'close'">
+        {{"close" | translate}}
+    </div>
+    <div *ngIf="buttonText == 'add'">
+        {{"add" | translate}}
+    </div>
+    
+    
     </button>
     </header>
     <app-add-task (onAddTask)="addTask($event)"></app-add-task>

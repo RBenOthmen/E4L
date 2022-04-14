@@ -9,6 +9,7 @@
     "teachers":"Teachers",
     "lessons":"Lessons",
     "home":"Home",
+    "messages":"Messages",
     
     "signingin":"Signing In",
     "username":"Username",
@@ -26,7 +27,20 @@
     "birthday":"Birthday",
     "phonenumber":"Phone number",
     "createNewAccount":"Create New Account",
-    "alreadyHaveAnAccount":"Already have an account"
+    "alreadyHaveAnAccount":"Already have an account",
+
+    "task":"Task",
+    "limitdate":"Limit date",
+    "add":"Add",
+    "close":"Close",
+    "addedon":"Added on",
+    "savetask":"Save task",
+
+    "choiceAUser":"Choice a user",
+    "exit":"Exit",
+    "send":"Send",
+    "you":"You"
+    
     
 
     

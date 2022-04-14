@@ -9,6 +9,7 @@
     "teachers":"Professeurs",
     "lessons":"Cours",
     "home":"Accueil",
+    "messages":"Messages",
 
     "signingin":"Connectez-vous",
     "username":"Nom d'utilisateur",
@@ -26,5 +27,17 @@
     "birthday":"Date d'anniversaire",
     "phonenumber":"Numéro de téléphone",
     "createNewAccount":"Créer un nouveau compte",
-    "alreadyHaveAnAccount":"Vous avez déjà un compte"
+    "alreadyHaveAnAccount":"Vous avez déjà un compte",
+
+    "task":"Tache",
+    "limitdate":"Date limite",
+    "add":"Ajout",
+    "close":"Fermer",
+    "addedon":"Ajouté le",
+    "savetask":"Enregistrer la tâche",
+
+    "choiceAUser":"Choisissez un utilisateur",
+    "exit":"Sortie",
+    "send":"Envoyer",
+    "you":"Tu"
 }

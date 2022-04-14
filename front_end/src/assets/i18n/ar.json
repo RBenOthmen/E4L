@@ -9,6 +9,7 @@
     "teachers":"معلمون",
     "lessons":"الدروس",
     "home":"ترحيب",
+    "messages":"رسائل",
 
     "signingin":"تسجيل الدخول",
     "username":"اسم االمستخدم",
@@ -26,5 +27,17 @@
     "birthday":"تاريخ الميلاد",
     "phonenumber":"رقم الهاتف",
     "createNewAccount":"انشاء حساب جديد",
-    "alreadyHaveAnAccount":"هل لديك حساب"
+    "alreadyHaveAnAccount":"هل لديك حساب",
+
+    "task":"مهمة",
+    "limitdate":"تاريخ محدد",
+    "add":"ضف",
+    "close":"أغلق",
+    "addedon":"أضاف في",
+    "savetask":"حفظ المهمة",
+
+    "choiceAUser":"اختيار مستخدم",
+    "exit":"خروج",
+    "send":"إرسال",
+    "you":"أنت"
 }

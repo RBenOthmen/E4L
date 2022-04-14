@@ -50,6 +50,7 @@ import { TasksComponent } from './todolist/tasks/tasks.component';
 import { MessengerComponent } from './Messenger/messenger/messenger.component';
 import { MessengerWindowComponent } from './Messenger/messenger-window/messenger-window.component';
 import { MessengerUserItemComponent } from './Messenger/messenger-user-item/messenger-user-item.component';
+import { LanguageSelecteurComponent } from './components/language-selecteur/language-selecteur.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -83,6 +84,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MessengerComponent,
     MessengerWindowComponent,
     MessengerUserItemComponent,
+    LanguageSelecteurComponent,
     
   ],
   imports: [

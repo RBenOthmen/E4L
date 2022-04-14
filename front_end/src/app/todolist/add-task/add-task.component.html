@@ -1,15 +1,15 @@
 <form *ngIf="showAddTask" class="add-form" (ngSubmit)="onSubmit()">
     <div class="form-control">
-        <label for="text">Text</label>
+        <label for="text">{{"task" | translate}}</label>
         <input type="text" name="text" [(ngModel)]="text" id="text">
     </div>
     <div class="form-control">
-        <label for="date">Date Limit</label>
+        <label for="date">{{"limitdate" | translate}}</label>
         <input type="date" name="date" [(ngModel)]="date" id="date">
     </div>
     <!-- <div class="form-control form-control-check">
         <label for="reminder">Set Reminder</label>
         <input type="checkbox" name="reminder" [(ngModel)]="reminder" id="reminder">
     </div> -->
-    <input type="submit" value="Save Task" class="btn btn-block">
+    <input type="submit" value="{{'savetask' | translate}}" class="btn btn-block">
 </form>

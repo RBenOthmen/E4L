@@ -1,0 +1,12 @@
+.admin-container {
+    padding-left: 2%;
+}
+
+.admin-container input {
+    width: auto;
+}
+
+.table-container {
+    width: 80%;
+    margin: 50px auto;
+}

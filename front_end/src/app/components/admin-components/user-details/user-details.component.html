@@ -1,0 +1,23 @@
+<form [formGroup]="form" (ngSubmit)="submitForm(form)">
+    <div formGroupName="account">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input
+          formControlName="username"
+          type="text"
+          class="form-control"
+          id="username"
+        />
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          formControlName="password"
+          type="text"
+          class="form-control"
+          id="password"
+        />
+      </div>
+    </div>
+    <button class="btn btn-primary" type="submit">Sign Up</button>
+  </form>

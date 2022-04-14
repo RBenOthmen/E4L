@@ -28,6 +28,13 @@
     "phonenumber":"Phone number",
     "createNewAccount":"Create New Account",
     "alreadyHaveAnAccount":"Already have an account",
+    "signup_error_first_name":"First name should be at least 3 caracters",
+    "signup_error_last_name":"Last name should be at least 3 caracters",
+    "signup_error_username":"username should be at least 3 caracters/numbers",
+    "signup_error_email":"Email should be at this form example@email.com",
+    "signup_error_password":"Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one symbol",
+    "signup_error_birthday":"Enter a valid birthday",
+    "signup_error_phone_number":"Enter a valid phone number",
 
     "task":"Task",
     "limitdate":"Limit date",

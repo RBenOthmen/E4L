@@ -52,6 +52,12 @@ import { MessengerWindowComponent } from './Messenger/messenger-window/messenger
 import { MessengerUserItemComponent } from './Messenger/messenger-user-item/messenger-user-item.component';
 import { LanguageSelecteurComponent } from './components/language-selecteur/language-selecteur.component';
 
+import {MatDialogModule} from '@angular/material/dialog';
+import { AdminComponent } from './components/admin/admin.component';
+import { AdminTeachersListComponent } from './components/admin-teachers-list/admin-teachers-list.component';
+import { AdminStudentsComponent } from './components/admin-students/admin-students.component';
+import { UserDetailsComponent } from './components/admin-components/user-details/user-details.component';
+
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
@@ -86,6 +92,13 @@ export function HttpLoaderFactory(http: HttpClient) {
     MessengerUserItemComponent,
     LanguageSelecteurComponent,
     
+    AdminComponent,
+    AdminTeachersListComponent,
+    AdminStudentsComponent,
+    UserDetailsComponent,
+
+
+
   ],
   imports: [
     BrowserModule,
@@ -106,6 +119,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ToastModule,
     MessagesModule,
     MessageModule,
+    MatDialogModule,
     TranslateModule.forRoot({
       loader: {
           provide: TranslateLoader,

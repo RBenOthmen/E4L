@@ -3,85 +3,100 @@
   <div class="form_sign">
     <h2 class="title_sign">{{ 'creatingAnAccount' | translate }}</h2>
     <form [formGroup]="registerForm" class="row g-3" (submit)="register()">
-      <span>
-        <div>
-          <input type="radio" id="student" name="user" value="student" formControlName="user" checked>
-          <label for="student"> {{ 'student' | translate }}</label>
-        </div>
+      <span class="centralize">
+          <mat-radio-button id="student" name="user" value="student" formControlName="user" checked></mat-radio-button>
+          <label for="student"> {{ 'student' | translate }} </label>
 
-        <div>
-          <input type="radio" id="teacher" name="user" value="teacher" formControlName="user">
+          <mat-radio-button id="teacher" name="user" value="teacher" formControlName="user"></mat-radio-button>
           <label for="teacher"> {{ 'teacher' | translate }}</label>
-        </div>
       </span>
+
+
       <!--    Full Name-->
-      <div class="form-group">
-        <label for="first_name">{{ 'firstname' | translate }}:</label>
-        <input aria-label="" placeholder="{{ 'firstname' | translate }}" formControlName="first_name" type="text" id="first_name"
-          name="first_name" class="form-control">
+        <mat-form-field class="example-full-width" appearance="fill"> <!-- appearance="fill" -->
+          <mat-label>First name</mat-label>
+          <input matInput placeholder="First name" formControlName="first_name" type="text" id="first_name">
+        </mat-form-field>
         <small *ngIf="first_name!.invalid && first_name?.touched" class="text-danger">{{ 'signup_error_first_name' | translate }}</small>
-      </div>
-      <div class="form-group">
-        <label for="last_name">{{ 'lastname' | translate }}:</label>
-        <input aria-label="" placeholder="{{ 'lastname' | translate }}" formControlName="last_name" type="text" id="last_name"
-          name="last_name" class="form-control">
+
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>last_name</mat-label>
+          <input matInput placeholder="last_name" formControlName="last_name" type="text" id="last_name">
+        </mat-form-field>
         <small *ngIf="last_name!.invalid && last_name?.touched" class="text-danger">{{ 'signup_error_last_name' | translate }}</small>
-      </div>
-      <div class="form-group">
-        <label for="username">{{ 'username' | translate }}:</label>
-        <input aria-label="" placeholder="{{ 'username' | translate }}" formControlName="username" type="text" id="username" name="username"
-          class="form-control">
-        <small *ngIf="username!.invalid && username?.touched" class="text-danger">
-          {{ 'signup_error_username' | translate }}
-        </small>
-      </div>
+
+        <mat-form-field class="example-full-width" appearance="fill" >
+          <mat-label>Username</mat-label>
+          <input matInput value="" placeholder="username" formControlName="username" type="text" id="username">
+        </mat-form-field>
+        <small *ngIf="username!.invalid && username?.touched" class="text-danger">{{ 'signup_error_username' | translate }}</small>
+
+
       <!--    Email-->
-      <div class="form-group">
-        <label for="email">{{ 'email' | translate }}:</label>
-        <input placeholder="{{ 'email' | translate }}" formControlName="email" type="text" id="email" name="email" class="form-control">
-        <small *ngIf="email?.invalid && email?.touched" class="text-danger">
-          {{ 'signup_error_email' | translate }}
-        </small>
-      </div>
+      <mat-form-field class="example-full-width" appearance="fill" >
+        <mat-label>email</mat-label>
+        <input matInput placeholder="email" formControlName="email" type="text" id="email">
+      </mat-form-field>
+      <mat-error *ngIf="email!.invalid && email?.touched" class="text-danger">
+        {{ 'signup_error_email' | translate }}
+      </mat-error>
+
+
       <!--Password-->
-      <div class="form-group">
-        <label for="password">{{ 'password' | translate }}:</label>
-        <input placeholder="{{ 'password' | translate }}" formControlName="password" [type]="showPassword" id="password" name="password"
-          class="form-control">
-        <small *ngIf="password?.invalid && password?.touched" class="text-danger">
-          {{ 'signup_error_password' | translate }}
-        </small>
-        <p><input type="checkbox" id="passwordStatus" name="passwordStatus" (click)="togglePassword()"> {{ 'showpassword' | translate }}
-        </p>
-      </div>
-    
+      <mat-form-field class="example-full-width" appearance="fill" >
+        <mat-label>password</mat-label>
+        <input matInput placeholder="password" formControlName="password" [type]="showPassword" id="password" name="password">
+      </mat-form-field>
+      <small *ngIf="password!.invalid && password?.touched" class="text-danger">{{ 'signup_error_password' | translate }}</small>
 
-      <!--Birthday-->
-      <div class="form-group">
-        <label for="birthday">{{ 'birthday' | translate }}:</label>
-        <input placeholder="Birthday" formControlName="birthday" type="date" id="birthday" name="birthday"
-          class="form-control">
-        <small *ngIf="birthday?.invalid && birthday?.touched" class="text-danger">
+      <!-- Show/Hide password(angularMaterial)
+      <div class="example-container">
+        <mat-form-field appearance="fill">
+          <mat-label>Enter your password</mat-label>
+          <input matInput [type]="hide ? 'password' : 'text'">
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" floatLabel="always">
+          <mat-label>Amount</mat-label>
+          <input matInput type="number" class="example-right-align" placeholder="0">
+          <span matPrefix>$&nbsp;</span>
+          <span matSuffix>.00</span>
+        </mat-form-field>
+      </div> -->
+
+      <mat-checkbox id="passwordStatus" name="passwordStatus" (click)="togglePassword()">{{ 'showpassword' | translate }}</mat-checkbox>
+
+
+      <!-- BirthDate -->
+      <mat-form-field >
+        <mat-label>Choose a date</mat-label>
+        <input [min]="minDate" [max]="maxDate" matInput [matDatepicker]="picker" formControlName="birthday" id="birthday" name="birthday" readonly="true"> <!-- (focus)="picker.open()" -->
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker touchUi="true"></mat-datepicker>
+        <mat-error *ngIf="(birthday?.invalid && birthday?.touched) || (birthday?.touched && this.dateInput)">
           {{ 'signup_error_birthday' | translate }}
-        </small>
-      </div>
-      <!--Phone Number-->
-      <div class="form-group">
-        <label for="phone">{{ 'phonenumber' | translate }}:</label>
-        <input placeholder="Phone number" formControlName="phone" type="number" id="phone" name="phone"
-          class="form-control">
-        <small *ngIf="phone?.invalid && phone?.touched" class="text-danger">
-          {{ 'signup_error_phone_number' | translate }}
-        </small>
-      </div>
+        </mat-error>
+      </mat-form-field>
 
+
+      <!--Phone Number-->
+      <mat-form-field class="example-full-width" appearance="fill" >
+        <mat-label>phone</mat-label>
+        <input matInput placeholder="phone" formControlName="phone" type="number" id="phone">
+      </mat-form-field>
+      <small *ngIf="phone!.invalid && phone?.touched" class="text-danger">{{ 'signup_error_phone' | translate }}</small>
 
       <small class="text-danger" *ngIf="invalidSignup">This username or email is already used !</small>
 
       <small class="text-danger" *ngIf="serverOffline">Server offline, reconnecting ...</small>
 
       <div class="button_sign">
-        <button pButton>{{ 'createNewAccount' | translate }}</button>
+        <!-- <button pButton>{{ 'createNewAccount' | translate }}</button> -->
+        <button color="primary" mat-raised-button>{{ 'createNewAccount' | translate }}</button>
       </div>
     </form>
 

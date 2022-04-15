@@ -11,7 +11,7 @@ import { AppError } from '../exceptions/AppError';
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.css']
+  styleUrls: ['./sign-up.component.css'],
 })
 export class SignUpComponent implements OnInit {
   isToggled : boolean = false;
@@ -19,6 +19,8 @@ export class SignUpComponent implements OnInit {
   registerForm!: FormGroup;
   invalidSignup : boolean = false;
   serverOffline : boolean = false;
+  minDate = new Date(1910, 1, 1);
+  maxDate = new Date(2014, 1, 1);
 
   constructor(private userService: UserService,
     private authService : AuthService,
@@ -36,10 +38,31 @@ export class SignUpComponent implements OnInit {
       "username": new FormControl(null, [Validators.required, Validators.minLength(3), Validators.pattern('(^[a-zA-Z ]+[0-9]*)')]),
       "email": new FormControl(null, [Validators.required, Validators.email]),
       "password": new FormControl(null, [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')]),
-      "birthday": new FormControl(null, [Validators.required, Validators.pattern('[0-9]{4}-[0-9]{2}-[0-9]{2}')]),
+      // "birthday": new FormControl(null, [Validators.required, Validators.pattern('[0-9]{4}-[0-9]{2}-[0-9]{2}')]),
+      "birthday": new FormControl(null, Validators.required),
       "phone": new FormControl(null, [Validators.required, Validators.min(10000000), Validators.max(99999999)]),
       "user" : new FormControl(null, Validators.required),
     })
+  }
+
+
+  private day: number| undefined;
+  private month: number| undefined;
+  private year: number| undefined;
+  private isValidDate: boolean| undefined;
+  dateValidator(date: Date): boolean{
+    this.day = date.getDate();
+    this.month = date.getMonth() + 1;
+    this.year = date.getFullYear();
+
+    this.isValidDate = this.day in [1, 31] && this.month in [1, 12] && this.year in [1920, 2014];
+    console.log(this.isValidDate);
+    console.log(this.day + "/" + this.month + "/" + this.year);
+    return this.isValidDate;
+  }
+
+  get dateInput() {
+    return this.isValidDate;
   }
 
 

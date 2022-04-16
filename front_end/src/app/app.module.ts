@@ -1,3 +1,4 @@
+import { MatComponentsModule } from './modules/mat-components/mat-components.module';
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
@@ -58,15 +59,6 @@ import { AdminTeachersListComponent } from './components/admin-teachers-list/adm
 import { AdminStudentsComponent } from './components/admin-students/admin-students.component';
 import { UserDetailsComponent } from './components/admin-components/user-details/user-details.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import {MatRadioModule} from '@angular/material/radio';
-import {MatInputModule} from '@angular/material/input';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-import {MatButtonModule} from '@angular/material/button';
-import {MatChipsModule} from '@angular/material/chips';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 
 
@@ -140,15 +132,7 @@ export function HttpLoaderFactory(http: HttpClient) {
       }
   }),
   BrowserAnimationsModule,
-  MatCheckboxModule,
-  MatRadioModule,
-  MatInputModule,
-  MatDatepickerModule,
-  MatNativeDateModule,
-  MatButtonModule,
-  MatChipsModule,
-  MatProgressSpinnerModule,
-  MatProgressBarModule,
+  MatComponentsModule,
   ],
   providers: [
     UserService,

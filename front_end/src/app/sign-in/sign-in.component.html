@@ -1,5 +1,5 @@
 <div class="container">
-  
+
   <div class="form_sign">
     <h2 class="title_sign">{{ 'signingin' | translate }}</h2>
     <form [formGroup]="loginForm" class="row g-3" (submit)="signIn()">
@@ -25,18 +25,17 @@
 
       <small class="text-danger" *ngIf="serverOffline">Server offline, reconnecting ...</small>
 
-    
+
       <a (click)="passwordReset()"><div class="hypertext">{{ 'forgetyourpassword' | translate }} ?</div></a>
-    
+
 
       <div class="button_sign">
-        <button pButton type="submit"  class="w-full">
+        <button mat-raised-button color="primary" type="submit"  class="w-full">
           {{ 'login' | translate }}
-
         </button>
       </div>
     </form>
-
+ 
 
 
     <br>
@@ -44,7 +43,7 @@
       {{ 'dontHaveAnAccountYet' | translate }} !<a (click)="goToSignup()"><div class="hypertext">{{ 'signup' | translate }}</div></a>
     </div>
 
-    
+
 
   </div>
 </div>

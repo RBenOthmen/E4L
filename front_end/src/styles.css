@@ -1,5 +1,11 @@
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css");
 /* @import "../node_modules/@angular/material/prebuilt-themes/indigo-pink.css"; */
+@import "https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap";
+
+/* @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+@import '@angular/material/prebuilt-themes/purple-green.css';
+@import '@angular/material/prebuilt-themes/pink-bluegrey.css'; */
 
 @font-face {
   font-family: "poppins";
@@ -19,6 +25,7 @@
 /*}*/
 
 /* You can add global styles to this file, and also import other style files */
+
 .title_sign{
   color: black;
   text-align: center;

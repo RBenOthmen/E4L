@@ -62,6 +62,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 
+import { CommonModule } from '@angular/common';
+import { FlatpickrModule } from 'angularx-flatpickr';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CalendarComponent } from './components/calendar/calendar.component';
+import { OrganizeMeetingComponent } from './components/organize-meeting/organize-meeting.component';
+
+
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
@@ -100,6 +110,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     AdminTeachersListComponent,
     AdminStudentsComponent,
     UserDetailsComponent,
+    CalendarComponent,
+    OrganizeMeetingComponent,
 
 
 
@@ -133,6 +145,13 @@ export function HttpLoaderFactory(http: HttpClient) {
   }),
   BrowserAnimationsModule,
   MatComponentsModule,
+    CommonModule,
+    NgbModalModule,
+    FlatpickrModule.forRoot(),
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
   ],
   providers: [
     UserService,

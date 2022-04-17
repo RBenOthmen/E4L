@@ -8,6 +8,7 @@ import { NotFoundError } from '../exceptions/not-found-error';
 import { Student } from '../interfaces/Student';
 import { Unauthorized } from '../exceptions/Unauthorized';
 import { Forbidden } from '../exceptions/Forbidden';
+import { User } from '../interfaces/user';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +18,7 @@ export class AdminService {
   // private urlDashboardStudent = 'http://localhost:8000/dashboard/eleves/';
   private urlStudents = 'http://localhost:8000/core/students/';
   private urlTeachers = 'http://localhost:8000/core/teachers/';
+  private baseUrl = 'http://localhost:8000/';
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -85,6 +87,13 @@ export class AdminService {
   CreateStudent(student: Student): Observable<Student> {
     return this.http
       .post<Student>(this.urlStudents, student, this.httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+  //////////////////////////////////////
+
+  activateUser(user: User): Observable<User> {
+    return this.http
+      .post<User>(this.baseUrl+'core/activate/'+user.id+'/', user, this.httpOptions)
       .pipe(catchError(this.handleError));
   }
 

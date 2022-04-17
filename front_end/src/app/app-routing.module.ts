@@ -1,3 +1,4 @@
+import { CalendarComponent } from './components/calendar/calendar.component';
 import { TasksComponent } from './todolist/tasks/tasks.component';
 import { ActivateEmailComponent } from './components/activate-email/activate-email.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
@@ -38,11 +39,10 @@ const routes: Routes = [
   {path: 'activate/:uid/:token', component: ActivateEmailComponent},
   {path: 'tasks', component: TasksComponent},
   {path: 'chat', component: MessengerComponent},
-  { path: 'admin', component: AdminComponent},
-  { path: 'admin-teachers', component: AdminTeachersListComponent},
-  { path: 'admin-students', component: AdminStudentsComponent},
+  { path: 'admin', component: AdminStudentsComponent},
   { path: 'user-details', component: UserDetailsComponent},
   { path: 'app-admin', component: AdminComponent},
+  { path: 'calendar', component: CalendarComponent},
 ];
 
 @NgModule({

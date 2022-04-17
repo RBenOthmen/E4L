@@ -8,6 +8,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { User } from 'src/app/interfaces/user';
+import { BadInput } from 'src/app/exceptions/BadInput';
+import { UiService } from 'src/app/services/ui.service';
 
 @Component({
   selector: 'app-admin-teachers-list',
@@ -69,6 +71,8 @@ export class AdminTeachersListComponent implements OnInit {
 
   constructor(private userService: UserService,
     private authService : AuthService,
+    private uiService : UiService,
+    private adminService : AdminService,
     @Inject(MAT_DIALOG_DATA) public editData : User,
     private dialogRef : MatDialogRef<AdminTeachersListComponent>) {
   }
@@ -160,10 +164,53 @@ export class AdminTeachersListComponent implements OnInit {
   }
 
   addUser() {
+    let user : User = this.getUser();
 
+    this.authService.signup(user).subscribe( {
+      next : response => {
+        this.userForm.reset();
+        this.uiService.toastSuccess("Account has been created successfuly")
+        // this.activateUser(response);
+      },
+        error : (err : AppError) => {
+         if (err instanceof BadInput){
+          console.log(err)
+          this.uiService.toastError("Bad input")
+         }
+         else {
+          this.uiService.toastError("Server error")
+         }
+       }
+      });
   }
 
   updateUser() {
 
+  }
+
+  activateUser(user : User) {
+    this.adminService.activateUser(user).subscribe( {
+      next : response => {
+        this.uiService.toastSuccess("Account has been created successfuly")
+      },
+        error : (err : AppError) => {
+
+          this.uiService.toastError("Account has been created without being activated")
+         
+       }
+      });
+  }
+
+  getUser() : User{
+    return  {
+      first_name : this.first_name?.value,
+      last_name : this.first_name?.value,
+      email : this.email?.value,
+      password : this.password?.value,
+      username : this.username?.value,
+      phone : this.phone?.value,
+      birth_date : this.birthday?.value,
+      type : this.user?.value,
+    };
   }
 }

@@ -46,6 +46,19 @@ export class AuthService {
       // this._LoggedIn.next(!!token);
    }
 
+   getToken() {
+    const token = localStorage.getItem('token');
+    if (token)
+      console.log(token)
+  }
+
+  getId() : number{
+    const token = localStorage.getItem('token');
+    return this.helper.decodeToken(<string>token).user_id;
+  }
+
+
+
   login(credentials : User) : Observable<User> {
     //let isLogin : boolean =false;
     return this.http.post<User>(this.url + 'auth/jwt/create/' , credentials , httpOptions)
@@ -124,6 +137,14 @@ export class AuthService {
     )
   }
 
+  getUserId(id : number) : Observable<User>{
+    console.log(this.currentUser.role)
+    if (this.currentUser.role == 'S')
+      return this.http.get<User>(this.url + 'dashboard/studentinfo/' + id +'/' , httpOptions);
+    return this.http.get<User>(this.url + 'dashboard/teacherinfo/' + id +'/', httpOptions);
+    
+  }
+
 
   getUserDetails() : Observable<User> {
     let token = localStorage.getItem('token');
@@ -136,18 +157,29 @@ export class AuthService {
     console.log('im here')
     return this.http.get<User>(this.url + 'auth/users/me/' , Authorization)
     .pipe(
+      catchError(this.handleError),
       tap( response => {
-        this.currentUser.email = response.email;
-        this.currentUser.username = response.username;
-        this.currentUser.first_name = response.first_name;
-        this.currentUser.last_name = response.last_name;
-        this.currentUser.phone = response.phone;
-        this.currentUser.birth_date = response.birth_date;
-        this.currentUser.role = response.role;
-      }
-      )
-    );
+        this.currentUser = response
+        this.getUserId(<number>response.id).subscribe(
+              response => this.currentUser.user_id = response.id
+            );
+      })
+      );
+    
   }
+
+  // tap( response => {
+  //   this.currentUser.email = response.email;
+  //   this.currentUser.username = response.username;
+  //   this.currentUser.first_name = response.first_name;
+  //   this.currentUser.last_name = response.last_name;
+  //   this.currentUser.phone = response.phone;
+  //   this.currentUser.birth_date = response.birth_date;
+  //   this.currentUser.role = response.role;
+  //   this.getUserId(<number>response.id).subscribe(
+  //     response => this.currentUser.user_id = response.id
+  //   );
+  // }
 
 
 

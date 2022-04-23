@@ -93,7 +93,7 @@
   
   <!-- Everything you see below is just for the demo, you don't need to include it in your app -->
   
-  <br /><br /><br />
+  <!-- <br /><br /><br />
   
   <h3>
     Edit events
@@ -109,7 +109,6 @@
         <tr>
           <th>Title</th>
           <th>Color</th>
-          <!-- <th>Secondary color</th> -->
           <th>Starts at</th>
           <th>Ends at</th>
           <th>Remove</th>
@@ -133,13 +132,6 @@
               (change)="refresh.next()"
             />
           </td>
-          <!-- <td>
-            <input
-              type="color"
-              [(ngModel)]="event.color"
-              (change)="refresh.next()"
-            />
-          </td> -->
           <td>
             <input
               class="form-control"
@@ -178,7 +170,7 @@
         </tr>
       </tbody>
     </table>
-  </div>
+  </div> -->
 
   <!-- /////////////////////////////////////////////////////////////////////////// -->
 
@@ -186,7 +178,7 @@
 
   <h3>
     Meetings
-    <button class="btn btn-primary float-right" (click)="addEvent()">
+    <button class="btn btn-primary float-right" (click)="addMeeting()">
       Organize a meeting
     </button>
     <div class="clearfix"></div>
@@ -206,23 +198,29 @@
       <tbody>
         <tr *ngFor="let event of events">
 
-          <td>
-            Username
+          <td (click)="selectUser(event)">
+            <input
+              type="text"
+              placeholder="Select user"
+              class="form-control"
+              [(ngModel)]="event.title"
+              (ngModelChange)="refresh.next()"
+            />
           </td>
           <td>
             <input
               type="color"
               [(ngModel)]="event.color"
-              (change)="refresh.next()"
+              (change)="updateMeeting(event)"
             />
           </td>
-          <!-- <td>
+          <td>
             <input
               class="form-control"
               type="text"
               mwlFlatpickr
               [(ngModel)]="event.start"
-              (ngModelChange)="refresh.next()"
+              (ngModelChange)="updateMeeting(event)"
               [altInput]="true"
               [convertModelValue]="true"
               [enableTime]="true"
@@ -230,16 +228,10 @@
               altFormat="F j, Y H:i"
               placeholder="Not set"
             />
-          </td> -->
-          <td>
-            {{event.start}}
           </td>
           <td>
             <button class="btn btn-danger" (click)="deleteEvent(event)">
               Delete
-            </button>
-            <button class="btn btn-primary" (click)="deleteEvent(event)">
-              Edit
             </button>
           </td>
         </tr>

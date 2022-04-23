@@ -165,8 +165,10 @@ export class AdminTeachersListComponent implements OnInit {
 
   addUser() {
     let user : User = this.getUser();
+    user.role = 'S';
 
-    this.authService.signup(user).subscribe( {
+
+    this.adminService.CreateUser(user).subscribe( {
       next : response => {
         this.userForm.reset();
         this.uiService.toastSuccess("Account has been created successfuly")
@@ -185,7 +187,27 @@ export class AdminTeachersListComponent implements OnInit {
   }
 
   updateUser() {
+    let user : User = this.getUser();
 
+    user.id = this.editData.id;
+    user.role = this.editData.role;
+
+    this.adminService.updateUser(user).subscribe( {
+      next : response => {
+        this.userForm.reset();
+        this.uiService.toastSuccess("Account has been updated successfuly")
+        // this.activateUser(response);
+      },
+        error : (err : AppError) => {
+         if (err instanceof BadInput){
+          console.log(err)
+          this.uiService.toastError("Bad input")
+         }
+         else {
+          this.uiService.toastError("Server error")
+         }
+       }
+      });
   }
 
   activateUser(user : User) {

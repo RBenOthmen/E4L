@@ -1,0 +1,7 @@
+<div mat-dialog-content>
+    <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
+    <app-meet-user-item *ngFor="let item of users" [user]="item" (onChoiceUser)="onChoiceUser(item)">
+
+    </app-meet-user-item>
+</div>
+

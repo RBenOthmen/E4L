@@ -33,7 +33,7 @@
       </small>
     </div>
     <!--Password-->
-    <div class="form-group">
+    <div class="form-group" *ngIf="!this.editData">
       <label for="password">{{ 'password' | translate }}:</label>
       <input placeholder="{{ 'password' | translate }}" formControlName="password" [type]="showPassword" id="password" name="password"
         class="form-control">
@@ -63,6 +63,7 @@
         {{ 'signup_error_phone_number' | translate }}
       </small>
     </div>
+
 
 
     <div>

@@ -68,8 +68,9 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { CalendarComponent } from './components/calendar/calendar.component';
-import { OrganizeMeetingComponent } from './components/organize-meeting/organize-meeting.component';
+import { CalendarComponent } from './Meet-calendar/calendar/calendar.component';
+import { OrganizeMeetingComponent } from './Meet-calendar/organize-meeting/organize-meeting.component';
+import { MeetUserItemComponent } from './Meet-calendar/meet-user-item/meet-user-item.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -112,6 +113,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     UserDetailsComponent,
     CalendarComponent,
     OrganizeMeetingComponent,
+    MeetUserItemComponent,
+
 
 
 

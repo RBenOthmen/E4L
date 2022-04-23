@@ -29,5 +29,7 @@ export class User {
     phone ? : string;
     birth_date? : Date;
     type ? : string;
-    role ?: string
+    role ?: string;
+    user ?: User; 
+    is_active ?: boolean;
 }

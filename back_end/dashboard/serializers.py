@@ -4,15 +4,17 @@ from decimal import Decimal
 import email
 from itertools import product
 from rest_framework import serializers
+from core.serializers import UserSerializer
 
-from dashboard.models import Eleve, Lesson, Professeur, Progress, Task, EleveImage
+from dashboard.models import Eleve, Lesson, Meeting, Professeur, Progress, Task, EleveImage
 
 
 class ProfesseurSerializer(serializers.ModelSerializer):
     user_id = serializers.IntegerField()
+    user = UserSerializer()
     class Meta:
         model = Professeur
-        fields  = ['id', 'user_id']
+        fields  = ['id', 'user_id', 'user']
 
 class LessonSerializer(serializers.ModelSerializer):
 
@@ -50,12 +52,13 @@ class ProgressEleveSerializer(serializers.ModelSerializer):
         return Progress.objects.create(eleve_id=eleve_id , **validated_data)
 
 class EleveSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
     user_id = serializers.IntegerField()
     images = EleveImageSerializer(many=True, read_only=True)
 
     class Meta:
         model = Eleve
-        fields = ['id', 'user_id', 'images']
+        fields = ['id', 'user_id', 'images', 'user']
 
 
 class TaskSerializer(serializers.ModelSerializer):
@@ -72,6 +75,28 @@ class TaskSerializer(serializers.ModelSerializer):
         #     instance = ExampleModel.objects.create(**validated_data)
         #     instance.example_relationship = example_relationship
         #     return instance
+
+class MeetingStudentSerializer(serializers.ModelSerializer):
+    eleve_id = serializers.IntegerField()
+    professeur_id = serializers.IntegerField()
+    class Meta:
+        model = Meeting
+        fields =['id', 'start', 'title', 'color', 'professeur_id', 'eleve_id']
+
+        def create(self, validated_data):
+            eleve_id = self.context['eleve_id']
+            return Meeting.objects.create(eleve_id=eleve_id , **validated_data)
+
+class MeetingTeacherSerializer(serializers.ModelSerializer):
+    eleve_id = serializers.IntegerField()
+    professeur_id = serializers.IntegerField()
+    class Meta:
+        model = Meeting
+        fields =['id', 'start', 'title', 'color', 'professeur_id', 'eleve_id']
+
+        def create(self, validated_data):
+            professeur_id = self.context['professeur_id']
+            return Meeting.objects.create(professeur_id=professeur_id , **validated_data)
 
 
 

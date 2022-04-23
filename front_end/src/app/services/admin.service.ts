@@ -16,9 +16,10 @@ import { User } from '../interfaces/user';
 export class AdminService {
   // private urlCoreTeacher = 'http://localhost:8000/core/teachers';
   // private urlDashboardStudent = 'http://localhost:8000/dashboard/eleves/';
-  private urlStudents = 'http://localhost:8000/core/students/';
-  private urlTeachers = 'http://localhost:8000/core/teachers/';
   private baseUrl = 'http://localhost:8000/';
+  private urlUsers = this.baseUrl+'core/users/';
+  private urlStudents = this.baseUrl+'core/students/';
+  private urlTeachers = this.baseUrl+'core/teachers/';
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -94,6 +95,19 @@ export class AdminService {
   activateUser(user: User): Observable<User> {
     return this.http
       .post<User>(this.baseUrl+'core/activate/'+user.id+'/', user, this.httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
+  CreateUser(user: User): Observable<Teacher> {
+    return this.http
+      .post<Teacher>(this.baseUrl+'core/create/', user, this.httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
+  updateUser(user: User): Observable<User> {
+    console.log(user)
+    return this.http
+      .put<User>(this.urlUsers + user.id + '/', user, this.httpOptions)
       .pipe(catchError(this.handleError));
   }
 

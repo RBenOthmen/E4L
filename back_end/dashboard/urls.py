@@ -8,10 +8,12 @@ from rest_framework_nested import routers
 from . import views
 
 router = routers.DefaultRouter()
-router.register('eleves',views.EleveViewSet)
-router.register('professeurs',views.ProfesseurViewSet)
+router.register('eleves',views.EleveViewSet, basename='eleves')
+router.register('professeurs',views.ProfesseurViewSet, basename='professeurs')
 router.register('lessons',views.LessonViewSet)
 router.register('progress',views.ProgressViewSet)
+
+
 
 #eleve router changed to progress router
 progress_router = routers.NestedDefaultRouter(router, 'eleves', lookup='eleve')
@@ -23,6 +25,16 @@ tasks_router.register('tasks', views.TaskProfesseurViewSet, basename='professeur
 image_router = routers.NestedDefaultRouter(router, 'eleves', lookup='eleve')
 image_router.register('images', views.EleveImageViewSet, basename='eleve_images')
 
-urlpatterns = router.urls + progress_router.urls + tasks_router.urls + image_router.urls
+mettingsStudent_router = routers.NestedDefaultRouter(router, 'eleves', lookup='eleve')
+mettingsStudent_router.register('meetings', views.MeetingStudentViewSet, basename='student-meetings')
+
+mettingTeacher_router = routers.NestedDefaultRouter(router, 'professeurs', lookup='professeur')
+mettingTeacher_router.register('meetings', views.MeetingTeacherViewSet, basename='teacher-meetings')
+
+urlpatterns = [
+    path('teacherinfo/<int:id>/', views.TeacherInfo, name='teacherinfo'),
+    path('studentinfo/<int:id>/', views.StudentInfo, name='studentinfo'),
+    path('meetings/<int:id>/', views.Meetings, name='meetings')
+] + router.urls + progress_router.urls + tasks_router.urls + image_router.urls + mettingTeacher_router.urls + mettingsStudent_router.urls
 
 

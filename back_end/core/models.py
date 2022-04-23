@@ -43,7 +43,7 @@ class User(AbstractUser):
     birth_date = models.DateField(null=True)
     role = models.CharField(
         max_length=2, choices=ROLE_CHOICES)
-    is_active = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=False)
     image = models.ImageField(
         upload_to = 'store/images',
         validators=[validate_file_size],

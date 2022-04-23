@@ -2,6 +2,13 @@
   <button class="btn btn-primary" (click)="addUser(student)">
     Add
   </button>
+  <div class="select">
+    <select name="" id="" class="form-select" (change)="changeSelect($event)">
+    <option value="all" >All</option>
+    <option value="S" >Student</option>
+    <option value="T" >Teachers</option>
+  </select>
+  </div>
   <div class="row col-md-6 col-md-offset-2 custyle">
     <form [formGroup]="updateUserForm">
       <table class="table table-striped custab">

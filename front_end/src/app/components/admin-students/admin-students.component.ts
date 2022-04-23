@@ -37,6 +37,7 @@ export class AdminStudentsComponent implements OnInit {
   @Input('student') student!: Student;
   student_selected: any;
   updateUserForm!: FormGroup;
+  select !: string;
 
   constructor(private adminService: AdminService, private route: Router,private dialog: MatDialog) {}
 
@@ -79,6 +80,11 @@ export class AdminStudentsComponent implements OnInit {
       email: new FormControl(null, [Validators.required, Validators.email]),
       birth_date: new FormControl(null, [Validators.required ,Validators.pattern('[0-9]{4}-[0-9]{2}-[0-9]{2}')])
     });
+  }
+
+  changeSelect(select : any) {
+    this.select = select.target.value;
+    console.log(this.select)
   }
 
   updateUser(user : User) {

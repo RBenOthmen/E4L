@@ -1,4 +1,4 @@
-import { CalendarComponent } from './components/calendar/calendar.component';
+import { CalendarComponent } from './Meet-calendar/calendar/calendar.component';
 import { TasksComponent } from './todolist/tasks/tasks.component';
 import { ActivateEmailComponent } from './components/activate-email/activate-email.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';

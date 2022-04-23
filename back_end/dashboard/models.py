@@ -51,3 +51,10 @@ class EleveImage(models.Model):
     image = models.ImageField(
         upload_to = 'store/images',
         validators=[validate_file_size])
+
+class Meeting (models.Model):
+    professeur = models.OneToOneField(Professeur, on_delete=models.CASCADE, null=True)
+    eleve = models.OneToOneField(Eleve, on_delete=models.CASCADE, null=True)
+    start = models.DateTimeField()
+    color = models.CharField(max_length=255)
+    title = models.CharField(max_length=255, null=True)

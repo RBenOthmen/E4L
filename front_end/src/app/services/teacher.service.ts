@@ -1,7 +1,7 @@
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable, catchError, throwError, tap } from 'rxjs';
 import { AppError } from '../exceptions/AppError';
 import { BadInput } from '../exceptions/BadInput';
 import { Teacher } from '../interfaces/Teacher';
@@ -35,9 +35,10 @@ export class TeacherService {
   }
 
   getTeachers() : Observable<Teacher[]>{
-    return this.http.get<Teacher[]>(this.urlUser,httpOptions)
+    return this.http.get<Teacher[]>(this.urlTeacher,httpOptions)
     .pipe(
-      catchError(this.handleError)
+      
+        catchError(this.handleError)
   );
   }
 

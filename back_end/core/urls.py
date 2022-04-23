@@ -6,10 +6,12 @@ from rest_framework_nested import routers
 from . import views
 
 router = routers.DefaultRouter()
-router.register('users',views.CustomUserViewSet) #localhost;8000/core/users GET
+router.register('create',views.CustomCreateUserViewSet, basename='create') #localhost;8000/core/users GET
+router.register('users',views.CustomUserViewSet, basename='users') #localhost;8000/core/users GET
 router.register('teachers',views.TeacherViewSet, basename='teacher') #localhost/core/teachers
 router.register('students',views.StudentViewSet, basename='student') #localhost/core/students
 
-urlpatterns = router.urls 
+urlpatterns = [
+] + router.urls
 
 

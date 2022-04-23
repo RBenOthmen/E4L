@@ -1,8 +1,8 @@
 export class Meeting {
      id ?: number;
-     teacher_id ?: number;
-     student_id ?: number;
-     date ?: Date;
+     professeur_id ?: number;
+     eleve_id ?: number;
+     start ?: Date;
      color ?: string;
 
 }

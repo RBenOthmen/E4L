@@ -12,7 +12,7 @@ import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-sign-in',
-  templateUrl: './sign-in.component.html',
+  templateUrl: './login.component.html',
   styleUrls: ['./sign-in.component.css'],
   providers : [MessageService]
 })
@@ -57,8 +57,8 @@ export class SignInComponent implements OnInit {
     this.authService.login(credentials)
       .subscribe({
         next : response => {
-          
-          
+
+
           this.router.navigate(['/']);
         }
         ,error : (err : AppError) => {
@@ -81,20 +81,20 @@ export class SignInComponent implements OnInit {
     };
   }
 
-  
 
-  
+
+
   passwordReset() {
     this.router.navigate(['/password-reset']);
   }
-  
-  
+
+
   togglePassword() {
     if (this.showPassword == 'password')
     this.showPassword = 'text';
     else if (this.showPassword == 'text')
     this.showPassword = 'password';
   }
-  
-  
+
+
 }

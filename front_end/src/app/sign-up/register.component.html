@@ -16,10 +16,8 @@
           <input aria-label="" placeholder="{{ 'firstname' | translate }}" formControlName="first_name" type="text" id="first_name" name="first_name" class="form-control">
           <small *ngIf="first_name!.invalid && first_name?.touched" class="text-danger">{{ 'signup_error_first_name' | translate }}</small>
 
-        <label for="last_name">{{ 'lastname' | translate }}:</label>
-          <input aria-label="" placeholder="{{ 'lastname' | translate }}" formControlName="last_name" type="text" id="last_name"
-            name="last_name" class="form-control">
-          <small *ngIf="last_name!.invalid && last_name?.touched" class="text-danger">{{ 'signup_error_last_name' | translate }}</small>
+          <label for="last_name">{{ 'lastname' | translate }}:</label>
+          <input aria-label="" placeholder="{{ 'lastname' | translate }}" formControlName="last_name" type="text" id="last_name" name="last_name" class="form-control">
           <small *ngIf="last_name!.invalid && last_name?.touched" class="text-danger">{{ 'signup_error_last_name' | translate }}</small>
 
 

@@ -4,38 +4,42 @@
     <h2 class="title_sign">{{ 'creatingAnAccount' | translate }}</h2>
     <form [formGroup]="registerForm" class="row g-3" (submit)="register()">
       <span class="centralize">
-          <mat-radio-button id="student" name="user" value="student" formControlName="user" checked></mat-radio-button>
+          <!-- <mat-radio-button id="student" name="user" value="student" formControlName="user" checked></mat-radio-button> -->
+          <input type="radio" id="student" name="user" value="student" formControlName="user" checked class="form-check-input">
           <label for="student"> {{ 'student' | translate }} </label>
 
-          <mat-radio-button id="teacher" name="user" value="teacher" formControlName="user"></mat-radio-button>
+          <input type="radio" id="teacher" name="user" value="teacher" formControlName="user" class="form-check-input">
           <label for="teacher"> {{ 'teacher' | translate }}</label>
+          <!-- <mat-radio-button id="teacher" name="user" value="teacher" formControlName="user"></mat-radio-button> -->
       </span>
 
 
-      <!--    Full Name-->
+      <!-- First Name-->
         <mat-form-field class="example-full-width" appearance="fill"> <!-- appearance="fill" -->
-          <mat-label>First name</mat-label>
-          <input matInput placeholder="First name" formControlName="first_name" type="text" id="first_name">
+          <mat-label>{{ 'firstname' | translate }}</mat-label>
+          <input matInput placeholder="{{ 'firstname' | translate }}" formControlName="first_name" type="text" id="first_name">
         </mat-form-field>
         <small *ngIf="first_name!.invalid && first_name?.touched" class="text-danger">{{ 'signup_error_first_name' | translate }}</small>
 
+        <!-- Last Name -->
         <mat-form-field class="example-full-width" appearance="fill">
-          <mat-label>last_name</mat-label>
-          <input matInput placeholder="last_name" formControlName="last_name" type="text" id="last_name">
+          <mat-label>{{ 'lastname' | translate }}</mat-label>
+          <input matInput placeholder="{{ 'lastname' | translate }}" formControlName="last_name" type="text" id="last_name">
         </mat-form-field>
         <small *ngIf="last_name!.invalid && last_name?.touched" class="text-danger">{{ 'signup_error_last_name' | translate }}</small>
 
+        <!-- Username -->
         <mat-form-field class="example-full-width" appearance="fill" >
-          <mat-label>Username</mat-label>
-          <input matInput value="" placeholder="username" formControlName="username" type="text" id="username">
+          <mat-label>{{ 'username' | translate }} </mat-label>
+          <input matInput value="" placeholder="{{ 'username' | translate }}" formControlName="username" type="text" id="username">
         </mat-form-field>
         <small *ngIf="username!.invalid && username?.touched" class="text-danger">{{ 'signup_error_username' | translate }}</small>
 
 
       <!--    Email-->
       <mat-form-field class="example-full-width" appearance="fill" >
-        <mat-label>email</mat-label>
-        <input matInput placeholder="email" formControlName="email" type="text" id="email">
+        <mat-label>{{ 'email' | translate }} </mat-label>
+        <input matInput placeholder="{{ 'email' | translate }}" formControlName="email" type="text" id="email">
       </mat-form-field>
       <mat-error *ngIf="email!.invalid && email?.touched" class="text-danger">
         {{ 'signup_error_email' | translate }}
@@ -44,8 +48,8 @@
 
       <!--Password-->
       <mat-form-field class="example-full-width" appearance="fill" >
-        <mat-label>password</mat-label>
-        <input matInput placeholder="password" formControlName="password" [type]="showPassword" id="password" name="password">
+        <mat-label>{{ 'password' | translate }}</mat-label>
+        <input matInput placeholder="{{ 'password' | translate }}" formControlName="password" [type]="showPassword" id="password" name="password">
       </mat-form-field>
       <small *ngIf="password!.invalid && password?.touched" class="text-danger">{{ 'signup_error_password' | translate }}</small>
 
@@ -71,22 +75,30 @@
 
 
       <!-- BirthDate -->
-      <mat-form-field >
-        <mat-label>Choose a date</mat-label>
-        <input [min]="minDate" [max]="maxDate" matInput [matDatepicker]="picker" formControlName="birthday" id="birthday" name="birthday" readonly="true"> <!-- (focus)="picker.open()" -->
-        <mat-hint>MM/DD/YYYY</mat-hint>
+      <!-- <mat-form-field >
+        <mat-label>Choose a date</mat-label> -->
+        <!--<input [min]="minDate" [max]="maxDate" matInput [matDatepicker]="picker" formControlName="birthday" id="birthday" name="birthday" readonly="true">--> <!-- (focus)="picker.open()" -->
+        <!-- <mat-hint>MM/DD/YYYY</mat-hint>
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker touchUi="true"></mat-datepicker>
         <mat-error *ngIf="(birthday?.invalid && birthday?.touched) || (birthday?.touched && this.dateInput)">
           {{ 'signup_error_birthday' | translate }}
         </mat-error>
-      </mat-form-field>
+      </mat-form-field> -->
+      <div class="form-group">
+        <label for="birthday">{{ 'birthday' | translate }}</label>
+        <input placeholder="Birthday" formControlName="birthday" type="date" id="birthday" name="birthday"
+          class="form-control">
+        <small *ngIf="birthday?.invalid && birthday?.touched" class="text-danger">
+          {{ 'signup_error_birthday' | translate }}
+        </small>
+      </div>
 
 
       <!--Phone Number-->
       <mat-form-field class="example-full-width" appearance="fill" >
-        <mat-label>phone</mat-label>
-        <input matInput placeholder="phone" formControlName="phone" type="number" id="phone">
+        <mat-label>{{ 'phonenumber' | translate }}</mat-label>
+        <input matInput placeholder="{{ 'phonenumber' | translate }}" formControlName="phone" type="number" id="phone">
       </mat-form-field>
       <small *ngIf="phone!.invalid && phone?.touched" class="text-danger">{{ 'signup_error_phone' | translate }}</small>
 

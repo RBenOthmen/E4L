@@ -1,0 +1,46 @@
+<div class="container">
+
+    <div class="form_sign">
+      <h2 class="title_sign">{{ 'signingin' | translate }}</h2>
+      <form [formGroup]="loginForm" class="row g-3" (submit)="signIn()">
+
+        <!-- Username -->
+        <mat-form-field class="example-full-width" appearance="fill" >
+          <mat-label>{{ 'username' | translate }}:</mat-label>
+          <input matInput value="" placeholder="{{ 'username' | translate }}:" formControlName="username" type="text" id="username">
+        </mat-form-field>
+
+        <!--Password-->
+        <mat-form-field class="example-full-width" appearance="fill" >
+          <mat-label>{{ 'username' | translate }}:</mat-label>
+          <input matInput placeholder="{{ 'username' | translate }}:" formControlName="password" [type]="showPassword" id="password" name="password">
+        </mat-form-field>
+
+        <small class="text-danger" *ngIf="invalidLogin">Incorrect username/password</small>
+
+        <small class="text-danger" *ngIf="serverOffline">Server offline, reconnecting ...</small>
+
+
+        <a (click)="passwordReset()"><div class="hypertext">{{ 'forgetyourpassword' | translate }} ?</div></a>
+
+
+        <div class="button_sign">
+          <button mat-raised-button color="primary" type="submit"  class="w-full">
+            {{ 'login' | translate }}
+          </button>
+        </div>
+      </form>
+
+
+
+      <br>
+      <div class="button_sign">
+        {{ 'dontHaveAnAccountYet' | translate }} !<a (click)="goToSignup()"><div class="hypertext">{{ 'signup' | translate }}</div></a>
+      </div>
+
+
+
+    </div>
+  </div>
+
+  <p-toast></p-toast>

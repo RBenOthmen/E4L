@@ -182,6 +182,10 @@
             {{ 'teachers' | translate }}
           </a>
         </li>
+        <!-- Students -->
+        <li>
+          <a routerLink="students" class="nav-link text-white">{{ 'Students' | translate }}</a>
+        </li>
 
         <li *ngIf="authService.isLoggedIn()">
           <a routerLink="tasks" class="nav-link text-white" >

@@ -80,14 +80,14 @@ class TeacherViewSet(ModelViewSet):
     serializer_class = UserSerializer
 
     def get_queryset(self ):     
-        return User.objects.filter(role="T").select_related('professeur')
+        return User.objects.filter(role="T")
 
 class StudentViewSet(ModelViewSet):
    
     serializer_class = UserSerializer
 
     def get_queryset(self ):     
-        return User.objects.filter(role="S").select_related('eleve')
+        return User.objects.filter(role="S")
     
     
 

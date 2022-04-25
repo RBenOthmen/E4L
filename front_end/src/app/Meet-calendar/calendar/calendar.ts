@@ -29,4 +29,8 @@ export interface CalendarEvent<MetaType = any> {
     meta?: MetaType;
     professeur_id ?: number;
     eleve_id ?: number;
+    organizer_id ?: number;
+     recipient_id ?: number;
+     status ?: string;
+     username_organizer ?: string;
 }

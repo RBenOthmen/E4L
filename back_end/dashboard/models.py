@@ -53,8 +53,31 @@ class EleveImage(models.Model):
         validators=[validate_file_size])
 
 class Meeting (models.Model):
-    professeur = models.OneToOneField(Professeur, on_delete=models.CASCADE, null=True)
-    eleve = models.OneToOneField(Eleve, on_delete=models.CASCADE, null=True)
+    professeur = models.ForeignKey(Professeur, on_delete=models.CASCADE, null=True)
+    eleve = models.ForeignKey(Eleve, on_delete=models.CASCADE, null=True)
     start = models.DateTimeField()
     color = models.CharField(max_length=255)
     title = models.CharField(max_length=255, null=True)
+
+class Meet (models.Model):
+    PENDING_CHOICE='P'
+    REFUSED_CHOICE='R'
+    ACCEPTED_CHOICE='A'
+
+    STATUS_CHOICES = [
+        (PENDING_CHOICE, 'Pending'),
+        (REFUSED_CHOICE, 'Refused'),
+        (ACCEPTED_CHOICE, 'Accepted'),
+
+    ]
+    organizer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=None, related_name='organizer')
+    recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=None, related_name='recipient')
+    start = models.DateTimeField()
+    color = models.CharField(max_length=255)
+    title = models.CharField(max_length=255, null=True)
+    username_organizer = models.CharField(max_length=255, null=True)
+    username_recipient = models.CharField(max_length=255, null=True)
+    status = models.CharField(
+        max_length=1, choices=STATUS_CHOICES, default='P')
+
+    

@@ -36,13 +36,13 @@ export class StudentService {
 
   getStudents(): Observable<Student[]> {
     return this.http
-      .get<Student[]>(this.url, httpOptions)
+      .get<Student[]>(this.urlStudent, httpOptions)
       .pipe(catchError(this.handleError));
   }
 
   getStudent(id: string): Observable<Student> {
     return this.http
-      .get<Student>(this.url + '/' + id, httpOptions)
+      .get<Student>(this.urlStudent + '/' + id, httpOptions)
       .pipe(catchError(this.handleError));
   }
 

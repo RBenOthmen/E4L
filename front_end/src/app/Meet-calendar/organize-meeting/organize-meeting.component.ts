@@ -51,11 +51,9 @@ export class OrganizeMeetingComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    console.log(this.users)
   }
 
   onChoiceUser(user : User) {
-    console.log(this.event.title == '')
     if (this.event.title == '') {
       this.createMeeting(this.event, user)
     } else {
@@ -65,17 +63,31 @@ export class OrganizeMeetingComponent implements OnInit {
   }
 
   createMeeting(meeting : CalendarEvent, user : User) {
-    if (meeting.professeur_id) {
-      meeting.eleve_id = user.id;
-      meeting.title = user.user?.username || '';
-    } else if (meeting.eleve_id) {
-      meeting.professeur_id = user.id;
-      meeting.title = user.user?.username || '';
-    }
+    // if (meeting.professeur_id) {
+    //   meeting.eleve_id = user.id;
+    //   meeting.title = user.user?.username || '';
+    // } else if (meeting.eleve_id) {
+    //   meeting.professeur_id = user.id;
+    //   meeting.title = user.user?.username || '';
+    // }
 
     
 
-    this.meetingService.CreateStudentMeeting(meeting,this.authService.currentUser.user_id || 0).subscribe({
+    // this.meetingService.CreateStudentMeeting(meeting,this.authService.currentUser.user_id || 0).subscribe({
+    //   next: result => {
+    //     console.log(result)
+    //    }
+    //    ,error : (err : AppError) => {
+    //      if (err instanceof BadInput){
+    //        console.log(err)
+    //      }
+    //    }
+    //  });
+
+      meeting.recipient_id = user.user_id;
+      meeting.title = user.user?.username || '';
+
+    this.meetingService.createMeeting(meeting).subscribe({
       next: result => {
         console.log(result)
        }
@@ -88,25 +100,44 @@ export class OrganizeMeetingComponent implements OnInit {
   }
 
   updateMeeting(meeting : CalendarEvent, user : User) {
-    if (user.id == this.event.professeur_id) {
-      meeting.professeur_id = user.id;
+    // if (user.id == this.event.professeur_id) {
+    //   meeting.professeur_id = user.id;
+    //   meeting.title = user.user?.username || '';
+    // } else if (user.id == this.event.eleve_id) {
+    //   meeting.eleve_id = user.id;
+    //   meeting.title = user.user?.username || '';
+    // }
+
+    // console.log(user.id == this.event.professeur_id)
+
+    // console.log(user.id + ' ' + this.event.professeur_id)
+
+    // console.log(user.id == this.event.eleve_id)
+
+    // console.log(user.id + ' ' + this.event.eleve_id)
+
+    // console.log(meeting)
+
+    // this.meetingService.updateStudentMeeting(meeting,this.authService.currentUser.user_id || 0).subscribe({
+    //   next: result => {
+    //     console.log(result)
+    //    }
+    //    ,error : (err : AppError) => {
+    //      if (err instanceof BadInput){
+    //        console.log(err)
+    //      }
+    //    }
+    //  });
+
+    if (this.authService.getId() == this.event.organizer_id) {
+      meeting.recipient_id = user.user_id;
       meeting.title = user.user?.username || '';
-    } else if (user.id == this.event.eleve_id) {
-      meeting.eleve_id = user.id;
+    } else if (this.authService.getId() == this.event.recipient_id) {
+      meeting.recipient_id = user.user_id;
       meeting.title = user.user?.username || '';
     }
 
-    console.log(user.id == this.event.professeur_id)
-
-    console.log(user.id + ' ' + this.event.professeur_id)
-
-    console.log(user.id == this.event.eleve_id)
-
-    console.log(user.id + ' ' + this.event.eleve_id)
-
-    console.log(meeting)
-
-    this.meetingService.updateStudentMeeting(meeting,this.authService.currentUser.user_id || 0).subscribe({
+    this.meetingService.updateMeeting(meeting,this.authService.getId() || 0).subscribe({
       next: result => {
         console.log(result)
        }

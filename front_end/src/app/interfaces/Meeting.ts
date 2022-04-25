@@ -4,5 +4,8 @@ export class Meeting {
      eleve_id ?: number;
      start ?: Date;
      color ?: string;
+     status ?: string;
+     organizer_id ?: number;
+     recipient_id ?: number;
 
 }

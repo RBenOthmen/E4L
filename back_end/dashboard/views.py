@@ -5,13 +5,14 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from django.db.models import Count
-from .serializers import EleveSerializer, LessonSerializer, MeetingStudentSerializer, MeetingTeacherSerializer,ProfesseurSerializer, ProgressEleveSerializer, ProgressSerializer, EleveImageSerializer, TaskSerializer
+from .serializers import EleveSerializer, LessonSerializer, MeetSerializer, MeetingStudentSerializer, MeetingTeacherSerializer,ProfesseurSerializer, ProgressEleveSerializer, ProgressSerializer, EleveImageSerializer, TaskSerializer
 from dashboard import serializers
-from .models import Eleve, Lesson, Meeting, Professeur, Progress, EleveImage ,Task
+from .models import Eleve, Lesson, Meet, Meeting, Professeur, Progress, EleveImage ,Task
 from rest_framework.mixins import ListModelMixin, CreateModelMixin, RetrieveModelMixin, UpdateModelMixin
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from rest_framework.decorators import api_view,action
 from django.contrib.auth import get_user_model
+from django.db.models import Q
 
 User = get_user_model()
 
@@ -118,14 +119,16 @@ class MeetingTeacherViewSet(ModelViewSet):
 
 @api_view(['GET'])
 def TeacherInfo(request, id):
-        user = get_object_or_404(Professeur , user_id=id)
-        serializer = ProfesseurSerializer(data=request.data)
+        teacher = get_object_or_404(Professeur , user_id=id)
+        serializer = ProfesseurSerializer(teacher)
+        # serializer.is_valid(raise_exception=True)
         return Response(serializer.data)
 
 @api_view(['GET'])
 def StudentInfo(request, id):
         student = get_object_or_404(Eleve , user_id=id)
         serializer = EleveSerializer(student)
+        # serializer.is_valid(raise_exception=True)
         return Response(serializer.data)
 
 
@@ -140,6 +143,21 @@ def Meetings(request, id):
 # filter(Q(receiver__id=receiverid, sender__id=senderid) | Q(receiver__id=senderid, sender__id=receiverid))
         queryset = Meeting.objects.all()
         serializer = MeetingTeacherSerializer(queryset, many=True, context={
+            'request':request
+        })
+        return Response(serializer.data)
+
+class MeetViewSet(ModelViewSet):
+    queryset = Meet.objects.all()
+    serializer_class = MeetSerializer
+
+
+@api_view(['GET'])
+def getMeetView(request,id):
+    if request.method == "GET":
+        # id = request.data['id']
+        queryset = Meet.objects.filter(Q(organizer_id=id) | Q(recipient_id=id)).all()
+        serializer = MeetSerializer(queryset, many=True, context={
             'request':request
         })
         return Response(serializer.data)

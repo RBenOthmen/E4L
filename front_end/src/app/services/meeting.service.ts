@@ -18,6 +18,7 @@ export class MeetingService {
 
   private urlTeacher = 'http://localhost:8000/dashboard/professeurs/';
   private urlStudent = 'http://localhost:8000/dashboard/eleves/';
+  private urlMeet = 'http://localhost:8000/dashboard/meets/'
   constructor(
     private http : HttpClient
   ) { }
@@ -74,6 +75,34 @@ export class MeetingService {
 
   CreateStudentMeeting(meeting : CalendarEvent, id :number) : Observable<CalendarEvent> {
     return this.http.post<CalendarEvent>(this.urlStudent + id + '/meetings/' , meeting , httpOptions)
+    .pipe(
+      catchError(handleError)
+  );
+  }
+  // /////////////////////////////////////////////////////////////////////////////////////
+  getMeeting(id :number) : Observable<CalendarEvent[]> {
+    return this.http.get<CalendarEvent[]>('http://localhost:8000/dashboard/getallmeets/' + id + '/', httpOptions)
+    .pipe(
+      catchError(handleError)
+  );
+  }
+
+  createMeeting(meeting : CalendarEvent) : Observable<CalendarEvent> {
+    return this.http.post<CalendarEvent>(this.urlMeet, meeting , httpOptions)
+    .pipe(
+      catchError(handleError)
+  );
+  }
+
+  updateMeeting(meeting :CalendarEvent, id : number) : Observable<CalendarEvent> {
+    return this.http.put<CalendarEvent>(this.urlMeet + meeting.id + '/' ,meeting , httpOptions)
+    .pipe(
+      catchError(handleError)
+    );
+  }
+
+  deleteMeeting(meeting:CalendarEvent,id : number) : Observable<CalendarEvent> {
+    return this.http.delete<CalendarEvent>(this.urlMeet + meeting.id +'/' , httpOptions)
     .pipe(
       catchError(handleError)
   );

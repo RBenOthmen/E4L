@@ -192,6 +192,7 @@
           <th>Color</th>
           <th>Scheduled for</th>
           <th>Remove</th>
+          <th>Status</th>
         </tr>
       </thead>
   
@@ -233,6 +234,23 @@
             <button class="btn btn-danger" (click)="deleteEvent(event)">
               Delete
             </button>
+          </td>
+          <td *ngIf="event.status == 'P'  && event.recipient_id == this.authService.getId()">
+            <button class="btn btn-success" (click)="acceptMeeting(event)">
+              Accepter
+            </button>
+            <button class="btn btn-warning" (click)="refuseMeeting(event)">
+              Refuser
+            </button>
+          </td>
+          <td *ngIf="event.status == 'P'  && event.organizer_id == this.authService.getId()">
+            Pending
+          </td>
+          <td *ngIf="event.status == 'R'">
+            Refuser
+          </td>
+          <td *ngIf="event.status == 'A'">
+            Accepter
           </td>
         </tr>
       </tbody>

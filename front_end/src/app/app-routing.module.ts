@@ -58,6 +58,7 @@ const routes: Routes = [
   { path: 'admin-users', component: AdminUsersComponent },
   // {path: 'admin-users/new', component: UserFormComponent},
   // {path: 'admin-users/:id', component: UserFormComponent},
+  { path: 'students-list', component: StudentsListComponent },
 ];
 
 @NgModule({

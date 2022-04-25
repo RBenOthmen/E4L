@@ -6,7 +6,7 @@ from itertools import product
 from rest_framework import serializers
 from core.serializers import UserSerializer
 
-from dashboard.models import Eleve, Lesson, Meeting, Professeur, Progress, Task, EleveImage
+from dashboard.models import Eleve, Lesson, Meet, Meeting, Professeur, Progress, Task, EleveImage
 
 
 class ProfesseurSerializer(serializers.ModelSerializer):
@@ -97,6 +97,13 @@ class MeetingTeacherSerializer(serializers.ModelSerializer):
         def create(self, validated_data):
             professeur_id = self.context['professeur_id']
             return Meeting.objects.create(professeur_id=professeur_id , **validated_data)
+
+class MeetSerializer(serializers.ModelSerializer):
+    organizer_id = serializers.IntegerField()
+    recipient_id = serializers.IntegerField()
+    class Meta:
+        model = Meet
+        fields =['id', 'start', 'title', 'color', 'recipient_id', 'organizer_id', 'status', 'username_organizer', 'username_recipient']
 
 
 

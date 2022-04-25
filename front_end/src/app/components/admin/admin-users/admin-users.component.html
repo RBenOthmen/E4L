@@ -75,6 +75,9 @@
 <div class="container">
   <div class="card m-5 p-3">
       <div class="card-body">
+        <button class="btn btn-primary add" (click)="addUser()">
+          Add <i class="bi bi-plus-lg"></i>
+        </button>
         <table class="table table-bordered table-striped table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
               <thead>
               <tr>
@@ -84,6 +87,7 @@
                   <th>Last Name</th>
                   <th>Email</th>
                   <th>Phone number</th>
+                  <th>Operations</th>
               </tr>
               </thead>
               <tbody>
@@ -94,6 +98,14 @@
                   <td>{{ user.last_name }}</td>
                   <td>{{ user.email }}</td>
                   <td>{{ user.phone }}</td>
+                  <td>
+                    <button class="btn btn-warning" (click)="updateUser(user)">
+                      <i class="bi bi-pencil"></i>
+                    </button>
+                    <button class="btn btn-danger" (click)="deleteStudent(user)">
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </td>
               </tr>
               </tbody>
           </table>

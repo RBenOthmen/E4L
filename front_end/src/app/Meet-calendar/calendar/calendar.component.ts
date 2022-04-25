@@ -112,7 +112,7 @@ export class CalendarComponent implements OnInit {
     private dialog: MatDialog,
     private meetingService : MeetingService,
     private teacherService : TeacherService,
-    private authService :AuthService,
+    public authService :AuthService,
     private studentService:StudentService) {}
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
@@ -130,7 +130,7 @@ export class CalendarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+    this.getMeetings();
     this.getUserDetails();
     
   }
@@ -185,20 +185,21 @@ export class CalendarComponent implements OnInit {
   }
 
   getMeetings() {
-    console.log('getmeetings')
-    if (this.authService.currentUser.role =="T") {
-      this.getTeacherMeetings();
-    } else if (this.authService.currentUser.role =="S") {
-      this.getStudentMeetings();
-    }
-  }
 
-  getTeacherMeetings() {
-    
-    this.meetingService.getTeacherMeetings(this.authService.currentUser.id || 0)
+    this.meetingService.getMeeting(this.authService.getId())
     .subscribe({
       next: result => {
-        this.events = result;
+
+        for (let res of result) {
+          res.start = new Date(res.start)
+          if (res.organizer_id != this.authService.getId()) {
+            res.title = <string>res.username_organizer;
+          }
+        }
+        this.events = [
+          ...this.events,
+          ...result
+        ];
         this.refresh.next()
        }
        ,error : (err : AppError) => {
@@ -207,39 +208,15 @@ export class CalendarComponent implements OnInit {
          }
        }
      });
+
   }
 
-  getStudentMeetings() {
-    console.log(this.authService.currentUser)
-    this.meetingService.getStudentMeetings(this.authService.currentUser.user_id || 0)
-    .subscribe({
-      next: result => {
-        this.events = result;
-        this.refresh.next()
-        console.log(result)
-       }
-       ,error : (err : AppError) => {
-         if (err instanceof NotFoundError){
-           console.log(err)
-         }
-       }
-     });
-  }
   
   deleteEvent(eventToDelete: CalendarEvent) {
     if (eventToDelete.title =='')
       this.events = this.events.filter((event) => event !== eventToDelete);
-    else {
-      if (this.authService.currentUser.role =="T") {
-        this.deleteTeacherMeeting(eventToDelete);
-      } else if (this.authService.currentUser.role =="S") {
-        this.deleteStudentMeeting(eventToDelete);
-      }
-    }
-  }
-
-  deleteTeacherMeeting(eventToDelete: CalendarEvent) {
-    this.meetingService.deleteTeacherMeeting(eventToDelete, this.authService.currentUser.id || 0)
+      else {
+        this.meetingService.deleteMeeting(eventToDelete, this.authService.getId() || 0)
     .subscribe({
       next: result => {
         this.events = this.events.filter((event) => event !== eventToDelete);
@@ -250,166 +227,266 @@ export class CalendarComponent implements OnInit {
            console.log(err)
          }
        }
-     });
-  }
-
-  deleteStudentMeeting(eventToDelete: CalendarEvent) {
-    this.meetingService.deleteStudentMeeting(eventToDelete, this.authService.currentUser.user_id || 0)
-    .subscribe({
-      next: result => {
-        this.events = this.events.filter((event) => event !== eventToDelete);
-        this.refresh.next()
-       }
-       ,error : (err : AppError) => {
-         if (err instanceof NotFoundError){
-           console.log(err)
-         }
-       }
-     });
-  }
-  
-
-  updateMeeting(meeting: CalendarEvent) {
-    console.log('i m  here')
-    console.log(meeting.title == '')
-    if (meeting.title == '')
-      this.refresh.next()
-    else {
-      console.log()
-      if (this.authService.currentUser.role =="S") {
-        this.updateStudent(meeting)
-      } else if (this.authService.currentUser.role =="T") {
-        this.updateTeacher(meeting)
+      });
+      // if (this.authService.currentUser.role =="T") {
+      //   this.deleteTeacherMeeting(eventToDelete);
+      // } else if (this.authService.currentUser.role =="S") {
+        //   this.deleteStudentMeeting(eventToDelete);
+        // }
       }
     }
     
+    
+    
+    updateMeeting(meeting: CalendarEvent) {
+      if (meeting.title == '')
+      this.refresh.next()
+      else {
+        
+        this.meetingService.updateMeeting(meeting, this.authService.getId() || 0).subscribe({
+          next: result => {
+            this.refresh.next()
+        }
+        ,error : (err : AppError) => {
+          if (err instanceof NotFoundError){
+            console.log(err)
+          }
+        }
+      });
+      // if (this.authService.currentUser.role =="S") {
+        //   this.updateStudent(meeting)
+        // } else if (this.authService.currentUser.role =="T") {
+      //   this.updateTeacher(meeting)
+      // }
+    }
+    
   }
-
-  updateStudent(meeting : CalendarEvent) {
-    this.meetingService.updateStudentMeeting(meeting, this.authService.currentUser.user_id || 0).subscribe({
-      next: result => {
-        this.refresh.next()
-       }
-       ,error : (err : AppError) => {
-         if (err instanceof NotFoundError){
-           console.log(err)
-         }
-       }
-     });
-  }
-
-  updateTeacher(meeting : CalendarEvent) {
-    this.meetingService.updateTeacherMeeting(meeting, this.authService.currentUser.user_id || 0).subscribe({
-      next: result => {
-        this.refresh.next()
-       }
-       ,error : (err : AppError) => {
-         if (err instanceof NotFoundError){
-           console.log(err)
-         }
-       }
-     });
-  }
+  
   
   addMeeting(): void {
     let meeting : CalendarEvent= {
       title : '',
       start: startOfDay(new Date()),
       color: colors.red,
+      status : 'P',
+      organizer_id : this.authService.getId(),
+      username_organizer : this.authService.currentUser.username,
     }
-    if (this.authService.currentUser.role =="T") {
-      meeting.professeur_id = this.authService.currentUser.user_id
-    } else if (this.authService.currentUser.role =="S") {
-      meeting.eleve_id = this.authService.currentUser.user_id
-    }
+    // if (this.authService.currentUser.role =="T") {
+      //   meeting.professeur_id = this.authService.currentUser.user_id
+      // } else if (this.authService.currentUser.role =="S") {
+        //   meeting.eleve_id = this.authService.currentUser.user_id
+        // }
 
-    console.log(meeting)
-
-    this.events = [
-      ...this.events,
+        this.events = [
+          ...this.events,
       meeting
     ];
     
   }
 
+  acceptMeeting(meeting: CalendarEvent) {
+    meeting.status = 'A';
+    this.meetingService.updateMeeting(meeting,this.authService.getId() || 0).subscribe({
+      next: result => {
+       }
+       ,error : (err : AppError) => {
+         if (err instanceof BadInput){
+           console.log(err)
+         }
+       }
+     });
+  }
+
+  refuseMeeting(meeting: CalendarEvent) {
+    meeting.status = 'R';
+    this.meetingService.updateMeeting(meeting,this.authService.getId() || 0).subscribe({
+      next: result => {
+       }
+       ,error : (err : AppError) => {
+         if (err instanceof BadInput){
+           console.log(err)
+         }
+       }
+     });
+  }
+  
   getUserId() {
     this.authService.getUserId(this.authService.getId()).subscribe({
       next: result => {
         this.currentUser = result
         this.getMeetings();
         
-       }
-       ,error : (err : AppError) => {
-         if (err instanceof NotFoundError){
-           console.log(err)
+      }
+      ,error : (err : AppError) => {
+        if (err instanceof NotFoundError){
+          console.log(err)
          }
-       }
-     });
-  }
-
-
-  getUserDetails() {
-    this.authService.getUserDetails().subscribe({
-      next: result => {
-        this.currentUser = result
-        // this.authService.getUserId(result.id).subscribe()
-        console.log(result)
-        this.getListUsers();
-        this.getUserId();
+        }
+      });
+    }
+    
+    
+    getUserDetails() {
+      this.authService.getUserDetails().subscribe({
+        next: result => {
+          this.currentUser = result
+          // this.authService.getUserId(result.id).subscribe()
+          this.getListUsers();
+        // this.getUserId();
         
-       }
-       ,error : (err : AppError) => {
-         if (err instanceof NotFoundError){
-           console.log(err)
-         }
-       }
-     });
-  }
-
-  getListUsers() {
-  
-    if (this.authService.currentUser.role =="S") {
-      this.teacherService.getTeachers().subscribe({
-       next: result => {
-         this.users = result
       }
        ,error : (err : AppError) => {
          if (err instanceof NotFoundError){
-          console.log(err)
-         }
-       }
-     });
-    } else if (this.authService.currentUser.role =="T") {
-      this.studentService.getStudents().subscribe({
-        next: result => {
-          this.users = result
-        }
-        ,error : (err : AppError) => {
-          if (err instanceof NotFoundError){
            console.log(err)
           }
         }
       });
     }
-
     
+    getListUsers() {
+      
+      if (this.authService.currentUser.role =="S") {
+        this.teacherService.getTeachers().subscribe({
+          next: result => {
+            
+            this.users = result
+          }
+          ,error : (err : AppError) => {
+            if (err instanceof NotFoundError){
+              console.log(err)
+        }
+      }
+    });
+  } else if (this.authService.currentUser.role =="T") {
+    this.studentService.getStudents().subscribe({
+      next: result => {
+        this.users = result
+      }
+      ,error : (err : AppError) => {
+        if (err instanceof NotFoundError){
+          console.log(err)
+        }
+      }
+    });
+  }
+  
+  
     
   }
-
-  selectUser(event : CalendarEvent) {
+  
+  selectUser(user : CalendarEvent) {
     if (!this.users)
-      this.getUserDetails();
-
-    console.log(this.users)
+    this.getUserDetails();
     this.dialog.open(OrganizeMeetingComponent, {
       width : '30%',
       data : {
         users : this.users,
-        event : event
+        event : user
       }
+      
+    }).afterClosed().subscribe(
+      () => {
+        this.refresh.next()
+      }
+      );;
+    }
+    
+    
+    // deleteTeacherMeeting(eventToDelete: CalendarEvent) {
+    //   this.meetingService.deleteTeacherMeeting(eventToDelete, this.authService.currentUser.id || 0)
+    //   .subscribe({
+    //     next: result => {
+    //       this.events = this.events.filter((event) => event !== eventToDelete);
+    //       this.refresh.next()
+    //     }
+    //     ,error : (err : AppError) => {
+    //       if (err instanceof NotFoundError){
+    //         console.log(err)
+    //        }
+    //      }
+    //     });
+    //   }
+      
+    //   deleteStudentMeeting(eventToDelete: CalendarEvent) {
+    //     this.meetingService.deleteStudentMeeting(eventToDelete, this.authService.currentUser.user_id || 0)
+    //     .subscribe({
+    //       next: result => {
+    //         this.events = this.events.filter((event) => event !== eventToDelete);
+    //         this.refresh.next()
+    //       }
+    //       ,error : (err : AppError) => {
+    //         if (err instanceof NotFoundError){
+    //           console.log(err)
+    //         }
+    //       }
+    //     });
+    //   }
+      
+    //   updateStudent(meeting : CalendarEvent) {
+    //     this.meetingService.updateStudentMeeting(meeting, this.authService.currentUser.user_id || 0).subscribe({
+    //       next: result => {
+    //       this.refresh.next()
+    //      }
+    //      ,error : (err : AppError) => {
+    //        if (err instanceof NotFoundError){
+    //          console.log(err)
+    //        }
+    //       }
+    //     });
+    //   }
+      
+    //   updateTeacher(meeting : CalendarEvent) {
+    //     this.meetingService.updateTeacherMeeting(meeting, this.authService.currentUser.user_id || 0).subscribe({
+    //     next: result => {
+    //       this.refresh.next()
+    //     }
+    //     ,error : (err : AppError) => {
+    //       if (err instanceof NotFoundError){
+    //         console.log(err)
+    //       }
+    //     }
+    //   });
+    // }
 
-    });
+    // getTeacherMeetings() {
+      
+    //   this.meetingService.getTeacherMeetings(this.authService.currentUser.id || 0)
+    //   .subscribe({
+    //     next: result => {
+    //       // this.events = result;
+    //       this.events = [
+    //         ...this.events,
+    //         ...result
+    //       ];
+    //       this.refresh.next()
+    //      }
+    //      ,error : (err : AppError) => {
+    //        if (err instanceof NotFoundError){
+    //          console.log(err)
+    //        }
+    //      }
+    //    });
+    // }
+  
+    // getStudentMeetings() {
+    //   this.meetingService.getStudentMeetings(this.authService.currentUser.user_id || 0)
+    //   .subscribe({
+    //     next: result => {
+    //       // this.events = result;
+    //       for (let res of result) {
+    //         res.start = new Date(res.start)
+    //       }
+    //       this.events = result
+    //       this.refresh.next()
+    //       console.log(result)
+    //      }
+    //      ,error : (err : AppError) => {
+    //        if (err instanceof NotFoundError){
+    //          console.log(err)
+    //        }
+    //      }
+    //    });
+    // }
   }
   
-
-}

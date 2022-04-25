@@ -1,3 +1,5 @@
+import { StudentProfileComponent } from './components/student-profile/student-profile.component';
+import { StudentItemComponent } from './components/student-item/student-item.component';
 import { MatComponentsModule } from './modules/mat-components/mat-components.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -72,11 +74,14 @@ import { MeetUserItemComponent } from './Meet-calendar/meet-user-item/meet-user-
 import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
+
+
 import { RatingComponent } from './components/rating/rating.component';
 // import { AuthGuardService } from './services/auth-guard.service';
 // import { AdminAuthGuardService } from './services/admin-auth-guard.service';
 // import { UserFormComponent } from './components/admin/user-form/user-form.component';
 import { AdminUsersComponent } from './components/admin/admin-users/admin-users.component';
+import { StudentsListComponent } from './components/students-list/students-list.component';
 // import { PaginationComponent } from './components/pagination/pagination.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -127,6 +132,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     RatingComponent,
     // UserFormComponent,
     AdminUsersComponent,
+    StudentItemComponent,
+    StudentsListComponent,
+    StudentProfileComponent
 
   ],
   imports: [

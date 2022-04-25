@@ -102,7 +102,7 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
     );
   }
 
-  addUser(user : User) {
+  addUser() {
     this.dialog.open(AdminTeachersListComponent, {
       width : '30%'
     }).afterClosed().subscribe(
@@ -132,6 +132,7 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
       });
     }
   }
+
 
   updateStudent(student: Student) {
     student.role = 'S';

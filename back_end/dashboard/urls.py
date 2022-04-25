@@ -12,6 +12,7 @@ router.register('eleves',views.EleveViewSet, basename='eleves')
 router.register('professeurs',views.ProfesseurViewSet, basename='professeurs')
 router.register('lessons',views.LessonViewSet)
 router.register('progress',views.ProgressViewSet)
+router.register('meets',views.MeetViewSet)
 
 
 
@@ -34,7 +35,8 @@ mettingTeacher_router.register('meetings', views.MeetingTeacherViewSet, basename
 urlpatterns = [
     path('teacherinfo/<int:id>/', views.TeacherInfo, name='teacherinfo'),
     path('studentinfo/<int:id>/', views.StudentInfo, name='studentinfo'),
-    path('meetings/<int:id>/', views.Meetings, name='meetings')
+    path('meetings/<int:id>/', views.Meetings, name='meetings'),
+    path('getallmeets/<int:id>/', views.getMeetView, name='get_meets'),
 ] + router.urls + progress_router.urls + tasks_router.urls + image_router.urls + mettingTeacher_router.urls + mettingsStudent_router.urls
 
 

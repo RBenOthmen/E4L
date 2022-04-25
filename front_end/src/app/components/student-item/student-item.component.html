@@ -1,0 +1,10 @@
+<div class="profile">
+    <img src="../../assets/images/user-icon.png" alt="" class="profile_image" />
+    <div class="profile_name">
+      {{ student.first_name }} {{ student.last_name }}
+    </div>
+    <div class="profile_email">{{ student.email }}</div>
+    <a [routerLink]="['/students', student.id]">
+      <button class="btn btn-primary">View Profile</button>
+    </a>
+  </div>

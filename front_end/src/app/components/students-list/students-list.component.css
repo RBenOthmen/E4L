@@ -1,0 +1,12 @@
+.list-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+}
+
+@media(max-width: 500px) {
+    .list-container {
+        grid-template-columns: 1fr;
+
+    }
+}

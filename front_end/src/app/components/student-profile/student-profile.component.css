@@ -1,0 +1,47 @@
+
+
+.profile {
+
+    padding: 20px;
+    display: flex;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+ }
+
+ .profile_image {
+    max-width: 250px;
+    max-height: 250px;
+    border-radius: 50%;
+    margin-right: 30px;
+    margin-bottom: 20px;
+ }
+
+ .about {
+     padding-top: 20px;
+     padding-bottom: 5px;
+ }
+
+ .higthligh {
+    font : 1.2em;
+    font-weight: bold;
+ }
+
+ .td {
+    padding-right: 20px;
+ }
+
+
+ @media(max-width: 500px) {
+    .profile {
+        flex-direction: column;
+    }
+
+    .profile_image {
+        margin-right: auto;
+        margin-left: auto;
+     }
+}
+
+.rating {
+    margin-bottom: 20px;
+    color: orange;
+}

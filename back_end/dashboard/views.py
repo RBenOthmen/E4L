@@ -5,9 +5,9 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from django.db.models import Count
-from .serializers import EleveSerializer, LessonSerializer, MeetSerializer, MeetingStudentSerializer, MeetingTeacherSerializer,ProfesseurSerializer, ProgressEleveSerializer, ProgressSerializer, EleveImageSerializer, TaskSerializer
+from .serializers import CommentSerializer, EleveSerializer, LessonSerializer, MeetSerializer, MeetingStudentSerializer, MeetingTeacherSerializer,ProfesseurSerializer, ProgressEleveSerializer, ProgressSerializer, EleveImageSerializer, ReviewSerializer, TaskSerializer
 from dashboard import serializers
-from .models import Eleve, Lesson, Meet, Meeting, Professeur, Progress, EleveImage ,Task
+from .models import Comment, Eleve, Lesson, Meet, Meeting, Professeur, Progress, EleveImage, Review ,Task
 from rest_framework.mixins import ListModelMixin, CreateModelMixin, RetrieveModelMixin, UpdateModelMixin
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from rest_framework.decorators import api_view,action
@@ -161,5 +161,40 @@ def getMeetView(request,id):
             'request':request
         })
         return Response(serializer.data)
+
+
+class ReviewViewSet(ModelViewSet):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+
+@api_view(['POST'])
+def rate_review(request):
+    if request.method == "POST":
+        professeur_id = request.data['professeur_id']
+        user_id = request.data['user_id']
+        # queryset = Review.objects.filter(Q(professeur_id=professeur_id) | Q(eleve_id=eleve_id)).all()
+        queryset = Review.objects.filter(professeur_id=professeur_id,user_id=user_id).all()
+        serializer = ReviewSerializer(queryset, many=True, context={
+            'request':request
+        })
+        return Response(serializer.data)
+
+# update create delete => comment
+class CommentViewSet(ModelViewSet):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+
+@api_view(['POST'])
+def get_comments(request):
+    if request.method == "POST":
+        task_manager_id = request.data['task_manager_id']
+        user_id = request.data['user_id']
+        queryset = Review.objects.filter(task_manager_id=task_manager_id,user_id=user_id).all()
+        serializer = ReviewSerializer(queryset, many=True, context={
+            'request':request
+        })
+        return Response(serializer.data)
+
+
 
 

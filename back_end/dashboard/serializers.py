@@ -3,10 +3,11 @@ from dataclasses import field, fields
 from decimal import Decimal
 import email
 from itertools import product
+from tokenize import Comment
 from rest_framework import serializers
 from core.serializers import UserSerializer
 
-from dashboard.models import Eleve, Lesson, Meet, Meeting, Professeur, Progress, Task, EleveImage
+from dashboard.models import Eleve, Lesson, Meet, Meeting, Professeur, Progress, Review, Task, EleveImage
 
 
 class ProfesseurSerializer(serializers.ModelSerializer):
@@ -14,7 +15,7 @@ class ProfesseurSerializer(serializers.ModelSerializer):
     user = UserSerializer()
     class Meta:
         model = Professeur
-        fields  = ['id', 'user_id', 'user']
+        fields  = ['id', 'user_id', 'user', 'num_rating', 'avg_rating']
 
 class LessonSerializer(serializers.ModelSerializer):
 
@@ -107,7 +108,19 @@ class MeetSerializer(serializers.ModelSerializer):
 
 
 
+class ReviewSerializer(serializers.ModelSerializer):
+    user_id = serializers.IntegerField()
+    professeur_id = serializers.IntegerField()
+    class Meta:
+        model = Review
+        fields =['id', 'created_at', 'rate', 'professeur_id', 'user_id']
 
+class CommentSerializer(serializers.ModelSerializer):
+    user_id = serializers.IntegerField()
+    task_manager_id = serializers.IntegerField()
+    class Meta:
+        model = Comment
+        fields =['id', 'task_manager_id', 'user_id', 'comment', 'created_at']
 
     
     

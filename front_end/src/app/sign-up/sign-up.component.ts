@@ -1,3 +1,4 @@
+import { GeoService } from './../services/geo.service';
 import {Component, OnInit} from '@angular/core';
 import {UserService} from "../services/user.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
@@ -6,6 +7,7 @@ import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { BadInput } from '../exceptions/BadInput';
 import { AppError } from '../exceptions/AppError';
+import { formatDate } from '@angular/common';
 
 
 @Component({
@@ -14,6 +16,14 @@ import { AppError } from '../exceptions/AppError';
   styleUrls: ['./sign-up.component.css'],
 })
 export class SignUpComponent implements OnInit {
+
+  phoneType: string = 'HOME'
+  selectedCountryCode = 'us';
+  phoneCode = '1';
+  countryCodes = ['us', 'ca', 'de', 'mx', 'br', 'pt', 'cn', 'be', 'jp', 'ph', 'lu', 'bs', 'tn'];
+
+
+
   isToggled : boolean = false;
   showPassword : string = "password";
   registerForm!: FormGroup;
@@ -21,10 +31,14 @@ export class SignUpComponent implements OnInit {
   serverOffline : boolean = false;
   minDate = new Date(1910, 1, 1);
   maxDate = new Date(2014, 1, 1);
+  submitted = false;
+  digits : number = 8;
+  isPhoneNumber !: boolean;
 
   constructor(private userService: UserService,
     private authService : AuthService,
-    private router :Router) {
+    private router :Router,
+    private geoService : GeoService) {
   }
 
   goToSignin() {
@@ -42,7 +56,34 @@ export class SignUpComponent implements OnInit {
       "birthday": new FormControl(null, Validators.required),
       "phone": new FormControl(null, [Validators.required, Validators.min(10000000), Validators.max(99999999)]),
       "user" : new FormControl(null, Validators.required),
+      "phonenumber": new FormControl(null, [ Validators.required,
+        Validators.pattern("^[0-9]*$"),
+        Validators.minLength(8), Validators.maxLength(10)])
     })
+  }
+
+  changeSelectedCountryCode(value: string): void {
+    this.selectedCountryCode = value;
+    this.phoneCode = this.geoService.findCountryCodeByTwoLetterAbbreviation(this.selectedCountryCode);
+  }
+
+  //only number will be add
+  keyPress(phone : HTMLElement) {
+    // const pattern = /[0-9\+\-\ ]/;
+ 
+    // let inputChar = String.fromCharCode(event.charCode);
+    // if (event.keyCode != 8 && !pattern.test(inputChar)) {
+    //   event.preventDefault();
+    // }
+
+    console.log(this.phonenumber?.value.toString().length)
+    console.log(this.phonenumber?.value.toString().length != this.digits)
+    if (this.phonenumber?.value.toString().length != this.digits) {
+      this.isPhoneNumber= false;
+    } else
+      this.isPhoneNumber= true;
+
+    console.log(this.isPhoneNumber)
   }
 
 
@@ -103,6 +144,10 @@ export class SignUpComponent implements OnInit {
   get user(){
     return this.registerForm.get('user');
   }
+
+  get phonenumber(){
+    return this.registerForm.get('phonenumber');
+  }
   // end getters
 
 
@@ -117,6 +162,7 @@ export class SignUpComponent implements OnInit {
       this.showPassword = 'text';
     else if (this.showPassword == 'text')
     this.showPassword = 'password';
+    
   }
 
 
@@ -141,6 +187,8 @@ export class SignUpComponent implements OnInit {
   }
 
   getUser() : User{
+    let date = formatDate(new Date(this.birthday?.value),'yyyy/MM/dd','en');
+    let newdate : Date = <Date><unknown>(date[0]+date[1]+date[2]+date[3]+'-'+date[5]+date[6]+'-'+date[8]+date[9])
     return  {
       first_name : this.first_name?.value,
       last_name : this.first_name?.value,
@@ -148,7 +196,7 @@ export class SignUpComponent implements OnInit {
       password : this.password?.value,
       username : this.username?.value,
       phone : this.phone?.value,
-      birth_date : this.birthday?.value,
+      birth_date : newdate,
       type : this.user?.value,
     };
   }

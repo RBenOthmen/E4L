@@ -2,6 +2,7 @@
 import { User } from "./user";
 
   export class Teacher extends User {
-    rating ?:number;
+    rate ?:number;
+    avg_rating ?: number;
   }
   

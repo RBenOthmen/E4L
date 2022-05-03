@@ -114,7 +114,7 @@ export class MessengerComponent implements OnInit {
     let message : Message = {
       message: data,
       sender : this.currentUser.id,
-      receiver : this.receiver.id,
+      receiver : this.receiver.user?.id,
     };
     
     this.chatService.messages.next(message);

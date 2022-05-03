@@ -1,87 +1,151 @@
 
-<div class="container">
+
+<div class="account-container">
   <h2>Profile Settings</h2>
-  <form [formGroup]="profileForm" class="row g-3">
+  <div class="flex-row">
+    
+    <mat-tab-group mat-align-tabs="center" dynamicHeight>
+      <mat-tab label="Account">
+        <form [formGroup]="profileForm">
+          <!-- <div class="flex-row"> -->
+            
+            <div class="flex-column">
+              
+  
 
+  
+                  <mat-form-field  appearance="fill" class="example-full-width"> <!-- appearance="fill" -->
+                  <mat-label>{{ 'firstname' | translate }}</mat-label>
+                    <input matInput placeholder="{{ 'firstname' | translate }}" formControlName="first_name" type="text" id="first_name">
+                    <mat-error *ngIf="first_name!.invalid && first_name?.touched">
+                      {{ 'signup_error_first_name' | translate }}
+                    </mat-error>
+                  </mat-form-field>
 
-    <div class="form-group">
-      <div>First name :</div>
-      <input aria-label="" [value]="currentUser.first_name" placeholder="First name" formControlName="first_name" type="text" id="first_name" name="first_name" class="form-control">
-      <small *ngIf="first_name!.invalid && first_name?.touched" class="text-danger">first name is required</small>
-      <small *ngIf="isEmpty(first_name!)"></small>
-    </div>
+    
+                <mat-form-field class="example-full-width" appearance="fill">
+                  <mat-label>{{ 'lastname' | translate }}</mat-label>
+                  <input matInput placeholder="{{ 'lastname' | translate }}" formControlName="last_name" type="text" id="last_name">
+                  <mat-error *ngIf="last_name!.invalid && last_name?.touched">
+                    {{ 'signup_error_last_name' | translate }}
+                  </mat-error>
+                </mat-form-field>
+                <!-- <small *ngIf="last_name!.invalid && last_name?.touched" class="text-danger">{{ 'signup_error_last_name' | translate }}</small> -->
+        
 
-    <div class="form-group">
-      <div>Last name :</div>
-      <input aria-label="" [value]="currentUser.last_name" placeholder="Last name" formControlName="last_name" type="text" id="last_name" name="last_name" class="form-control">
-      <small *ngIf="last_name!.invalid && last_name?.touched" class="text-danger">last name is required</small>
-      <small *ngIf="isEmpty(last_name!)"></small>
-    </div>
-
-    <div class="form-group">
-      <div>Username :</div>
-      <input aria-label="" value="{{authService.currentUser.username}}" placeholder="Username" formControlName="username"
-        type="text" id="username" name="username" class="form-control">
-      <small *ngIf="username!.invalid && username?.touched" class="text-danger">username is required</small>
-      <small *ngIf="isEmpty(username!)"></small>
-    </div>
-
-    <!--    Email-->
-    <div class="form-group">
-      <div>Email :</div>
-      <input placeholder="Email" [value]="currentUser.email" formControlName="email" type="text" id="email"
-        name="email" class="form-control">
-      <small *ngIf="email?.invalid && email?.touched" class="text-danger">email is
-        required</small>
-    </div>
-
-    <div class="form-group">
-      <div>Birthday :</div>
-      <input placeholder="Birthday" [value]="currentUser.birth_date" formControlName="birthday" type="date" id="birthday" name="birthday"
-             class="form-control">
-      <small *ngIf="birthday?.invalid && birthday?.touched" class="text-danger">birthday is
-        required</small>
-    </div>
-
-
-    <div class="form-group">
-      <div>Phone number :</div>
-      <input placeholder="Phone number" [value]="currentUser.phone" formControlName="phone" type="number" id="phone" name="phone"
-             class="form-control">
-      <small *ngIf="phone?.invalid && phone?.touched" class="text-danger">phone is
-        required</small>
-    </div>
-
-
-    <div class="form-group">
-      <div>Current password :</div>
-      <input value="" placeholder="Current Password" formControlName="currentPassword" [type]="showPassword" id="currentPassword"
-        name="currentPassword" class="form-control">
-      <small *ngIf="currentPassword?.invalid && currentPassword?.touched" class="text-danger">Current password
-        is required</small>
-    </div>
-
-    <div><input type="checkbox" id="passwordStatus" name="passwordStatus" (click)="togglePassword()"> Show Password</div>
-
-    <div class="form-group">
-      <div>New password :</div>
-      <input placeholder="New Password" formControlName="newPassword" [type]="showPassword" id="newPassword"
-        name="newPassword" class="form-control">
-      <small *ngIf="newPassword?.invalid && newPassword?.touched" class="text-danger">Password
-        is required</small>
-    </div>
-
-    <div class="form-group">
-      <div>Confirm password :</div>
-      <input placeholder="Confirm Password" formControlName="confirmPassword" [type]="showPassword" id="confirmPassword"
-        name="confirmPassword" class="form-control">
-      <small *ngIf="confirmPassword?.invalid && confirmPassword?.touched" class="text-danger">password
-        is required</small>
-    </div>
-
-    <div>
-      <button class="btn btn-success" (click)="save()">Save</button>
-    </div>
-  </form>
+        
+              <!--    Email-->
+              <mat-form-field class="example-full-width" appearance="fill" >
+                <mat-label>{{ 'email' | translate }} </mat-label>
+                <input matInput placeholder="{{ 'email' | translate }}" formControlName="email" type="text" id="email">
+                <mat-error *ngIf="email!.invalid && email?.touched">
+                  {{ 'signup_error_email' | translate }}
+                </mat-error>
+              </mat-form-field>
+              
+              <mat-form-field class="example-full-width">
+                <mat-label>Choose a date</mat-label>
+                <input [min]="minDate" [max]="maxDate" matInput [matDatepicker]="picker" formControlName="birthday" id="birthday" name="birthday" readonly="true"> 
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker touchUi="true"></mat-datepicker>
+                  <mat-error *ngIf="(birthday?.invalid && birthday?.touched) || (birthday?.touched && this.dateInput)">
+                  {{ 'signup_error_birthday' | translate }}
+                </mat-error>
+              </mat-form-field>
+              
+              <mat-form-field class="example-full-width" appearance="fill">
+                <div class="wrap">
+                  <ngx-flag-picker [selectedCountryCode]="selectedCountryCode"
+                  [countryCodes]="countryCodes"
+                  (changedCountryCode)="changeSelectedCountryCode($event)">
+                </ngx-flag-picker>
+                (+{{phoneCode}})
+                <input matInput placeholder="{{ 'phonenumber' | translate }}" formControlName="phone" type="number" id="phone" class="left-space">
+              </div>
+              <mat-error *ngIf="phone?.touched && phone!.invalid">Please enter a valid phone number</mat-error>
+              </mat-form-field>
+            </div>
+  
+            
+  
+          
+          <!-- </div> -->
+        <div>
+            <button class="btn btn-success" (click)="save()">Save</button>
+          </div>
+          
+        </form>
+        </mat-tab>
+        <mat-tab label="Username">
+          <form [formGroup]="usernameForm" >
+          <mat-form-field  appearance="fill" class="example-full-width">
+            <mat-label>{{ 'username' | translate }} </mat-label>
+            <input matInput value="" placeholder="{{ 'username' | translate }}" formControlName="username" type="text" id="username">
+            <mat-error *ngIf="username!.invalid && username?.touched">
+              {{ 'signup_error_username' | translate }}
+            </mat-error>
+          </mat-form-field>
+          <div class="example-container">
+            <mat-form-field appearance="fill" class="example-full-width">
+              <mat-error *ngIf="usernamePassword!.invalid && usernamePassword?.touched">{{ 'signup_error_password' | translate }}</mat-error>
+              <mat-label>{{ 'password' | translate }}</mat-label>
+              <input matInput [type]="hide ? 'password' : 'text'" formControlName="usernamePassword">
+              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+  
+          <div>
+            <button class="btn btn-success" (click)="updateUsername()">Save</button>
+          </div>
+        </form>
+        </mat-tab>
+  
+        <mat-tab label="Password">
+          <form [formGroup]="passwordForm">
+          <div class="example-container">
+            <mat-form-field appearance="fill" class="example-full-width">
+              <mat-error *ngIf="currentPassword!.invalid && currentPassword?.touched">{{ 'signup_error_password' | translate }}</mat-error>
+              <mat-label>{{ 'password' | translate }}</mat-label>
+              <input matInput [type]="hide ? 'password' : 'text'" formControlName="currentPassword">
+              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+          <div class="example-container">
+            <mat-form-field appearance="fill" class="example-full-width">
+              <mat-error *ngIf="newPassword!.invalid && newPassword?.touched">{{ 'signup_error_password' | translate }}</mat-error>
+              <mat-label>{{ 'password' | translate }}</mat-label>
+              <input matInput [type]="hide ? 'password' : 'text'" formControlName="newPassword">
+              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+          <div class="example-container">
+            <mat-form-field appearance="fill" class="example-full-width">
+              <mat-error *ngIf="confirmPassword!.invalid && confirmPassword?.touched">{{ 'signup_error_password' | translate }}</mat-error>
+              <mat-label>{{ 'password' | translate }}</mat-label>
+              <input matInput [type]="hide ? 'password' : 'text'" formControlName="confirmPassword">
+              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+          <div>
+            <button class="btn btn-success" (click)="updatePassword()">Save</button>
+          </div>
+        </form>
+        </mat-tab>
+      </mat-tab-group>
+      <div class="flex-column">
+        <img [src]="imageUrl" alt="" style="width:250px;height:200px" class="profile-image">
+        <input type="file" #image accept="image/*" (change)="handleFileInput($event)">
+      </div>
+  </div>
+  
 </div>
 

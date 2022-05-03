@@ -1,0 +1,28 @@
+<form [formGroup]="phoneTypeFormGroup">
+
+  <mat-form-field class="example-full-width" appearance="fill" style="height:125px">
+    <!-- <div fxLayout="row wrap" class="wrap">
+      <div fxFlex="20" fxFlex.lt-md="100"> -->
+        <ngx-flag-picker [selectedCountryCode]="selectedCountryCode"
+                          [countryCodes]="countryCodes"
+                          (changedCountryCode)="changeSelectedCountryCode($event)">
+        </ngx-flag-picker>
+      <!-- </div> -->
+      <!-- <div fxFlex="10" fxFlex.lt-md="20" [ngStyle]="{'margin-top': '10px'}"> -->
+        (+{{phoneCode}})
+      <!-- </div> -->
+      <!-- <div fxFlex="60" fxFlex.lt-md="70" [ngStyle]="{'margin-top': '10px'}"> -->
+        <!-- appPhoneMask [countryCode]="selectedCountryCode" -->
+        <input (keyup)="keyPress()"  formControlName="phone"  matInput placeholder="Enter a phone number"  class='form-control' [ngClass]="{'valid' : isPhoneNumber, 'invalid' : !isPhoneNumber}">
+      <!-- </div> -->
+    <!-- </div> -->
+   
+    
+    <mat-error *ngIf="phone?.touched && this.isPhoneNumber == false">Please enter a valid phone number</mat-error>
+  </mat-form-field>
+    <div class="vertical-form-field" fxLayout="column" fxFlex="50" fxFlex.lt-md="100">
+      <div *ngIf="phone?.touched && this.isPhoneNumber == false" class="text-danger">
+        Phone number is required and must be at least {{this.digits}} numbers
+      </div>
+    </div>
+  </form>

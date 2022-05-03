@@ -3,7 +3,7 @@
     <img src="../../assets/images/user-icon.png" alt="" class="profile_image" />
     <div class="about">
       <div>
-        <h2>{{ teacher.first_name }} {{ teacher.last_name }}</h2>
+        <h2>{{ teacher.user?.first_name }} {{ teacher.user?.last_name }}</h2>
         <!-- <div>RATING</div>
                 <div class="rating">5 <i class="bi bi-star-fill"></i></div> -->
         <!-- ----------------------------------------------begin rating -->
@@ -15,19 +15,13 @@
             [max]="5"
             [(rate)]="starRating"
             [readonly]="false"
-          ></ngb-rating>
+          ></ngb-rating> {{teacher.avg_rating}}
           <!-- <div>
             <div *ngIf="ctrl.valid" class="text-success">Thanks!</div>
             <div *ngIf="ctrl.invalid" class="text-danger">Please rate me</div>
           </div> -->
         </div>
 
-        <button
-          class="btn btn-sm btn-outline-primary me-2"
-          (click)="ctrl.setValue(null)"
-        >
-          Clear
-        </button>
         <!-- ----------------------------------------------end rating -->
         <div>
           <button class="btn btn-primary">
@@ -51,7 +45,7 @@
         <td>
           <tr>
             {{
-              teacher.email
+              teacher.user?.email
             }}
           </tr>
           <tr>

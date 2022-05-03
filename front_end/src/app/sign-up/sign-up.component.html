@@ -3,56 +3,57 @@
   <div class="form_sign">
     <h2 class="title_sign">{{ 'creatingAnAccount' | translate }}</h2>
     <form [formGroup]="registerForm" class="row g-3" (submit)="register()">
-      <span class="centralize">
-          <!-- <mat-radio-button id="student" name="user" value="student" formControlName="user" checked></mat-radio-button> -->
-          <input type="radio" id="student" name="user" value="student" formControlName="user" checked class="form-check-input">
-          <label for="student"> {{ 'student' | translate }} </label>
-
-          <input type="radio" id="teacher" name="user" value="teacher" formControlName="user" class="form-check-input">
-          <label for="teacher"> {{ 'teacher' | translate }}</label>
-          <!-- <mat-radio-button id="teacher" name="user" value="teacher" formControlName="user"></mat-radio-button> -->
-      </span>
-
-
+      
+      
       <!-- First Name-->
-        <mat-form-field class="example-full-width" appearance="fill"> <!-- appearance="fill" -->
-          <mat-label>{{ 'firstname' | translate }}</mat-label>
+      <mat-form-field class="example-full-width" appearance="fill"> <!-- appearance="fill" -->
+        <mat-label>{{ 'firstname' | translate }}</mat-label>
           <input matInput placeholder="{{ 'firstname' | translate }}" formControlName="first_name" type="text" id="first_name">
+          <mat-error *ngIf="first_name!.invalid && first_name?.touched">
+            {{ 'signup_error_first_name' | translate }}
+          </mat-error>
         </mat-form-field>
-        <small *ngIf="first_name!.invalid && first_name?.touched" class="text-danger">{{ 'signup_error_first_name' | translate }}</small>
+        <!-- <small *ngIf="first_name!.invalid && first_name?.touched" class="text-danger">{{ 'signup_error_first_name' | translate }}</small> -->
 
         <!-- Last Name -->
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>{{ 'lastname' | translate }}</mat-label>
           <input matInput placeholder="{{ 'lastname' | translate }}" formControlName="last_name" type="text" id="last_name">
+          <mat-error *ngIf="last_name!.invalid && last_name?.touched">
+            {{ 'signup_error_last_name' | translate }}
+          </mat-error>
         </mat-form-field>
-        <small *ngIf="last_name!.invalid && last_name?.touched" class="text-danger">{{ 'signup_error_last_name' | translate }}</small>
+        <!-- <small *ngIf="last_name!.invalid && last_name?.touched" class="text-danger">{{ 'signup_error_last_name' | translate }}</small> -->
 
         <!-- Username -->
         <mat-form-field class="example-full-width" appearance="fill" >
           <mat-label>{{ 'username' | translate }} </mat-label>
           <input matInput value="" placeholder="{{ 'username' | translate }}" formControlName="username" type="text" id="username">
+          <mat-error *ngIf="username!.invalid && username?.touched">
+            {{ 'signup_error_username' | translate }}
+          </mat-error>
         </mat-form-field>
-        <small *ngIf="username!.invalid && username?.touched" class="text-danger">{{ 'signup_error_username' | translate }}</small>
-
+        <!-- <small *ngIf="username!.invalid && username?.touched" class="text-danger">{{ 'signup_error_username' | translate }}</small> -->
+        
 
       <!--    Email-->
       <mat-form-field class="example-full-width" appearance="fill" >
         <mat-label>{{ 'email' | translate }} </mat-label>
         <input matInput placeholder="{{ 'email' | translate }}" formControlName="email" type="text" id="email">
+        <mat-error *ngIf="email!.invalid && email?.touched">
+          {{ 'signup_error_email' | translate }}
+        </mat-error>
       </mat-form-field>
-      <mat-error *ngIf="email!.invalid && email?.touched" class="text-danger">
-        {{ 'signup_error_email' | translate }}
-      </mat-error>
-
-
+      
+      
       <!--Password-->
       <mat-form-field class="example-full-width" appearance="fill" >
         <mat-label>{{ 'password' | translate }}</mat-label>
         <input matInput placeholder="{{ 'password' | translate }}" formControlName="password" [type]="showPassword" id="password" name="password">
+        <mat-error *ngIf="password!.invalid && password?.touched">{{ 'signup_error_password' | translate }}</mat-error>
       </mat-form-field>
-      <small *ngIf="password!.invalid && password?.touched" class="text-danger">{{ 'signup_error_password' | translate }}</small>
-
+      <!-- <small *ngIf="password!.invalid && password?.touched" class="text-danger">{{ 'signup_error_password' | translate }}</small> -->
+      
       <!-- Show/Hide password(angularMaterial)
       <div class="example-container">
         <mat-form-field appearance="fill">
@@ -62,7 +63,7 @@
             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
           </button>
         </mat-form-field>
-
+        
         <mat-form-field appearance="fill" floatLabel="always">
           <mat-label>Amount</mat-label>
           <input matInput type="number" class="example-right-align" placeholder="0">
@@ -72,35 +73,73 @@
       </div> -->
 
       <mat-checkbox id="passwordStatus" name="passwordStatus" (click)="togglePassword()">{{ 'showpassword' | translate }}</mat-checkbox>
-
-
+      
+      
       <!-- BirthDate -->
-      <!-- <mat-form-field >
-        <mat-label>Choose a date</mat-label> -->
-        <!--<input [min]="minDate" [max]="maxDate" matInput [matDatepicker]="picker" formControlName="birthday" id="birthday" name="birthday" readonly="true">--> <!-- (focus)="picker.open()" -->
-        <!-- <mat-hint>MM/DD/YYYY</mat-hint>
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker touchUi="true"></mat-datepicker>
-        <mat-error *ngIf="(birthday?.invalid && birthday?.touched) || (birthday?.touched && this.dateInput)">
+      <!-- (focus)="picker.open()" -->
+      <mat-form-field >
+        <mat-label>Choose a date</mat-label>
+        <input [min]="minDate" [max]="maxDate" matInput [matDatepicker]="picker" formControlName="birthday" id="birthday" name="birthday" readonly="true"> 
+        <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker touchUi="true"></mat-datepicker>
+          <mat-error *ngIf="(birthday?.invalid && birthday?.touched) || (birthday?.touched && this.dateInput)">
           {{ 'signup_error_birthday' | translate }}
         </mat-error>
-      </mat-form-field> -->
-      <div class="form-group">
-        <label for="birthday">{{ 'birthday' | translate }}</label>
-        <input placeholder="Birthday" formControlName="birthday" type="date" id="birthday" name="birthday"
-          class="form-control">
-        <small *ngIf="birthday?.invalid && birthday?.touched" class="text-danger">
-          {{ 'signup_error_birthday' | translate }}
-        </small>
-      </div>
-
-
-      <!--Phone Number-->
-      <mat-form-field class="example-full-width" appearance="fill" >
-        <mat-label>{{ 'phonenumber' | translate }}</mat-label>
-        <input matInput placeholder="{{ 'phonenumber' | translate }}" formControlName="phone" type="number" id="phone">
       </mat-form-field>
-      <small *ngIf="phone!.invalid && phone?.touched" class="text-danger">{{ 'signup_error_phone' | translate }}</small>
+      
+      <mat-form-field class="example-full-width" appearance="fill">
+        <div class="wrap">
+          <ngx-flag-picker [selectedCountryCode]="selectedCountryCode"
+          [countryCodes]="countryCodes"
+          (changedCountryCode)="changeSelectedCountryCode($event)">
+        </ngx-flag-picker>
+        (+{{phoneCode}})
+        <input matInput placeholder="{{ 'phonenumber' | translate }}" formControlName="phone" type="number" id="phone" class="left-space">
+      </div>
+      <mat-error *ngIf="phone?.touched && phone!.invalid">Please enter a valid phone number</mat-error>
+    </mat-form-field>
+
+    <!-- <div class="form-group">
+      <label for="birthday">{{ 'birthday' | translate }}</label>
+      <input placeholder="Birthday" formControlName="birthday" type="date" id="birthday" name="birthday"
+      class="form-control">
+      <small *ngIf="birthday?.invalid && birthday?.touched" class="text-danger">
+        {{ 'signup_error_birthday' | translate }}
+      </small>
+    </div> -->
+    
+    
+    <span class="centralize">
+        <!-- <mat-radio-button id="student" name="user" value="student" formControlName="user" checked></mat-radio-button> -->
+        <input type="radio" id="student" name="user" value="student" formControlName="user" checked class="form-check-input">
+        <label for="student"> {{ 'student' | translate }} </label>
+
+        <input type="radio" id="teacher" name="user" value="teacher" formControlName="user" class="form-check-input left-space">
+        <label for="teacher"> {{ 'teacher' | translate }}</label>
+        <!-- <mat-radio-button id="teacher" name="user" value="teacher" formControlName="user"></mat-radio-button> -->
+    </span>
+    
+    
+    <!--Phone Number-->
+    <!-- <mat-form-field class="example-full-width" appearance="fill" >
+      <mat-label>{{ 'phonenumber' | translate }}</mat-label>
+      <input matInput placeholder="{{ 'phonenumber' | translate }}" formControlName="phone" type="number" id="phone">
+    </mat-form-field> -->
+
+
+    <!-- <div class="col-md-4">
+        <div class="form-group">
+            <label for="">YOUR PHONE NUMBER </label>
+            <input (keyup)="keyPress(number)" #number required type="text" formControlName="phonenumber" id="phonenumber" name="phonenumber" class="form-control" placeholder="Enter Your phone Number">
+            <div *ngIf="phonenumber?.touched && this.isPhoneNumber == false" class="text-danger">
+              Phone number is required and must be at least 10 numbers
+            </div>
+        </div>
+    </div> -->
+    <!-- <small *ngIf="phone!.invalid && phone?.touched" class="text-danger">{{ 'signup_error_phone' | translate }}</small> -->
+
+
 
       <small class="text-danger" *ngIf="invalidSignup">This username or email is already used !</small>
 

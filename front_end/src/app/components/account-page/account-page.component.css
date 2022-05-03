@@ -1,7 +1,6 @@
-.container{
+.account-container{
     width: 60%;
     margin: auto;
-    margin-top: 20px;
     display: block;
     margin-top: 25px;
     box-shadow: rgb(17, 12, 46, 0.15) 0px
@@ -19,4 +18,46 @@
   input[type=password] {
     max-width: 400px;
     border-color: rgb(139, 137, 137);
+  }
+
+
+
+  .mat-tab-group {
+    margin-bottom: 48px;
+  }
+
+  .form-control.ng-touched.ng-invalid {
+    border:1px solid red;
+  }
+  
+  .form-control.ng-touched.ng-valid {
+    border:1px solid green;
+  }
+  .example-full-width {
+    min-width: 150px;
+    max-width: 400px;
+    width: 100%;
+  }
+
+
+  .example-container .mat-form-field + .mat-form-field {
+    margin-left: 8px;
+  }
+  
+  .example-right-align {
+    text-align: right;
+  }
+  
+  input.example-right-align::-webkit-outer-spin-button,
+  input.example-right-align::-webkit-inner-spin-button {
+    display: none;
+  }
+  
+  input.example-right-align {
+    -moz-appearance: textfield;
+  }
+
+  .profile-image {
+    border-radius: 50%;
+    margin-bottom: 10px;
   }

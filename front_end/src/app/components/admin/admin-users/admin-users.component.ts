@@ -9,10 +9,11 @@ import { NotFoundError } from 'src/app/exceptions/not-found-error';
 import { MatDialog } from '@angular/material/dialog';
 import { User } from 'src/app/interfaces/user';
 import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
 import {Subject} from 'rxjs';
+import {AfterViewInit, ViewChild} from '@angular/core';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
+import {MatTableDataSource} from '@angular/material/table';
 
 
 @Component({
@@ -21,10 +22,16 @@ import {Subject} from 'rxjs';
   styleUrls: ['./admin-users.component.css']
 })
 export class AdminUsersComponent implements OnInit, OnDestroy {
+  displayedColumns: string[] = [ 'first_name', 'last_name', 'phone', 'email','username', 'action'];
+  dataSource!: MatTableDataSource<User>;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
   users!: User[];
   @Input('student') student!: Student;
   updateUserForm!: FormGroup;
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+
   element_data: User[] = [];
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
@@ -67,9 +74,25 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
     //   this.users;
   }
 
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
   getStudents() {
     this.adminService.getStudents().subscribe({
-      next: (result) => (this.users = result, this.dtTrigger.next(this.users)),
+      next: (result) => {
+        console.log(result)
+        this.users = result;
+        this.dtTrigger.next(this.users)
+        this.dataSource = new MatTableDataSource(result)
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      },
       error: (err: AppError) => {
         if (err instanceof NotFoundError) {
           console.log(err);
@@ -91,13 +114,15 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
 
 
   updateUser(user : User) {
+    console.log(user)
     this.dialog.open(AdminTeachersListComponent, {
       width : '30%',
       data : user
     }).afterClosed().subscribe(
       val => {
-        if (val === "Update")
-          console.log()
+        if (val === "save")
+        this.getStudents();
+        console.log()
       }
     );
   }
@@ -107,13 +132,14 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
       width : '30%'
     }).afterClosed().subscribe(
       val => {
-        if (val === "Add")
-          console.log()
+        if (val === "add")
+        this.getStudents();
+        console.log()
       }
     );
   }
 
-  deleteStudent(student: Student) {
+  deleteUser(student: Student) {
     if (
       confirm(
         'Are you sure to delete ' + student.first_name + ' ' + student.last_name
@@ -122,9 +148,10 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
       this.adminService.deleteStudent(student).subscribe({
         next: (response) => {
           console.log('Student deleted successfully');
-          let index: number = this.users.indexOf(student);
-          this.users.splice(index, 1);
-          console.log(index);
+          // let index: number = this.users.indexOf(student);
+          // this.users.splice(index, 1);
+          // console.log(index);
+          this.getStudents();
         },
         error: (err: AppError) => {
           console.log(err);
@@ -133,23 +160,6 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
     }
   }
 
-
-  updateStudent(student: Student) {
-    student.role = 'S';
-    this.adminService.updateStudent(student).subscribe({
-      next: (response) => {
-        console.log(student);
-        console.log('Student updated successfully');
-      },
-      error: (err: AppError) => {
-        console.log(err);
-      },
-    });
-  }
-
-  createUser() {
-    this.router.navigate(['/admin-users/new']);
-  }
 
 }
 

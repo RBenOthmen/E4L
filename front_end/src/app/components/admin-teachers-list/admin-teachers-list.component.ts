@@ -173,6 +173,7 @@ export class AdminTeachersListComponent implements OnInit {
         this.userForm.reset();
         this.uiService.toastSuccess("Account has been created successfuly")
         // this.activateUser(response);
+        this.dialogRef.close('add');
       },
         error : (err : AppError) => {
          if (err instanceof BadInput){
@@ -197,6 +198,7 @@ export class AdminTeachersListComponent implements OnInit {
         this.userForm.reset();
         this.uiService.toastSuccess("Account has been updated successfuly")
         // this.activateUser(response);
+        this.dialogRef.close('save');
       },
         error : (err : AppError) => {
          if (err instanceof BadInput){
@@ -226,7 +228,7 @@ export class AdminTeachersListComponent implements OnInit {
   getUser() : User{
     return  {
       first_name : this.first_name?.value,
-      last_name : this.first_name?.value,
+      last_name : this.last_name?.value,
       email : this.email?.value,
       password : this.password?.value,
       username : this.username?.value,

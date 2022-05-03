@@ -213,8 +213,35 @@ export class AuthService {
     }
     console.log(data)
 
+    if (data.type == File) {
+      console.log("i m file")
+      const formData = new FormData();
+      formData.append('image', data);
+      authorization = {
+        headers: new HttpHeaders({
+          'Content-Type' : 'multipart/form-data',
+          'Authorization' : 'JWT '+token
+        }),
+      }
+    }
+
     return this.http.patch<User>(this.url+"auth/users/me/", data, authorization).pipe(
       catchError(this.handleError));
+    }
+
+    updateUserImage(data : any):Observable<User>{
+      let token = localStorage.getItem('token');
+      let authorization = {
+        headers: new HttpHeaders({
+          // 'Content-Type' : 'multipart/form-data',
+          'Authorization' : 'JWT '+token
+        }),
+      }
+
+      let formData = new FormData();
+      formData.append('image', data);
+      return this.http.patch<User>(this.url+"auth/users/me/", formData, authorization).pipe(
+        catchError(this.handleError));
     }
 
   changePassword(user : any):Observable<User>{

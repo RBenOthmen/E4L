@@ -176,20 +176,21 @@
 
   <br /><br /><br />
 
-  <h3>
-    Meetings
-    <button class="btn btn-primary float-right" (click)="addMeeting()">
+  <div class="meetings">
+    <h3>
+      Meetings
+    </h3>
+    <button class="btn btn-primary" (click)="addMeeting()">
       Organize a meeting
     </button>
-    <div class="clearfix"></div>
-  </h3>
-
+  </div>
+  
   <div class="table-responsive">
     <table class="table table-bordered">
       <thead>
         <tr>
           <th>Student</th>
-          <th>Color</th>
+          <!-- <th>Color</th> -->
           <th>Scheduled for</th>
           <th>Remove</th>
           <th>Status</th>
@@ -208,13 +209,13 @@
               (ngModelChange)="refresh.next()"
             />
           </td>
-          <td>
+          <!-- <td>
             <input
               type="color"
               [(ngModel)]="event.color"
               (change)="updateMeeting(event)"
             />
-          </td>
+          </td> -->
           <td>
             <input
               class="form-control"

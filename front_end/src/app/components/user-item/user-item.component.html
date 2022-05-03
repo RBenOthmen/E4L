@@ -2,8 +2,8 @@
 
    <div class="profile">
          <img src="../../assets/images/user-icon.png"  alt="" class="profile_image">
-         <div class="profile_name">{{teacher.first_name}} {{teacher.last_name}}</div>
-         <div class="profile_email">{{teacher.email}}</div>
+         <div class="profile_name">{{teacher.user?.first_name}} {{teacher.user?.last_name}}</div>
+         <div class="profile_email">{{teacher.user?.email}}</div>
          <a [routerLink]="['/teachers',teacher.id]">
                <button class="btn btn-primary">
                      View Profile

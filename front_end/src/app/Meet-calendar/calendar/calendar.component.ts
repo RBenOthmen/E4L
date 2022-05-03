@@ -189,17 +189,15 @@ export class CalendarComponent implements OnInit {
     this.meetingService.getMeeting(this.authService.getId())
     .subscribe({
       next: result => {
-
+        console.log('get meetings')
         for (let res of result) {
           res.start = new Date(res.start)
           if (res.organizer_id != this.authService.getId()) {
             res.title = <string>res.username_organizer;
           }
         }
-        this.events = [
-          ...this.events,
-          ...result
-        ];
+        console.log(result)
+        this.events = result;
         this.refresh.next()
        }
        ,error : (err : AppError) => {
@@ -387,6 +385,7 @@ export class CalendarComponent implements OnInit {
       
     }).afterClosed().subscribe(
       () => {
+        this.getMeetings();
         this.refresh.next()
       }
       );;

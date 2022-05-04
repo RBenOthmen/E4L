@@ -3,11 +3,11 @@ from dataclasses import field, fields
 from decimal import Decimal
 import email
 from itertools import product
-from tokenize import Comment
+
 from rest_framework import serializers
 from core.serializers import UserSerializer
 
-from dashboard.models import Eleve, Lesson, Meet, Meeting, Professeur, Progress, Review, Task, EleveImage
+from dashboard.models import Eleve, Lesson, Meet, Meeting, Professeur, Progress, Review, Task, EleveImage, Comment
 
 
 class ProfesseurSerializer(serializers.ModelSerializer):

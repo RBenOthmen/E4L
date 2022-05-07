@@ -10,6 +10,13 @@ import { Unauthorized } from '../exceptions/Unauthorized';
 import { Forbidden } from '../exceptions/Forbidden';
 import { User } from '../interfaces/user';
 
+
+const httpOptionsForComment = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+  }),
+};
+
 @Injectable({
   providedIn: 'root',
 })
@@ -17,9 +24,9 @@ export class AdminService {
   // private urlCoreTeacher = 'http://localhost:8000/core/teachers';
   // private urlDashboardStudent = 'http://localhost:8000/dashboard/eleves/';
   private baseUrl = 'http://localhost:8000/';
-  private urlUsers = this.baseUrl+'core/users/';
-  private urlStudents = this.baseUrl+'core/students/';
-  private urlTeachers = this.baseUrl+'core/teachers/';
+  private urlUsers = this.baseUrl + 'core/users/';
+  private urlStudents = this.baseUrl + 'core/students/';
+  private urlTeachers = this.baseUrl + 'core/teachers/';
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -81,7 +88,11 @@ export class AdminService {
 
   updateStudent(student: Student): Observable<Student> {
     return this.http
-      .put<Student>(this.urlStudents + student.id + '/', student, this.httpOptions)
+      .put<Student>(
+        this.urlStudents + student.id + '/',
+        student,
+        this.httpOptions
+      )
       .pipe(catchError(this.handleError));
   }
 
@@ -92,22 +103,40 @@ export class AdminService {
   }
   //////////////////////////////////////
 
-  activateUser(user: User): Observable<User> {
+  getComments(u_id: number): Observable<Comment[]> {
     return this.http
-      .post<User>(this.baseUrl+'core/activate/'+user.id+'/', user, this.httpOptions)
+      .get<Comment[]>(this.baseUrl + 'dashboard/getusercomments/' + u_id, httpOptionsForComment)
+      .pipe(catchError(this.handleError));
+  }
+
+  modifyCommentState(comment_id: number, commentState: boolean): Observable<Comment> {
+    return this.http
+      .patch<Comment>(this.baseUrl + 'dashboard/comments/' + comment_id + '/',
+      { state: commentState},
+      this.httpOptions)
       .pipe(catchError(this.handleError));
   }
 
   CreateUser(user: User): Observable<Teacher> {
     return this.http
-      .post<Teacher>(this.baseUrl+'core/create/', user, this.httpOptions)
+      .post<Teacher>(this.baseUrl + 'core/create/', user, this.httpOptions)
       .pipe(catchError(this.handleError));
   }
 
   updateUser(user: User): Observable<User> {
-    console.log(user)
+    console.log(user);
     return this.http
       .put<User>(this.urlUsers + user.id + '/', user, this.httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
+  activateUser(user: User): Observable<User> {
+    return this.http
+      .post<User>(
+        this.baseUrl + 'core/activate/' + user.id + '/',
+        user,
+        this.httpOptions
+      )
       .pipe(catchError(this.handleError));
   }
 

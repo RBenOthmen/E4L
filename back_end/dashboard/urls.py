@@ -41,6 +41,7 @@ urlpatterns = [
     path('getallmeets/<int:id>/', views.getMeetView, name='get_meets'),
     path('getstudentreview/', views.rate_review, name='get_review'),
     path('getcomments/', views.get_comments, name='get_comments'),
+    path('getusercomments/<int:id>/', views.get_comments_to_admin, name='get_comments_to_admin'),
 ] + router.urls + progress_router.urls + tasks_router.urls + image_router.urls + mettingTeacher_router.urls + mettingsStudent_router.urls
 
 

@@ -69,8 +69,8 @@ class TaskSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         professeur_id = self.context['professeur_id']
-        
-        return Task.objects.create(professeur_id=professeur_id , **validated_data)    
+
+        return Task.objects.create(professeur_id=professeur_id , **validated_data)
 
         # example_relationship = validated_data.pop('example_relationship')
         #     instance = ExampleModel.objects.create(**validated_data)
@@ -120,9 +120,9 @@ class CommentSerializer(serializers.ModelSerializer):
     task_manager_id = serializers.IntegerField()
     class Meta:
         model = Comment
-        fields =['id', 'task_manager_id', 'user_id', 'comment', 'created_at']
+        fields =['id', 'task_manager_id', 'user_id', 'comment', 'created_at', 'state']
 
-    
-    
 
-        
+
+
+

@@ -1,0 +1,44 @@
+<form [formGroup]="commentForm" class="example-form">
+  <div *ngIf="comments.length == 0">No comments yet!</div>
+
+  <table>
+    <thead>
+      <tr>
+        <th *ngIf="comments.length != 0">Comment</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let comment of comments">
+        <td><input [value]="comment.comment" readonly /></td>
+        <td>
+          <!-- <i class="bi bi-check-circle-fill"
+            [ngClass]="{'bi bi-check-circle-fill':comment.state==true, 'bi bi-check-circle':comment.state==false}"
+            (click)="changeState(comment)">
+          </i> -->
+          <div *ngIf="comment.state">
+            <button mat-raised-button color="basic" (click)="changeState(comment)">
+              <!-- {{ btnValue }} -->
+             Mark as unread
+            </button>
+          </div>
+          <div *ngIf="comment.state==false">
+            <button mat-raised-button color="primary" (click)="changeState(comment)">
+              <!-- {{ btnValue }} -->
+              Mark as read
+            </button>
+          </div>
+
+          <!-- <button mat-raised-button color="basic" (click)="changeState(comment)">
+            Mark as unread
+          </button>
+          <button *ngIf="comment.state == false" mat-raised-button color="primary" (click)="changeState(comment)">
+            Mark as read
+          </button> -->
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button mat-raised-button color="warn" mat-dialog-close>Close</button>
+</form>

@@ -1,0 +1,8 @@
+.dialog-size {
+    width: 100%;
+    height: 100px;
+}
+
+input, thead, tr, table, td {
+    width: 100%;
+}

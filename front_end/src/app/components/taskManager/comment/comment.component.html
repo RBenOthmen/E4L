@@ -1,0 +1,15 @@
+<form [formGroup]="commentForm" class="example-form">
+    <!-- (submit)="addComment()" -->
+    <!-- <mat-form-field class="example-full-width" appearance="fill" formControlName="comment"> -->
+    <mat-label>Leave a comment</mat-label>
+    <textarea
+      matInput
+      formControlName="comment"
+      class="dialog-size"
+      placeholder="Ex. This page need ..."
+    ></textarea>
+    <!-- </mat-form-field> -->
+
+    <button mat-raised-button color="primary" (click)="addComment()">Submit</button>
+    <button mat-raised-button color="warn" mat-dialog-close>Close</button>
+  </form>

@@ -1,0 +1,40 @@
+<form [formGroup]="commentForm" class="example-form">
+  <!-- <mat-label>All Comments: </mat-label> -->
+
+  <!-- <div *ngFor="let comment of comments">
+    <p>* {{ comment.comment }}</p>
+  </div> -->
+
+  <div *ngIf="comments.length == 0">No comments yet!</div>
+
+  <table>
+    <thead>
+      <tr *ngIf="comments.length != 0">
+        <th>Comment</th>
+        <th>Operation</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      <!-- <label class="radio-inline" *ngFor="let answer of answers">
+        <span class="answer-color-{{answer.value}}">
+          <input type="radio" [(ngModel)]="selectedOption" name="inlineRadioOptions" [value]="answer.value" >
+            {{answer.text}}
+        </span>
+      </label> -->
+
+      <tr *ngFor="let comment of comments">
+        <td><input [value]="comment.comment" [ngClass]="{'isReaded': comment.state == true}" #newComment id="inputComment"/></td>
+        <td>
+          <button mat-raised-button color="info" (click)="updateComment(comment, newComment.value)">Edit</button>
+        </td>
+        <td>
+          <button mat-raised-button color="danger" (click)="deleteComment(comment)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button mat-raised-button color="warn" mat-dialog-close>Close</button>
+</form>

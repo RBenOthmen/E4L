@@ -1,0 +1,63 @@
+<form [formGroup]="userForm" class="row g-3">
+
+    <!--    First Name-->
+    <div class="form-group">
+        <label for="first_name">{{ 'firstname' | translate }}:</label>
+        <input aria-label="" placeholder="{{ 'firstname' | translate }}" formControlName="first_name" type="text" id="first_name"
+        name="first_name" class="form-control" readonly>
+        <small *ngIf="first_name!.invalid && first_name?.touched" class="text-danger">{{ 'signup_error_first_name' | translate }}</small>
+    </div>
+
+    <!--    Last Name-->
+    <div class="form-group">
+        <label for="last_name">{{ 'lastname' | translate }}:</label>
+        <input aria-label="" placeholder="{{ 'lastname' | translate }}" formControlName="last_name" type="text" id="last_name"
+        name="last_name" class="form-control" readonly>
+        <small *ngIf="last_name!.invalid && last_name?.touched" class="text-danger">{{ 'signup_error_last_name' | translate }}</small>
+    </div>
+
+    <!--    Username-->
+    <div class="form-group">
+        <label for="username">{{ 'username' | translate }}:</label>
+        <input aria-label="" placeholder="{{ 'username' | translate }}" formControlName="username" type="text" id="username" name="username"
+        class="form-control" readonly>
+        <small *ngIf="username!.invalid && username?.touched" class="text-danger">
+        {{ 'signup_error_username' | translate }}
+        </small>
+    </div>
+
+    <!--    Email-->
+    <div class="form-group">
+        <label for="email">{{ 'email' | translate }}:</label>
+        <input placeholder="{{ 'email' | translate }}" formControlName="email" type="text" id="email" name="email" class="form-control" readonly>
+        <small *ngIf="email?.invalid && email?.touched" class="text-danger">
+        {{ 'signup_error_email' | translate }}
+        </small>
+    </div>
+
+    <!--Birthday-->
+    <div class="form-group">
+        <label for="birthday">{{ 'birthday' | translate }}:</label>
+        <input placeholder="Birthday" formControlName="birthday" type="date" id="birthday" name="birthday"
+        class="form-control" readonly>
+        <small *ngIf="birthday?.invalid && birthday?.touched" class="text-danger">
+        {{ 'signup_error_birthday' | translate }}
+        </small>
+    </div>
+
+    <!--Phone Number-->
+    <div class="form-group">
+        <label for="phone">{{ 'phonenumber' | translate }}:</label>
+        <input placeholder="Phone number" formControlName="phone" type="number" id="phone" name="phone"
+        class="form-control" readonly>
+        <small *ngIf="phone?.invalid && phone?.touched" class="text-danger">
+        {{ 'signup_error_phone_number' | translate }}
+        </small>
+    </div>
+
+    <div>
+        <button mat-raised-button color="primary" (click)="comment()">Comment</button>
+        <button mat-raised-button color="info" (click)="getComments()">All Comments</button>
+        <button mat-raised-button color="warn" mat-dialog-close>Close</button>
+    </div>
+</form>

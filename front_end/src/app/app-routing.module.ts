@@ -25,6 +25,7 @@ import { AdminComponent } from './components/admin/admin.component';
 import { AdminUsersComponent } from './components/admin/admin-users/admin-users.component';
 // import {UserFormComponent} from "./components/admin/user-form/user-form.component";
 import { RatingComponent } from './components/rating/rating.component';
+import { TmUsersComponent } from './components/taskManager/tm-users/tm-users.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -52,6 +53,7 @@ const routes: Routes = [
   { path: 'user-details', component: UserDetailsComponent },
   { path: 'calendar', component: CalendarComponent },
   { path: 'rating', component: RatingComponent },
+  { path: 'tm-users', component: TmUsersComponent },
 
   { path: 'admin', component: AdminStudentsComponent },
   { path: 'app-admin', component: AdminComponent }, // canActivate: [AuthGuardService]

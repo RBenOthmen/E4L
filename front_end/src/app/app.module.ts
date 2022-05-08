@@ -20,9 +20,7 @@ import { UserService } from './services/user.service';
 import { FooterComponent } from './footer/footer.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SideBarComponent } from './side-bar/side-bar.component';
-import { MatSliderModule } from '@angular/material/slider';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { MatIconModule } from '@angular/material/icon';
 import { CategoryItemComponent } from './components/category-item/category-item.component';
 import { LessonItemComponent } from './components/lesson-item/lesson-item.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -55,7 +53,6 @@ import { MessengerWindowComponent } from './Messenger/messenger-window/messenger
 import { MessengerUserItemComponent } from './Messenger/messenger-user-item/messenger-user-item.component';
 import { LanguageSelecteurComponent } from './components/language-selecteur/language-selecteur.component';
 
-import { MatDialogModule } from '@angular/material/dialog';
 import { AdminComponent } from './components/admin/admin.component';
 import { AdminTeachersListComponent } from './components/admin-teachers-list/admin-teachers-list.component';
 import { AdminStudentsComponent } from './components/admin-students/admin-students.component';
@@ -86,13 +83,9 @@ import { TmViewProfileComponent } from './components/taskManager/tm-view-profile
 import { ViewCommentsComponent } from './components/taskManager/view-comments/view-comments.component';
 // import { PaginationComponent } from './components/pagination/pagination.component';
 import { NgxFlagPickerModule } from 'ngx-flag-picker';
-import { MatExpansionModule } from '@angular/material/expansion';
 
-import { MatSortModule } from '@angular/material/sort';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatDividerModule } from '@angular/material/divider';
 import { UserCommentsComponent } from './components/admin/user-comments/user-comments.component';
+import { CommentDetailsComponent } from './components/comment-details/comment-details.component';
 // import { VideoScreenComponent } from './Zoom/video-screen/video-screen.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -149,6 +142,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ViewCommentsComponent,
     PhoneTypeFormComponent,
     UserCommentsComponent,
+    CommentDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -160,15 +154,12 @@ export function HttpLoaderFactory(http: HttpClient) {
     HttpClientModule,
     MenubarModule,
     FontAwesomeModule,
-    MatSliderModule,
     NoopAnimationsModule,
-    MatIconModule,
     PasswordModule,
     CheckboxModule,
     ToastModule,
     MessagesModule,
     MessageModule,
-    MatDialogModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -178,11 +169,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     }),
     BrowserAnimationsModule,
     MatComponentsModule,
-    MatExpansionModule,
-    MatSortModule,
-    MatPaginatorModule,
-    MatTabsModule,
-    MatDividerModule,
     CommonModule,
     NgbModalModule,
     FlatpickrModule.forRoot(),

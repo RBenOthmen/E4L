@@ -29,7 +29,7 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   users!: User[];
-  @Input('student') student!: Student;
+  @Input('user') user!: User;
   updateUserForm!: FormGroup;
   element_data: User[] = [];
   dtOptions: DataTables.Settings = {};
@@ -81,7 +81,8 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.getStudents();
+    // this.getStudents();
+    this.getUsers();
 
     console.log(this.users);
     console.log('nothing');
@@ -139,9 +140,27 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
     });
   }
 
+  getUsers() {
+    this.adminService.getUsers().subscribe({
+      next: (result) => {
+        console.log(result);
+        this.users = result;
+        this.dtTrigger.next(this.users);
+        this.dataSource = new MatTableDataSource(result);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      },
+      error: (err: AppError) => {
+        if (err instanceof NotFoundError) {
+          console.log(err);
+        }
+      },
+    });
+  }
+
   getStudent(id: number) {
     this.adminService.getStudent(id).subscribe({
-      next: (result) => (this.student = result),
+      next: (result) => (this.user = result),
       error: (err: AppError) => {
         if (err instanceof NotFoundError) {
           console.log(err);

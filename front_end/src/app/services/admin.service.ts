@@ -109,6 +109,12 @@ export class AdminService {
       .pipe(catchError(this.handleError));
   }
 
+  getComment(comment_id: number): Observable<Comment> {
+    return this.http
+      .get<Comment>(this.baseUrl + 'dashboard/comments/' + comment_id, httpOptionsForComment)
+      .pipe(catchError(this.handleError));
+  }
+
   modifyCommentState(comment_id: number, commentState: boolean): Observable<Comment> {
     return this.http
       .patch<Comment>(this.baseUrl + 'dashboard/comments/' + comment_id + '/',
@@ -116,6 +122,8 @@ export class AdminService {
       this.httpOptions)
       .pipe(catchError(this.handleError));
   }
+
+  //--------------------------------------------------------------- Users management
 
   CreateUser(user: User): Observable<Teacher> {
     return this.http
@@ -127,6 +135,12 @@ export class AdminService {
     console.log(user);
     return this.http
       .put<User>(this.urlUsers + user.id + '/', user, this.httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
+  getUsers(): Observable<User[]> {
+    return this.http
+      .get<User[]>(this.urlUsers, this.httpOptions)
       .pipe(catchError(this.handleError));
   }
 

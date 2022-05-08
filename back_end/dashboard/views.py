@@ -25,7 +25,7 @@ class EleveViewSet(ModelViewSet):
     # queryset = Eleve.objects.all()
     serializer_class = EleveSerializer
 
-    def get_queryset(self ):     
+    def get_queryset(self ):
         return Eleve.objects.select_related('user').all()
 
     @action(detail=False, methods=['GET','PUT'])
@@ -44,7 +44,7 @@ class ProfesseurViewSet(ModelViewSet):
     # queryset = Professeur.objects.all()
     serializer_class = ProfesseurSerializer
 
-    def get_queryset(self ):     
+    def get_queryset(self ):
         return Professeur.objects.select_related('user').all()
 
     @action(detail=False, methods=['GET','PUT','PATCH'])
@@ -73,7 +73,7 @@ class ProgressViewSet(ModelViewSet):
     serializer_class = ProgressSerializer
 
 
-    
+
 
 class LessonViewSet(ModelViewSet):
     queryset = Lesson.objects.all()
@@ -90,11 +90,11 @@ class ProgressEleveViewSet(ModelViewSet):
         return {'eleve_id':self.kwargs['eleve_pk']}
 
 class TaskProfesseurViewSet(ModelViewSet):
-    
+
     serializer_class = TaskSerializer
 
 
-    def get_queryset(self, ):     
+    def get_queryset(self, ):
         return Task.objects.filter(professeur_id=self.kwargs['professeur_pk'])
 
     def get_serializer_context(self):
@@ -146,7 +146,7 @@ def StudentInfo(request, id):
 
 
 
-    
+
 @api_view(['GET'])
 def Meetings(request, id):
     if request.method == "GET":
@@ -201,8 +201,18 @@ def get_comments(request):
     if request.method == "POST":
         task_manager_id = request.data['task_manager_id']
         user_id = request.data['user_id']
-        queryset = Review.objects.filter(task_manager_id=task_manager_id,user_id=user_id).all()
-        serializer = ReviewSerializer(queryset, many=True, context={
+        queryset = Comment.objects.filter(task_manager_id=task_manager_id,user_id=user_id).all()
+        serializer = CommentSerializer(queryset, many=True, context={
+            'request':request
+        })
+        return Response(serializer.data)
+
+
+@api_view(['GET'])
+def get_comments_to_admin(request, id):
+    if request.method == "GET":
+        queryset = Comment.objects.filter(user_id=id).all()
+        serializer = CommentSerializer(queryset, many=True, context={
             'request':request
         })
         return Response(serializer.data)

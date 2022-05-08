@@ -12,6 +12,13 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   exports: [
@@ -27,6 +34,14 @@ import { MatTableModule } from '@angular/material/table';
     MatToolbarModule,
     MatPaginatorModule,
     MatTableModule,
+    MatExpansionModule,
+    MatSortModule,
+    MatPaginatorModule,
+    MatTabsModule,
+    MatDividerModule,
+    MatIconModule,
+    MatSliderModule,
+    MatDialogModule,
   ],
 })
 export class MatComponentsModule {}

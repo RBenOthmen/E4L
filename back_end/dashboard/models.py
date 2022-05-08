@@ -38,6 +38,7 @@ class Professeur (models.Model):
     
 
 
+<<<<<<< HEAD
     # def num_rating(self):
     #     ratings = Review.objects.filter(professeur=self)
     #     return len(ratings)
@@ -53,13 +54,26 @@ class Professeur (models.Model):
     #     else:
     #         return 0
     
+=======
+    def avg_rating(self):
+        sum= 0
+        ratings = Review.objects.filter(professeur=self)
+        for rating in ratings:
+            sum += rating.rate
+
+        if len(ratings) > 0:
+            return sum / len(ratings)
+        else:
+            return 0
+
+>>>>>>> 6439123141628df054e2e6b08326d7950f6eb17b
 class Task (models.Model):
     title = models.CharField(max_length=255)
     start_date = models.DateField(auto_now=True)
     end_date = models.DateField()
     is_completed = models.BooleanField(default=False)
     professeur = models.ForeignKey(Professeur, on_delete=models.CASCADE)
-    
+
 
 class Progress (models.Model):
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
@@ -121,5 +135,4 @@ class Comment (models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=None)
     created_at = models.DateTimeField(auto_now_add=True)
     comment = models.TextField()
-
-    
+    state = models.BooleanField(default=False)

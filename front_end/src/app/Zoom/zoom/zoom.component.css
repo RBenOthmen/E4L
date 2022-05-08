@@ -1,0 +1,17 @@
+.loading {
+    /* top: 59px !important; */
+    /* left: 0 !important;
+    right: 0; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90%;
+  }
+
+  .display {
+
+  }
+
+  .hidden {
+    display: none;
+  }

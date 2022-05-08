@@ -1,3 +1,5 @@
+import { ZoomService } from './../../Zoom/zoom.service';
+import { ZoomMeeting } from './../../interfaces/ZoomMeeting';
 import { Component, OnInit, Inject, ChangeDetectionStrategy, Input, Output } from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {
@@ -43,11 +45,13 @@ export class OrganizeMeetingComponent implements OnInit {
     private meetingService : MeetingService,
     private teacherService : TeacherService,
     private authService :AuthService,
-    private studentService:StudentService) {
+    private studentService:StudentService,
+    private zoomService : ZoomService) {
     // this.users = data;
     // this.getUserDetails();
     this.users = data.users;
     this.event = data.event;
+    this.currentUser = data.currentUser;
    }
 
   ngOnInit(): void {
@@ -62,23 +66,53 @@ export class OrganizeMeetingComponent implements OnInit {
 
   }
 
-  createMeeting(meeting : CalendarEvent, user : User) {
-    
+  
 
-      meeting.recipient_id = user.user_id;
-      meeting.title = user.user?.username || '';
-      // meeting.username_recipient
-    this.meetingService.createMeeting(meeting).subscribe({
-      next: result => {
-        console.log(result)
-        this.dialogRef.close();
-       }
-       ,error : (err : AppError) => {
-         if (err instanceof BadInput){
+  createMeeting(meeting : CalendarEvent, user : User) {
+      console.log(this.currentUser.email)
+      this.zoomService.createMeeting(<string>this.currentUser.email).subscribe({
+        next : (data : ZoomMeeting) => {
+           if(data) {
+          console.log(data)
+          let join_URL : string =  <string>data.join_URL
+          // let meetingNumber : string = data.join_URL?.slice(0, data.join_URL.indexOf('?')) || '0'
+          // meetingNumber = meetingNumber.substring(join_URL.indexOf('j/')+2, meetingNumber.length)
+          // console.log(meetingNumber);
+          let meetingNumber = <string>data.meetingNumber
+          let password : string = <string>data.meetingPassword;
+          console.log()
+          // this.getSignature(1,meetingNumber, password);
+          this.createDbMeeting(meeting,user,meetingNumber,password)
+        } else {
+          console.log(data)
+        }
+        },
+          error : (err : AppError) => {
            console.log(err)
          }
+        })
+      
+  }
+
+  createDbMeeting(meeting : CalendarEvent, user : User, meetingNumber : string, password : string) {
+    meeting.recipient_id = user.user_id;
+    meeting.title = user.user?.username || '';
+    meeting.meetingNumber = meetingNumber;
+    meeting.password = password;
+    // meeting.username_recipient
+    console.log(meeting)
+  this.meetingService.createMeeting(meeting).subscribe({
+    next: result => {
+      console.log(result)
+      
+      this.dialogRef.close();
+     }
+     ,error : (err : AppError) => {
+       if (err instanceof BadInput){
+         console.log(err)
        }
-     });
+     }
+   });
   }
 
   updateMeeting(meeting : CalendarEvent, user : User) {

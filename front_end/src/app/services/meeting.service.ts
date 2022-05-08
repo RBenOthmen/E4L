@@ -18,7 +18,7 @@ export class MeetingService {
 
   private urlTeacher = 'http://localhost:8000/dashboard/professeurs/';
   private urlStudent = 'http://localhost:8000/dashboard/eleves/';
-  private urlMeet = 'http://localhost:8000/dashboard/meets/'
+  private urlMeet = 'http://localhost:8000/dashboard/meets/';
   constructor(
     private http : HttpClient
   ) { }
@@ -80,8 +80,15 @@ export class MeetingService {
   );
   }
   // /////////////////////////////////////////////////////////////////////////////////////
-  getMeeting(id :number) : Observable<CalendarEvent[]> {
+  getMeetings(id :number) : Observable<CalendarEvent[]> {
     return this.http.get<CalendarEvent[]>('http://localhost:8000/dashboard/getallmeets/' + id + '/', httpOptions)
+    .pipe(
+      catchError(handleError)
+  );
+  }
+
+  getMeeting(id :number) : Observable<CalendarEvent> {
+    return this.http.get<CalendarEvent>(this.urlMeet + id + '/', httpOptions)
     .pipe(
       catchError(handleError)
   );

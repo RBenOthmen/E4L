@@ -25,6 +25,7 @@ import { AdminComponent } from './components/admin/admin.component';
 import { AdminUsersComponent } from './components/admin/admin-users/admin-users.component';
 // import {UserFormComponent} from "./components/admin/user-form/user-form.component";
 import { RatingComponent } from './components/rating/rating.component';
+import { MeetingComponent } from './Zoom/meeting/meeting.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -59,6 +60,9 @@ const routes: Routes = [
   // {path: 'admin-users/new', component: UserFormComponent},
   // {path: 'admin-users/:id', component: UserFormComponent},
   { path: 'students-list', component: StudentsListComponent },
+  
+  { path: 'zoom', loadChildren: () => import('src/app/Zoom/zoom.module').then(m => m.ZoomModule) },
+  { path: 'meeting/:meeting/:role', component: MeetingComponent },
 ];
 
 @NgModule({

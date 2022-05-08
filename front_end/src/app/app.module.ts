@@ -1,3 +1,4 @@
+import { ZoomService } from './Zoom/zoom.service';
 import { StudentProfileComponent } from './components/student-profile/student-profile.component';
 import { StudentItemComponent } from './components/student-item/student-item.component';
 import { MatComponentsModule } from './modules/mat-components/mat-components.module';
@@ -84,6 +85,19 @@ import { AdminUsersComponent } from './components/admin/admin-users/admin-users.
 import { StudentsListComponent } from './components/students-list/students-list.component';
 // import { PaginationComponent } from './components/pagination/pagination.component';
 
+import {MatExpansionModule} from '@angular/material/expansion';
+
+import { NgxFlagPickerModule } from 'ngx-flag-picker';
+import {MatSortModule} from '@angular/material/sort';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatDividerModule} from '@angular/material/divider';
+import { MeetingComponent } from './Zoom/meeting/meeting.component';
+
+import { SanitizerPipe } from 'src/app/Pipes/sanitizer.pipe';
+
+
+
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
@@ -134,7 +148,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     AdminUsersComponent,
     StudentItemComponent,
     StudentsListComponent,
-    StudentProfileComponent
+    StudentProfileComponent,
+    MeetingComponent,
+    SanitizerPipe,
+
 
   ],
   imports: [
@@ -174,8 +191,15 @@ export function HttpLoaderFactory(http: HttpClient) {
     }),
     NgbModule,
     DataTablesModule,
+    MatExpansionModule,
+    MatSortModule,
+    MatPaginatorModule,
+    MatTabsModule,
+    MatDividerModule,
+    NgxFlagPickerModule,
   ],
   providers: [
+    ZoomService,
     UserService,
     MessageService,
     HttpClient,

@@ -1,4 +1,5 @@
 from multiprocessing import context
+from operator import truediv
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 from rest_framework.decorators import api_view
@@ -13,6 +14,9 @@ from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from rest_framework.decorators import api_view,action
 from django.contrib.auth import get_user_model
 from django.db.models import Q
+# from djoser.views import djoserviews
+# from rest_framework.authtoken import token
+# from rest_framework_simplejwt .views
 
 User = get_user_model()
 
@@ -43,8 +47,8 @@ class ProfesseurViewSet(ModelViewSet):
     def get_queryset(self ):     
         return Professeur.objects.select_related('user').all()
 
-    @action(detail=False, methods=['GET','PUT'])
-    def me(self, request):
+    @action(detail=False, methods=['GET','PUT','PATCH'])
+    def me(self, request, *args, **kwargs):
         (professeur, created) = Professeur.objects.get_or_create(user_id=request.user.id)
         if request.method =='GET':
             serializer = ProfesseurSerializer(professeur)
@@ -54,6 +58,14 @@ class ProfesseurViewSet(ModelViewSet):
             serializer.is_valid(raise_exception=True)
             serializer.save()
             return Response(serializer.data)
+        elif request.method == 'PATCH':
+            kwargs['partial'] = True
+            partial = kwargs.pop('partial', False)
+            serializer = ProfesseurSerializer(professeur, data=request.data, partial=partial)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            return Response(serializer.data)
+        
 
 
 class ProgressViewSet(ModelViewSet):

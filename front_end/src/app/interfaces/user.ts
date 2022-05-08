@@ -32,5 +32,5 @@ export class User {
     role ?: string;
     user ?: User; 
     is_active ?: boolean;
-  image ?: File;
+  image ?: any;
 }

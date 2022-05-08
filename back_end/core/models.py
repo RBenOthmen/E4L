@@ -45,6 +45,6 @@ class User(AbstractUser):
         max_length=2, choices=ROLE_CHOICES)
     is_active = models.BooleanField(default=False)
     image = models.ImageField(
-        upload_to = 'store/images',
+        upload_to = 'images',
         validators=[validate_file_size],
         null = True)

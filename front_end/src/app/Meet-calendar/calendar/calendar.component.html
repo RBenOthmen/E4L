@@ -192,6 +192,7 @@
           <th>Student</th>
           <!-- <th>Color</th> -->
           <th>Scheduled for</th>
+          <th>Join Meet</th>
           <th>Remove</th>
           <th>Status</th>
         </tr>
@@ -230,6 +231,11 @@
               altFormat="F j, Y H:i"
               placeholder="Not set"
             />
+          </td>
+          <td>
+            <button class="btn btn-danger" (click)="joinMeeting(event)">
+              Join
+            </button>
           </td>
           <td>
             <button class="btn btn-danger" (click)="deleteEvent(event)">

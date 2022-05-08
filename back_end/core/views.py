@@ -2,7 +2,7 @@ from coreapi import Object
 from django.shortcuts import get_object_or_404, render
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth import get_user_model
-from core.serializers import UserCreateSerializer, UserSerializer
+from core.serializers import CustomTokenObtainPairSerializer, UserCreateSerializer, UserSerializer
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from djoser.views import UserViewSet as BaseUserViewSet
 from rest_framework import status
@@ -19,8 +19,14 @@ from rest_framework.decorators import api_view
 from rest_framework_simplejwt import views
 from djoser import views as djoserviews
 from rest_framework.decorators import action
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 User = get_user_model()
+
+class CustomTokenObtainPairView(TokenObtainPairView):
+
+    serializer_class = CustomTokenObtainPairSerializer
+    token_obtain_pair = TokenObtainPairView.as_view()
 
 @api_view(['POST'])
 def activation(request, id):

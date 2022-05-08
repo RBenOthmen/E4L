@@ -1,6 +1,6 @@
 from unicodedata import name
 from django.db import router
-from django.urls import path
+from django.urls import path, re_path
 from rest_framework.routers import SimpleRouter , DefaultRouter
 from rest_framework_nested import routers
 from . import views
@@ -12,6 +12,7 @@ router.register('teachers',views.TeacherViewSet, basename='teacher') #localhost/
 router.register('students',views.StudentViewSet, basename='student') #localhost/core/students
 
 urlpatterns = [
+    re_path(r"^jwt/create/?", views.CustomTokenObtainPairView.as_view(), name="jwt-custom-create"),
 ] + router.urls
 
 

@@ -61,7 +61,7 @@ export class AuthService {
 
   login(credentials : User) : Observable<User> {
     //let isLogin : boolean =false;
-    return this.http.post<User>(this.url + 'auth/jwt/create/' , credentials , httpOptions)
+    return this.http.post<User>(this.url + 'core/jwt/create/' , credentials , httpOptions)
       .pipe(
         catchError(this.handleError),
         tap(response => {
@@ -211,22 +211,25 @@ export class AuthService {
         'Authorization' : 'JWT '+token
       }),
     }
-    console.log(data)
 
-    if (data.type == File) {
-      console.log("i m file")
-      const formData = new FormData();
-      formData.append('image', data);
-      authorization = {
-        headers: new HttpHeaders({
-          'Content-Type' : 'multipart/form-data',
-          'Authorization' : 'JWT '+token
-        }),
-      }
-    }
 
     return this.http.patch<User>(this.url+"auth/users/me/", data, authorization).pipe(
       catchError(this.handleError));
+    }
+
+    updateUserVideo(data : any):Observable<User>{
+      let token = localStorage.getItem('token');
+      let authorization = {
+        headers: new HttpHeaders({
+          // 'Content-Type' : 'multipart/form-data',
+          'Authorization' : 'JWT '+token
+        }),
+      }
+
+      let formData = new FormData();
+      formData.append('video', data);
+      return this.http.patch<User>(this.url+"dashboard/professeurs/me/", formData, authorization).pipe(
+        catchError(this.handleError));
     }
 
     updateUserImage(data : any):Observable<User>{

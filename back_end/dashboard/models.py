@@ -32,21 +32,26 @@ class Professeur (models.Model):
     #phone = models.CharField(max_length=255)
     #birth_date = models.DateField(null=True, blank=True)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    video = models.FileField(
+        upload_to = 'videos',
+        null = True)
+    
 
-    def num_rating(self):
-        ratings = Review.objects.filter(professeur=self)
-        return len(ratings)
 
-    def avg_rating(self):
-        sum= 0
-        ratings = Review.objects.filter(professeur=self)
-        for rating in ratings:
-            sum += rating.rate
+    # def num_rating(self):
+    #     ratings = Review.objects.filter(professeur=self)
+    #     return len(ratings)
+
+    # def avg_rating(self):
+    #     sum= 0
+    #     ratings = Review.objects.filter(professeur=self)
+    #     for rating in ratings:
+    #         sum += rating.rate
         
-        if len(ratings) > 0:
-            return sum / len(ratings)
-        else:
-            return 0
+    #     if len(ratings) > 0:
+    #         return sum / len(ratings)
+    #     else:
+    #         return 0
     
 class Task (models.Model):
     title = models.CharField(max_length=255)
@@ -88,12 +93,13 @@ class Meet (models.Model):
     organizer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=None, related_name='organizer')
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=None, related_name='recipient')
     start = models.DateTimeField()
-    color = models.CharField(max_length=255)
     title = models.CharField(max_length=255, null=True)
     username_organizer = models.CharField(max_length=255, null=True)
     username_recipient = models.CharField(max_length=255, null=True)
     status = models.CharField(
         max_length=1, choices=STATUS_CHOICES, default='P')
+    meetingNumber = models.CharField(max_length=255, null=True)
+    password = models.CharField(max_length=255, null=True)
 
 class Review (models.Model):
     RATE_CHOICES = [

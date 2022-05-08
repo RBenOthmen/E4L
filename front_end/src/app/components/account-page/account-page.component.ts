@@ -18,7 +18,9 @@ export class AccountPageComponent implements OnInit {
   phoneCode = '1';
   countryCodes = ['us', 'ca', 'de', 'mx', 'br', 'pt', 'cn', 'be', 'jp', 'ph', 'lu', 'bs', 'tn'];
   
-  imageUrl = '../../assets/images/user-icon.png';
+  videoToUpload !:any;
+  videoToDisplay !: any;
+  imageUrl : any = '../../assets/images/user-icon.png';
   fileToUpload!: any;
   profileForm!: FormGroup;
   usernameForm!: FormGroup;
@@ -29,6 +31,7 @@ export class AccountPageComponent implements OnInit {
 
   currentUser : User = {
   }
+  isImageLoading!: boolean;
 
   constructor(public authService : AuthService,
     private router :Router,
@@ -71,7 +74,8 @@ export class AccountPageComponent implements OnInit {
         this.currentUser.password = response.password;
         this.currentUser.birth_date = response.birth_date;
         this.currentUser.phone = response.phone;
-        console.log(response)
+        console.log(response.image)
+        this.imageUrl = response.image;
         this.profileForm.controls["first_name"].setValue(response.first_name);
         this.profileForm.controls["last_name"].setValue(response.last_name);
         this.profileForm.controls["email"].setValue(response.email);
@@ -80,9 +84,19 @@ export class AccountPageComponent implements OnInit {
         this.usernameForm.controls["username"].setValue(response.username);
       }
     );
-    console.log(this.authService.currentUser.first_name)
-    document.getElementById('first_name')?.setAttribute(<string>this.authService.currentUser.first_name, '');
+    // console.log(this.authService.currentUser.first_name)
+    // document.getElementById('first_name')?.setAttribute(<string>this.authService.currentUser.first_name, '');
     // document.getElementById("first_name").innerHTML = <string>this.authService.currentUser.first_name;
+    this.authService.getCurrentTeacherInfo()
+    .subscribe({
+      next : response => {
+        console.log('http://localhost:8000'+response.video)
+        this.videoToDisplay ='http://localhost:8000'+ response.video;
+      },
+        error : (err : AppError) => {
+          console.log(err);
+       }
+   })
   }
 
   changeSelectedCountryCode(value: string): void {
@@ -90,8 +104,24 @@ export class AccountPageComponent implements OnInit {
     this.phoneCode = this.geoService.findCountryCodeByTwoLetterAbbreviation(this.selectedCountryCode);
   }
 
+  handleVideoInput(vid :any) {
+    let video = vid.target.files[0];
+    console.log(video)
+    this.videoToUpload = video;
+    // image.item(0)
+    console.log(this.videoToUpload.type)
+    //show image preview here
+    var reader = new FileReader();
+    reader.readAsDataURL(this.videoToUpload);
+    reader.onload = (event : any) => {
+      this.videoToDisplay = event.target.result;
+    }
+
+  }
+  
   handleFileInput(img :any) {
     let image = img.target.files[0];
+    console.log(image)
     this.fileToUpload = image;
     // image.item(0)
     console.log(this.fileToUpload.type)
@@ -103,6 +133,34 @@ export class AccountPageComponent implements OnInit {
     }
 
   }
+
+//   imageToShow: any;
+
+// createImageFromBlob(image: Blob) {
+//    let reader = new FileReader();
+//    reader.addEventListener("load", () => {
+//       this.fileToUpload = reader.result;
+//    }, false);
+
+//    if (image) {
+//       reader.readAsDataURL(image);
+//    }
+// }
+
+// getImageFromService() {
+//   this.isImageLoading = true;
+//   this.authService.getImage().subscribe({
+//     next : data => {
+//       this.createImageFromBlob(data);
+//       this.isImageLoading = false;
+//     },
+//       error : (err : AppError) => {
+//         this.isImageLoading = false;
+//         console.log(err);
+//      }
+//  });
+  
+// }
 
   isEmpty(word: any): boolean {
     if (word.valueOf().length == 0) {
@@ -166,6 +224,17 @@ export class AccountPageComponent implements OnInit {
 
   updateUserImage(data : any) : void {
     this.authService.updateUserImage(data).subscribe({
+      next : response => {
+        console.log("file update success")
+      },
+        error : (err : AppError) => {
+          console.log(err)
+       }
+    });
+  }
+
+  updateUserVideo() : void {
+    this.authService.updateUserVideo(this.videoToUpload).subscribe({
       next : response => {
         console.log("file update success")
       },

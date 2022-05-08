@@ -15,7 +15,8 @@ class ProfesseurSerializer(serializers.ModelSerializer):
     user = UserSerializer()
     class Meta:
         model = Professeur
-        fields  = ['id', 'user_id', 'user', 'num_rating', 'avg_rating']
+        # fields  = ['id', 'user_id', 'video', 'user', 'num_rating', 'avg_rating']
+        fields  = ['id', 'user_id', 'video', 'user']
 
 class LessonSerializer(serializers.ModelSerializer):
 
@@ -104,7 +105,7 @@ class MeetSerializer(serializers.ModelSerializer):
     recipient_id = serializers.IntegerField()
     class Meta:
         model = Meet
-        fields =['id', 'start', 'title', 'color', 'recipient_id', 'organizer_id', 'status', 'username_organizer', 'username_recipient']
+        fields =['id', 'start', 'title', 'recipient_id', 'organizer_id', 'status', 'username_organizer', 'username_recipient', 'meetingNumber', 'password']
 
 
 

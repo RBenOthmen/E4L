@@ -33,4 +33,6 @@ export interface CalendarEvent<MetaType = any> {
      recipient_id ?: number;
      status ?: string;
      username_organizer ?: string;
+     meetingNumber ?: string; // zoom meeting number
+     password ?: string; // zoom meeting password
 }

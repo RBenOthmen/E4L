@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 
 import { OrganizeMeetingComponent } from '../organize-meeting/organize-meeting.component';
 import { OnInit } from '@angular/core';
@@ -113,7 +114,8 @@ export class CalendarComponent implements OnInit {
     private meetingService : MeetingService,
     private teacherService : TeacherService,
     public authService :AuthService,
-    private studentService:StudentService) {}
+    private studentService:StudentService,
+    private router : Router) {}
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
@@ -186,7 +188,7 @@ export class CalendarComponent implements OnInit {
 
   getMeetings() {
 
-    this.meetingService.getMeeting(this.authService.getId())
+    this.meetingService.getMeetings(this.authService.getId())
     .subscribe({
       next: result => {
         console.log('get meetings')
@@ -265,7 +267,7 @@ export class CalendarComponent implements OnInit {
     let meeting : CalendarEvent= {
       title : '',
       start: startOfDay(new Date()),
-      color: colors.red,
+      // color: colors.red,
       status : 'P',
       organizer_id : this.authService.getId(),
       username_organizer : this.authService.currentUser.username,
@@ -372,6 +374,19 @@ export class CalendarComponent implements OnInit {
   
     
   }
+
+  joinMeeting(event : CalendarEvent) {
+    console.log(event)
+    if (event.organizer_id == this.authService.getId()) {
+      // this.router.navigateByUrl('/meeting/'+event.id+'/1')
+      this.router.navigateByUrl('/zoom/'+event.meetingNumber+'/'+event.password+'/1')
+    } else {
+      // this.router.navigateByUrl('/meeting/'+event.id+'/0')
+      this.router.navigateByUrl('/zoom/'+event.meetingNumber+'/'+event.password+'/0')
+    }
+    
+    
+  }
   
   selectUser(user : CalendarEvent) {
     if (!this.users)
@@ -380,7 +395,8 @@ export class CalendarComponent implements OnInit {
       width : '30%',
       data : {
         users : this.users,
-        event : user
+        event : user,
+        currentUser : this.authService.currentUser
       }
       
     }).afterClosed().subscribe(

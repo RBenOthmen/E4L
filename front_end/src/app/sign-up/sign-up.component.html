@@ -3,8 +3,17 @@
   <div class="form_sign">
     <h2 class="title_sign">{{ 'creatingAnAccount' | translate }}</h2>
     <form [formGroup]="registerForm" class="row g-3" (submit)="register()">
-      
-      
+
+      <span class="centralize">
+        <!-- <mat-radio-button id="student" name="user" value="student" formControlName="user" checked></mat-radio-button> -->
+        <input type="radio" id="student" name="user" value="student" formControlName="user" class="form-check-input" checked>
+        <label for="student"> {{ 'student' | translate }} </label>
+
+        <!-- <mat-radio-button id="teacher" name="user" value="teacher" formControlName="user"></mat-radio-button> -->
+        <input type="radio" id="teacher" name="user" value="teacher" formControlName="user" class="form-check-input left-space">
+        <label for="teacher"> {{ 'teacher' | translate }}</label>
+      </span>
+
       <!-- First Name-->
       <mat-form-field class="example-full-width" appearance="fill"> <!-- appearance="fill" -->
         <mat-label>{{ 'firstname' | translate }}</mat-label>
@@ -34,7 +43,7 @@
           </mat-error>
         </mat-form-field>
         <!-- <small *ngIf="username!.invalid && username?.touched" class="text-danger">{{ 'signup_error_username' | translate }}</small> -->
-        
+
 
       <!--    Email-->
       <mat-form-field class="example-full-width" appearance="fill" >
@@ -44,8 +53,8 @@
           {{ 'signup_error_email' | translate }}
         </mat-error>
       </mat-form-field>
-      
-      
+
+
       <!--Password-->
       <mat-form-field class="example-full-width" appearance="fill" >
         <mat-label>{{ 'password' | translate }}</mat-label>
@@ -53,7 +62,7 @@
         <mat-error *ngIf="password!.invalid && password?.touched">{{ 'signup_error_password' | translate }}</mat-error>
       </mat-form-field>
       <!-- <small *ngIf="password!.invalid && password?.touched" class="text-danger">{{ 'signup_error_password' | translate }}</small> -->
-      
+
       <!-- Show/Hide password(angularMaterial)
       <div class="example-container">
         <mat-form-field appearance="fill">
@@ -63,7 +72,7 @@
             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
           </button>
         </mat-form-field>
-        
+
         <mat-form-field appearance="fill" floatLabel="always">
           <mat-label>Amount</mat-label>
           <input matInput type="number" class="example-right-align" placeholder="0">
@@ -73,13 +82,13 @@
       </div> -->
 
       <mat-checkbox id="passwordStatus" name="passwordStatus" (click)="togglePassword()">{{ 'showpassword' | translate }}</mat-checkbox>
-      
-      
+
+
       <!-- BirthDate -->
       <!-- (focus)="picker.open()" -->
       <mat-form-field >
         <mat-label>Choose a date</mat-label>
-        <input [min]="minDate" [max]="maxDate" matInput [matDatepicker]="picker" formControlName="birthday" id="birthday" name="birthday" readonly="true"> 
+        <input [min]="minDate" [max]="maxDate" matInput [matDatepicker]="picker" formControlName="birthday" id="birthday" name="birthday" readonly="true">
         <mat-hint>MM/DD/YYYY</mat-hint>
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker touchUi="true"></mat-datepicker>
@@ -87,7 +96,16 @@
           {{ 'signup_error_birthday' | translate }}
         </mat-error>
       </mat-form-field>
-      
+
+      <!-- LinkedIn -->
+      <mat-form-field class="example-full-width" appearance="fill" *ngIf="user?.value == 'teacher'">
+        <mat-label>{{ 'linkedIn' | translate }} </mat-label>
+        <input matInput placeholder="{{ 'linkedIn' | translate }}" formControlName="linkedIn" type="text" id="linkedIn">
+        <mat-error *ngIf="linkedIn!.invalid && linkedIn?.touched">
+          {{ 'signup_error_linkedIn' | translate }}
+        </mat-error>
+      </mat-form-field>
+
       <mat-form-field class="example-full-width" appearance="fill">
         <div class="wrap">
           <ngx-flag-picker [selectedCountryCode]="selectedCountryCode"
@@ -108,19 +126,8 @@
         {{ 'signup_error_birthday' | translate }}
       </small>
     </div> -->
-    
-    
-    <span class="centralize">
-        <!-- <mat-radio-button id="student" name="user" value="student" formControlName="user" checked></mat-radio-button> -->
-        <input type="radio" id="student" name="user" value="student" formControlName="user" checked class="form-check-input">
-        <label for="student"> {{ 'student' | translate }} </label>
 
-        <input type="radio" id="teacher" name="user" value="teacher" formControlName="user" class="form-check-input left-space">
-        <label for="teacher"> {{ 'teacher' | translate }}</label>
-        <!-- <mat-radio-button id="teacher" name="user" value="teacher" formControlName="user"></mat-radio-button> -->
-    </span>
-    
-    
+
     <!--Phone Number-->
     <!-- <mat-form-field class="example-full-width" appearance="fill" >
       <mat-label>{{ 'phonenumber' | translate }}</mat-label>

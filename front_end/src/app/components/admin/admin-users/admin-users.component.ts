@@ -7,7 +7,11 @@ import { AppError } from 'src/app/exceptions/AppError';
 import { Student } from 'src/app/interfaces/Student';
 import { AdminService } from 'src/app/services/admin.service';
 import { NotFoundError } from 'src/app/exceptions/not-found-error';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 import { User } from 'src/app/interfaces/user';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
@@ -17,6 +21,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { TaskManagerService } from 'src/app/services/task-manager.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';
 
 @Component({
   selector: 'app-admin-users',
@@ -24,7 +29,14 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./admin-users.component.css'],
 })
 export class AdminUsersComponent implements OnInit, OnDestroy {
-  displayedColumns: string[] = ['first_name', 'last_name', 'phone', 'email', 'username', 'action'];
+  displayedColumns: string[] = [
+    'first_name',
+    'last_name',
+    'phone',
+    'email',
+    'username',
+    'action',
+  ];
   dataSource!: MatTableDataSource<User>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -36,6 +48,7 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
   dtTrigger: Subject<any> = new Subject<any>();
   comments!: Comment[];
   id!: number;
+  dialogRef!: MatDialogRef<ConfirmComponent>;
 
   constructor(
     private adminService: AdminService,
@@ -50,10 +63,10 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
     this.dialog
       .open(UserCommentsComponent, {
         width: '100%',
-        data : {
-          comment : this.comments,
-          id: user.id
-        }
+        data: {
+          comment: this.comments,
+          id: user.id,
+        },
       })
       .afterClosed()
       .subscribe((val) => {
@@ -62,18 +75,16 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
   }
 
   getComments(user: User) {
-    this.adminService
-      .getComments(user.id || 0)
-      .subscribe({
-        next: (result) => (
-          (console.log(result), this.comments = result, this.allComments(user))
-        ),
-        error: (err: AppError) => {
-          if (err instanceof NotFoundError) {
-            console.log(err);
-          }
-        },
-      });
+    this.adminService.getComments(user.id || 0).subscribe({
+      next: (result) => (
+        console.log(result), (this.comments = result), this.allComments(user)
+      ),
+      error: (err: AppError) => {
+        if (err instanceof NotFoundError) {
+          console.log(err);
+        }
+      },
+    });
   }
 
   ngOnDestroy(): void {
@@ -195,24 +206,29 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
       });
   }
 
-  deleteUser(student: Student) {
-    if (
-      confirm(
-        'Are you sure to delete ' + student.first_name + ' ' + student.last_name
-      )
-    ) {
-      this.adminService.deleteStudent(student).subscribe({
-        next: (response) => {
-          console.log('Student deleted successfully');
-          // let index: number = this.users.indexOf(student);
-          // this.users.splice(index, 1);
-          // console.log(index);
-          this.getStudents();
-        },
-        error: (err: AppError) => {
-          console.log(err);
-        },
+  deleteUser(user: User) {
+    this.dialog
+      .open(ConfirmComponent, {
+        width: '40%',
+        data: 'Are you sure you want to delete this user?',
+      })
+      .afterClosed()
+      .subscribe((val) => {
+        if (val === 'Ok') {
+          this.adminService.deleteUser(user).subscribe({
+            next: (response) => {
+              console.log('User deleted successfully');
+              // let index: number = this.users.indexOf(user);
+              // this.users.splice(index, 1);
+              // console.log(index);
+              this.getUsers();
+            },
+            error: (err: AppError) => {
+              console.log(err);
+            },
+          });
+          console.log('user deleted successfully!');
+        }
       });
-    }
   }
 }

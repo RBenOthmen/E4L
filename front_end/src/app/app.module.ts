@@ -86,7 +86,9 @@ import { NgxFlagPickerModule } from 'ngx-flag-picker';
 
 import { UserCommentsComponent } from './components/admin/user-comments/user-comments.component';
 import { CommentDetailsComponent } from './components/comment-details/comment-details.component';
+import { ConfirmComponent } from './components/dialogs/confirm/confirm.component';
 // import { VideoScreenComponent } from './Zoom/video-screen/video-screen.component';
+
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -121,7 +123,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     MessengerWindowComponent,
     MessengerUserItemComponent,
     LanguageSelecteurComponent,
-
     AdminComponent,
     AdminTeachersListComponent,
     AdminStudentsComponent,
@@ -129,7 +130,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     CalendarComponent,
     OrganizeMeetingComponent,
     MeetUserItemComponent,
-
     RatingComponent,
     // UserFormComponent,
     AdminUsersComponent,
@@ -143,6 +143,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     PhoneTypeFormComponent,
     UserCommentsComponent,
     CommentDetailsComponent,
+    ConfirmComponent,
   ],
   imports: [
     BrowserModule,

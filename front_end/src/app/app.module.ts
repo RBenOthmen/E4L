@@ -1,8 +1,5 @@
-<<<<<<< HEAD
 import { ZoomService } from './Zoom/zoom.service';
-=======
 import { PhoneTypeFormComponent } from './components/phone-type-form/phone-type-form.component';
->>>>>>> 6439123141628df054e2e6b08326d7950f6eb17b
 import { StudentProfileComponent } from './components/student-profile/student-profile.component';
 import { StudentItemComponent } from './components/student-item/student-item.component';
 import { MatComponentsModule } from './modules/mat-components/mat-components.module';
@@ -94,7 +91,7 @@ import { CommentDetailsComponent } from './components/comment-details/comment-de
 
 import {MatExpansionModule} from '@angular/material/expansion';
 
-import { NgxFlagPickerModule } from 'ngx-flag-picker';
+
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatTabsModule} from '@angular/material/tabs';
@@ -153,12 +150,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     StudentItemComponent,
     StudentsListComponent,
     StudentProfileComponent,
-<<<<<<< HEAD
     MeetingComponent,
     SanitizerPipe,
 
 
-=======
     TmUsersComponent,
     CommentComponent,
     TmViewProfileComponent,
@@ -166,7 +161,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     PhoneTypeFormComponent,
     UserCommentsComponent,
     CommentDetailsComponent,
->>>>>>> 6439123141628df054e2e6b08326d7950f6eb17b
   ],
   imports: [
     BrowserModule,
@@ -202,14 +196,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     }),
     NgbModule,
     DataTablesModule,
-<<<<<<< HEAD
     MatExpansionModule,
     MatSortModule,
     MatPaginatorModule,
     MatTabsModule,
     MatDividerModule,
-=======
->>>>>>> 6439123141628df054e2e6b08326d7950f6eb17b
     NgxFlagPickerModule,
   ],
   providers: [

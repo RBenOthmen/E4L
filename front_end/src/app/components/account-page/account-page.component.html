@@ -144,7 +144,7 @@
       <div class="center">
         <div class="flex-column">
 
-          <img [src]="imageUrl" alt="" style="width:250px;height:200px" class="profile-image">
+          <img [src]="imageToDisplay" alt="" style="width:250px;height:200px" class="profile-image">
           <input type="file" #image accept="image/*" (change)="handleFileInput($event)">
           <!-- <input type="file" #image (change)="handleFileInput($event)"> -->
           <video [src]="videoToDisplay" style="width:250px;height:200px" controls type="video/*"></video>

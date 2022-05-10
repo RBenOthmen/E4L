@@ -27,6 +27,10 @@ from dashboard.validators import validate_file_size
 #         token = RefreshToken.for_user(user).access_token
 #         return user
 
+class Phone(models.Model):
+    country_code = models.CharField(max_length=255)
+    number = models.CharField(max_length=255)
+
 class User(AbstractUser):
     ADMIN_CHOICE='A'
     TEACHER_CHOICE='T'
@@ -39,7 +43,7 @@ class User(AbstractUser):
         (TASKMANAGER_CHOICE, 'TaskManager'),
     ]
     email = models.EmailField(unique=True)
-    phone = models.CharField(max_length=255)
+    # phone = models.CharField(max_length=255)
     birth_date = models.DateField(null=True)
     role = models.CharField(
         max_length=2, choices=ROLE_CHOICES)
@@ -48,3 +52,5 @@ class User(AbstractUser):
         upload_to = 'images',
         validators=[validate_file_size],
         null = True)
+    phone = models.ForeignKey(Phone, on_delete=models.CASCADE)
+

@@ -10,6 +10,13 @@ from core.serializers import UserSerializer
 from dashboard.models import Eleve, Lesson, Meet, Meeting, Professeur, Progress, Review, Task, EleveImage, Comment
 
 
+class ProfesseurCreateSerializer(serializers.ModelSerializer):
+    user_id = serializers.IntegerField()
+    class Meta:
+        model = Professeur
+        # fields  = ['id', 'user_id', 'video', 'user', 'num_rating', 'avg_rating']
+        fields  = ['id', 'user_id', 'video']
+
 class ProfesseurSerializer(serializers.ModelSerializer):
     user_id = serializers.IntegerField()
     user = UserSerializer()
@@ -52,6 +59,14 @@ class ProgressEleveSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         eleve_id = self.context['eleve_id']
         return Progress.objects.create(eleve_id=eleve_id , **validated_data)
+
+class EleveCreateSerializer(serializers.ModelSerializer):
+    user_id = serializers.IntegerField()
+    images = EleveImageSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Eleve
+        fields = ['id', 'user_id', 'images']
 
 class EleveSerializer(serializers.ModelSerializer):
     user = UserSerializer()

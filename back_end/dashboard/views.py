@@ -2,11 +2,12 @@ from multiprocessing import context
 from operator import truediv
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
+from requests import request
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from django.db.models import Count
-from .serializers import CommentSerializer, EleveSerializer, LessonSerializer, MeetSerializer, MeetingStudentSerializer, MeetingTeacherSerializer,ProfesseurSerializer, ProgressEleveSerializer, ProgressSerializer, EleveImageSerializer, ReviewSerializer, TaskSerializer
+from .serializers import CommentSerializer, EleveCreateSerializer, EleveSerializer, LessonSerializer, MeetSerializer, MeetingStudentSerializer, MeetingTeacherSerializer, ProfesseurCreateSerializer,ProfesseurSerializer, ProgressEleveSerializer, ProgressSerializer, EleveImageSerializer, ReviewSerializer, TaskSerializer
 from dashboard import serializers
 from .models import Comment, Eleve, Lesson, Meet, Meeting, Professeur, Progress, EleveImage, Review ,Task
 from rest_framework.mixins import ListModelMixin, CreateModelMixin, RetrieveModelMixin, UpdateModelMixin
@@ -25,6 +26,14 @@ class EleveViewSet(ModelViewSet):
     # queryset = Eleve.objects.all()
     serializer_class = EleveSerializer
 
+    def get_serializer_class(self):
+        if self.request.method == 'POST':
+            return EleveCreateSerializer
+        elif self.request.method == 'PUT':
+            return EleveCreateSerializer
+        else :
+            return EleveSerializer
+
     def get_queryset(self ):
         return Eleve.objects.select_related('user').all()
 
@@ -42,7 +51,15 @@ class EleveViewSet(ModelViewSet):
 
 class ProfesseurViewSet(ModelViewSet):
     # queryset = Professeur.objects.all()
-    serializer_class = ProfesseurSerializer
+    # serializer_class = ProfesseurSerializer
+
+    def get_serializer_class(self):
+        if self.request.method == 'POST':
+            return ProfesseurCreateSerializer
+        elif self.request.method == 'PUT':
+            return ProfesseurCreateSerializer
+        else :
+            return ProfesseurSerializer
 
     def get_queryset(self ):
         return Professeur.objects.select_related('user').all()
@@ -65,6 +82,13 @@ class ProfesseurViewSet(ModelViewSet):
             serializer.is_valid(raise_exception=True)
             serializer.save()
             return Response(serializer.data)
+
+    # def rate(self, request):
+    #     queryset = Professeur.objects.annotate(rate_count=Count('reviews'), professeur_id=4).all()
+    #     serializer = ReviewSerializer(queryset, many=True, context={
+    #         'request':request
+    #     })
+    #     return Response(serializer.data)
         
 
 
@@ -179,9 +203,29 @@ class ReviewViewSet(ModelViewSet):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
 
+    @action(detail=False, methods=['GET','PUT','PATCH'])
+    def getRate(self, request, *args, **kwargs):
+        # id = self.kwargs['pk']
+        id = 4
+        print(id)
+        print('i m here')
+        ratings = Review.objects.filter(professeur=id)
+        sum= 0
+        for rating in ratings:
+            sum += rating.rate
+        
+        if len(ratings) > 0:
+            avg_rating = sum / len(ratings)
+        else:
+            avg_rating = 0
+        return Response({"avg_rating" : avg_rating})
+
 @api_view(['POST'])
 def rate_review(request):
     if request.method == "POST":
+        
+        
+        
         professeur_id = request.data['professeur_id']
         user_id = request.data['user_id']
         # queryset = Review.objects.filter(Q(professeur_id=professeur_id) | Q(eleve_id=eleve_id)).all()
@@ -190,6 +234,7 @@ def rate_review(request):
             'request':request
         })
         return Response(serializer.data)
+
 
 # update create delete => comment
 class CommentViewSet(ModelViewSet):

@@ -2,7 +2,8 @@ from coreapi import Object
 from django.shortcuts import get_object_or_404, render
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth import get_user_model
-from core.serializers import CustomTokenObtainPairSerializer, UserCreateSerializer, UserSerializer
+from core.models import Phone
+from core.serializers import AdminUserCreateSerializer, CustomTokenObtainPairSerializer, PhoneSerializer, UserCreateSerializer, UserSerializer
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from djoser.views import UserViewSet as BaseUserViewSet
 from rest_framework import status
@@ -38,11 +39,27 @@ def activation(request, id):
 
 class CustomCreateUserViewSet(ModelViewSet):  
     queryset = User.objects.all()
-    serializer_class = UserCreateSerializer   
+    # serializer_class = AdminUserCreateSerializer  
+
+    def get_serializer_class(self):
+        if self.request.method == 'POST':
+            return AdminUserCreateSerializer
+        elif self.request.method == 'PUT':
+            return AdminUserCreateSerializer
+        else :
+            return UserSerializer 
 
 class CustomUserViewSet(ModelViewSet):  
-    queryset = User.objects.all()
-    serializer_class = UserSerializer  
+    # serializer_class = UserSerializer  
+    queryset = User.objects.select_related('phone').all()
+
+    def get_serializer_class(self):
+        if self.request.method == 'POST':
+            return AdminUserCreateSerializer
+        elif self.request.method == 'PUT':
+            return AdminUserCreateSerializer
+        else :
+            return UserSerializer 
     
 
 
@@ -96,6 +113,10 @@ class StudentViewSet(ModelViewSet):
         return User.objects.filter(role="S")
     
     
+class PhoneViewSet(ModelViewSet):
+    queryset = Phone.objects.all()
+    serializer_class = PhoneSerializer
+
 
 
 

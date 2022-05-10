@@ -97,15 +97,7 @@
         </mat-error>
       </mat-form-field>
 
-      <!-- LinkedIn -->
-      <mat-form-field class="example-full-width" appearance="fill" *ngIf="user?.value == 'teacher'">
-        <mat-label>{{ 'linkedIn' | translate }} </mat-label>
-        <input matInput placeholder="{{ 'linkedIn' | translate }}" formControlName="linkedIn" type="text" id="linkedIn">
-        <mat-error *ngIf="linkedIn!.invalid && linkedIn?.touched">
-          {{ 'signup_error_linkedIn' | translate }}
-        </mat-error>
-      </mat-form-field>
-
+      
       <mat-form-field class="example-full-width" appearance="fill">
         <div class="wrap">
           <ngx-flag-picker [selectedCountryCode]="selectedCountryCode"
@@ -117,6 +109,31 @@
       </div>
       <mat-error *ngIf="phone?.touched && phone!.invalid">Please enter a valid phone number</mat-error>
     </mat-form-field>
+    
+    <!-- LinkedIn -->
+    <mat-form-field class="example-full-width" appearance="fill" *ngIf="user?.value == 'teacher'">
+      <mat-label>{{ 'linkedIn' | translate }} </mat-label>
+      <input matInput placeholder="{{ 'linkedIn' | translate }}" formControlName="linkedIn" type="text" id="linkedIn">
+      <mat-error *ngIf="linkedIn!.invalid && linkedIn?.touched">
+        {{ 'signup_error_linkedIn' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <!-- <div *ngIf="user?.value == 'teacher'">
+      <img [src]="imageToDisplay" alt="" style="width:250px;height:200px" class="profile-image">
+      <input type="file" #image accept="image/*" (change)="handleFileInput($event)">
+    </div> -->
+
+    <div *ngIf="user?.value == 'teacher'">
+      <video *ngIf="videoToDisplay; else defaultVideo" [src]="videoToDisplay" style="width:250px;height:200px" controls type="video/*"></video>
+      <ng-template #defaultVideo>
+        <img src="../../assets/images/vector-video-player.png" style="width:250px;height:200px">
+      </ng-template>
+      <input type="file" #image (change)="handleVideoInput($event)">
+    </div>
+          
+    
+
 
     <!-- <div class="form-group">
       <label for="birthday">{{ 'birthday' | translate }}</label>
@@ -152,10 +169,15 @@
 
       <small class="text-danger" *ngIf="serverOffline">Server offline, reconnecting ...</small>
 
-      <div class="button_sign">
+      <div class="button_sign" *ngIf="!uploading">
         <!-- <button pButton>{{ 'createNewAccount' | translate }}</button> -->
         <button mat-raised-button color="primary">{{ 'createNewAccount' | translate }}</button>
       </div>
+
+      <div *ngIf="uploading" class="spinner">
+        <mat-spinner [diameter]="40"></mat-spinner>
+      </div>
+
     </form>
 
     <br>

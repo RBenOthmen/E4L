@@ -27,7 +27,6 @@ class Lesson (models.Model):
         max_length=2, choices=CATEGORY_CHOICES)
 
 
-
 class Professeur (models.Model):
     #phone = models.CharField(max_length=255)
     #birth_date = models.DateField(null=True, blank=True)
@@ -35,10 +34,27 @@ class Professeur (models.Model):
     video = models.FileField(
         upload_to = 'videos',
         null = True)
+        
+    # review = models.ForeignKey(Review, on_delete=models.PROTECT, related_name='reviews')
+    
+class Review (models.Model):
+    RATE_CHOICES = [
+        (0, '0'),
+        (1, '1'),
+        (2, '2'),
+        (3, '3'),
+        (4, '4'),
+        (5, '5'),
+    ]
+    # professeur = models.ForeignKey(
+    #     'Professeur', on_delete=models.CASCADE, null=True, related_name='+', blank=True)
+    professeur = models.ForeignKey(Professeur, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=None)
+    created_at = models.DateTimeField(auto_now_add=True)
+    rate = models.IntegerField(choices=RATE_CHOICES)
     
 
 
-<<<<<<< HEAD
     # def num_rating(self):
     #     ratings = Review.objects.filter(professeur=self)
     #     return len(ratings)
@@ -54,19 +70,6 @@ class Professeur (models.Model):
     #     else:
     #         return 0
     
-=======
-    def avg_rating(self):
-        sum= 0
-        ratings = Review.objects.filter(professeur=self)
-        for rating in ratings:
-            sum += rating.rate
-
-        if len(ratings) > 0:
-            return sum / len(ratings)
-        else:
-            return 0
-
->>>>>>> 6439123141628df054e2e6b08326d7950f6eb17b
 class Task (models.Model):
     title = models.CharField(max_length=255)
     start_date = models.DateField(auto_now=True)
@@ -115,19 +118,7 @@ class Meet (models.Model):
     meetingNumber = models.CharField(max_length=255, null=True)
     password = models.CharField(max_length=255, null=True)
 
-class Review (models.Model):
-    RATE_CHOICES = [
-        (0, '0'),
-        (1, '1'),
-        (2, '2'),
-        (3, '3'),
-        (4, '4'),
-        (5, '5'),
-    ]
-    professeur = models.ForeignKey(Professeur, on_delete=models.CASCADE, null=True)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=None)
-    created_at = models.DateTimeField(auto_now_add=True)
-    rate = models.IntegerField(choices=RATE_CHOICES, default='0')
+
 
 class Comment (models.Model):
 

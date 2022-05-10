@@ -55,19 +55,22 @@ export class UserCommentsComponent implements OnInit {
   }
 
   changeState(comment: Comment) {
-    console.log("pre comment");
-    console.log(comment);
-    console.log("comment.state");
-    console.log(comment.state);
-    this.toggleState(comment.state);
-    console.log("post comment");
-    console.log(comment);
+    // console.log("pre comment");
+    // console.log(comment);
+    // console.log("comment.state");
+    // console.log(comment.state);
+    // this.toggleState(comment.state);
+    // console.log("post comment");
+    // console.log(comment);
     let index = this.comments.indexOf(comment);
     this.comments[index].state = !comment.state;
-    this.adminService.modifyCommentState(comment.id, !comment.state).subscribe({
+    // console.log("here 1"+comment.state)
+    // console.log("here"+!comment.state)
+    this.adminService.modifyCommentState(comment.id, comment.state).subscribe({
       next: (result) => {
         this.commentForm.reset();
         // this.uiService.toastSuccess('Comment has been updated successfuly');
+        console.log(result)
       },
       error: (err: AppError) => {
         let index = this.comments.indexOf(comment);

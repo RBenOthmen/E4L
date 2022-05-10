@@ -23,6 +23,8 @@ export class TeacherProfileComponent implements OnInit {
   id !: string;
   starRating = 0;
 
+  avg_rating !: number;
+
   ctrl = new FormControl(null, Validators.required);
 
   teacherReview : Review = {
@@ -57,6 +59,23 @@ export class TeacherProfileComponent implements OnInit {
           this.teacherReview = response[0];
 
         }
+      }
+      , error: (err: AppError) => {
+        if (err instanceof NotFoundError) {
+          console.log(err)
+        }
+      }
+    });
+
+    this.teacherService.getReview(this.id).subscribe({
+      next: response => {
+        // if (response[0]) {
+        //   this.starRating = response[0].rate || 0;
+        //   this.teacherReview = response[0];
+
+        // }
+        this.avg_rating = response.avg_rating || 0;
+        console.log(this.avg_rating)
       }
       , error: (err: AppError) => {
         if (err instanceof NotFoundError) {

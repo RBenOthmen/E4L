@@ -76,27 +76,18 @@ export class AuthService {
   }
 
   signup(credentials : User) : Observable<User> {
-    let user = {
-      username : credentials.username,
-      password : credentials.password,
-      email : credentials.email,
-      first_name : credentials.first_name,
-      last_name : credentials.last_name,
-      role : credentials.type == "teacher" ? 'T' : 'S',
-      phone : credentials.phone,
-      birth_date : credentials.birth_date,
-    };
+    credentials.role = credentials.type == "teacher" ? 'T' : 'S';
 
-    return this.http.post<User>(this.url + 'auth/users/' , user , httpOptions)
+    return this.http.post<User>(this.url + 'auth/users/' , credentials , httpOptions)
     .pipe(
       catchError(this.handleError),
       tap(response => {
         console.log(response)
         console.log(response.access)
-        if (credentials.type == "teacher") {
-          credentials.user_id = response.id;
-          this.createTeacher(credentials)
-        }
+        // if (credentials.type == "teacher") {
+        //   credentials.user_id = response.id;
+        //   this.createTeacher(credentials)
+        // }
           
 
       })
@@ -128,13 +119,11 @@ export class AuthService {
 
 
 
-  createTeacher(credentials : User) {
-    let teacher : Teacher = {
-      user_id : credentials.user_id,
-    }
-    this.http.post<User>(this.url + 'dashboard/professeurs/' , teacher , httpOptions).subscribe(
-      
-    )
+  createTeacher(teacher : Teacher) : Observable<Teacher>{
+    // let teacher : Teacher = {
+    //   user_id : credentials.user_id,
+    // }
+    return this.http.post<Teacher>(this.url + 'dashboard/professeurs/' , teacher , httpOptions);
   }
 
   getUserId(id : number) : Observable<User>{
@@ -244,6 +233,19 @@ export class AuthService {
       let formData = new FormData();
       formData.append('image', data);
       return this.http.patch<User>(this.url+"auth/users/me/", formData, authorization).pipe(
+        catchError(this.handleError));
+    }
+
+    createUserVideo(data : any, id : number):Observable<User>{
+      let authorization = {
+        headers: new HttpHeaders({
+          // 'Content-Type' : 'multipart/form-data',
+        }),
+      }
+
+      let formData = new FormData();
+      formData.append('video', data);
+      return this.http.patch<User>(this.url+"dashboard/professeurs/" + id + '/', formData, authorization).pipe(
         catchError(this.handleError));
     }
 

@@ -82,6 +82,13 @@ export class TeacherService {
   );
   }
 
+  getReview(id : string) : Observable<Teacher> {
+    return this.http.get<Teacher>(this.baseUrl + 'dashboard/reviews'+'/getRate/' , httpOptions)
+    .pipe(
+      catchError(this.handleError)
+  );
+  }
+
   updateReview(review : Review) : Observable<Teacher> {
     return this.http.put<Teacher>(this.baseUrl + 'dashboard/reviews/' +review.id +'/', review , httpOptions)
     .pipe(

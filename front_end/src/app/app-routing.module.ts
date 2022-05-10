@@ -25,11 +25,8 @@ import { AdminComponent } from './components/admin/admin.component';
 import { AdminUsersComponent } from './components/admin/admin-users/admin-users.component';
 // import {UserFormComponent} from "./components/admin/user-form/user-form.component";
 import { RatingComponent } from './components/rating/rating.component';
-<<<<<<< HEAD
 import { MeetingComponent } from './Zoom/meeting/meeting.component';
-=======
 import { TmUsersComponent } from './components/taskManager/tm-users/tm-users.component';
->>>>>>> 6439123141628df054e2e6b08326d7950f6eb17b
 
 const routes: Routes = [
   { path: '', component: HomeComponent },

@@ -1,3 +1,5 @@
+import { PhoneService } from './../services/phone.service';
+import { Phone } from './../interfaces/Phone';
 import { GeoService } from './../services/geo.service';
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
@@ -8,6 +10,7 @@ import { Router } from '@angular/router';
 import { BadInput } from '../exceptions/BadInput';
 import { AppError } from '../exceptions/AppError';
 import { formatDate } from '@angular/common';
+import { Teacher } from '../interfaces/Teacher';
 
 @Component({
   selector: 'app-sign-up',
@@ -31,11 +34,18 @@ export class SignUpComponent implements OnInit {
   digits: number = 8;
   isPhoneNumber!: boolean;
 
+  videoToUpload !:any;
+  videoToDisplay !: any;
+  imageToDisplay : any = '../../assets/images/user-icon.png';
+  fileToUpload!: any;
+  uploading = false;
+
   constructor(
     private userService: UserService,
     private authService: AuthService,
     private router: Router,
-    private geoService: GeoService
+    private geoService: GeoService,
+    private phoneService: PhoneService
   ) {}
 
   goToSignin() {
@@ -82,6 +92,35 @@ export class SignUpComponent implements OnInit {
         Validators.maxLength(10),
       ]),
     });
+  }
+
+  handleVideoInput(vid :any) {
+    let video = vid.target.files[0];
+    console.log(video)
+    this.videoToUpload = video;
+    // image.item(0)
+    console.log(this.videoToUpload.type)
+    //show image preview here
+    var reader = new FileReader();
+    reader.readAsDataURL(this.videoToUpload);
+    reader.onload = (event : any) => {
+      this.videoToDisplay = event.target.result;
+    }
+
+  }
+  
+  handleFileInput(img :any) {
+    let image = img.target.files[0];
+    console.log(image)
+    this.fileToUpload = image;
+    // image.item(0)
+    console.log(this.fileToUpload.type)
+    //show image preview here
+    var reader = new FileReader();
+    reader.readAsDataURL(this.fileToUpload);
+    reader.onload = (event : any) => {
+      this.imageToDisplay = event.target.result;
+    }
   }
 
   changeSelectedCountryCode(value: string): void {
@@ -187,14 +226,18 @@ export class SignUpComponent implements OnInit {
   }
 
   register() {
-    let user: User = this.getUser();
+    this.uploading = true;
+    let phone : Phone= {
+      number : this.phone?.value,
+      country_code : this.selectedCountryCode
+    }
 
-    this.authService.signup(user).subscribe({
+    this.phoneService.createPhone(phone).subscribe({
       next: (response) => {
-        this.registerForm.reset();
-        this.router.navigate(['/login']);
+        this.signup(response.id || 0);
       },
       error: (err: AppError) => {
+        this.uploading = false;
         if (err instanceof BadInput) {
           console.log(err);
           this.invalidSignup = true;
@@ -202,6 +245,64 @@ export class SignUpComponent implements OnInit {
           this.serverOffline = true;
         }
       },
+    });
+  }
+
+  signup(phone_id :number) {
+    let user: User = this.getUser();
+    user.phone_id = phone_id;
+
+    this.authService.signup(user).subscribe({
+      next: (response) => {
+        this.createTeacher(response.id || 0);
+      },
+      error: (err: AppError) => {
+        this.uploading = false;
+        if (err instanceof BadInput) {
+          console.log(err);
+          this.invalidSignup = true;
+        } else {
+          this.serverOffline = true;
+        }
+      },
+    });
+  }
+
+
+
+  createTeacher(id : number) {
+    let teacher : Teacher = {
+      user_id : id,
+      linkedIn: this.linkedIn?.value,
+    }
+    this.authService.createTeacher(teacher).subscribe({
+      next: (response) => {
+        this.createUserVideo(response.id || 0)
+        this.uploading = false;
+        this.registerForm.reset();
+        this.router.navigate(['/login']);
+      },
+      error: (err: AppError) => {
+        this.uploading = false;
+        console.log(err)
+        if (err instanceof BadInput) {
+          console.log(err);
+          this.invalidSignup = true;
+        } else {
+          this.serverOffline = true;
+        }
+      },
+    });
+  }
+
+  createUserVideo(id : number) : void {
+    this.authService.createUserVideo(this.videoToUpload, id).subscribe({
+      next : response => {
+        console.log("file update success")
+      },
+        error : (err : AppError) => {
+          console.log(err)
+       }
     });
   }
 
@@ -227,7 +328,7 @@ export class SignUpComponent implements OnInit {
       email: this.email?.value,
       password: this.password?.value,
       username: this.username?.value,
-      phone: this.phone?.value,
+      // phone: this.phone?.value,
       birth_date: newdate,
       type: this.user?.value,
     };

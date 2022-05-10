@@ -9,7 +9,15 @@ from django.contrib.auth import get_user_model
 
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
+from core.models import Phone
+
 User = get_user_model()
+
+class PhoneSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Phone
+        fields = ['id', 'country_code', 'number']
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
@@ -20,14 +28,14 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         token['last_name'] = user.last_name
         token['username'] = user.username
         token['email'] = user.email
-        token['phone'] = user.phone
         token['is_superuser'] = user.is_superuser
         return token
 
-class UserCreateSerializer(BaseUserCreateSerializer):
-
+class AdminUserCreateSerializer(BaseUserCreateSerializer):
+    phone_id = serializers.IntegerField()
+    # phone = PhoneSerializer()
     class Meta(BaseUserCreateSerializer.Meta):
-        fields = ['id', 'username', 'password', 'email', 'first_name', 'last_name', 'role', 'phone', 'birth_date', 'image']
+        fields = ['id', 'username', 'password', 'email', 'first_name', 'last_name', 'role', 'birth_date', 'image', 'phone_id']
 
 
     def perform_create(self, validated_data):
@@ -38,11 +46,17 @@ class UserCreateSerializer(BaseUserCreateSerializer):
             user.save(update_fields=["is_active"])
         return user
 
+class UserCreateSerializer(BaseUserCreateSerializer):
+    phone_id = serializers.IntegerField()
+    class Meta(BaseUserCreateSerializer.Meta):
+        fields = ['id', 'username', 'password', 'email', 'first_name', 'last_name', 'role', 'birth_date', 'image', 'phone_id']
+
 
 class UserSerializer(BaseUserSerializer):
-    
+    phone_id = serializers.IntegerField()
+    phone = PhoneSerializer()
     class Meta(BaseUserSerializer.Meta):
-        fields = ['id',  'email', 'first_name', 'last_name', 'role', 'phone', 'birth_date', 'image', 'username']
+        fields = ['id',  'email', 'first_name', 'last_name', 'role', 'phone', 'birth_date', 'image', 'username', 'phone_id']
 
 
 

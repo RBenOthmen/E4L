@@ -20,7 +20,7 @@ export class AccountPageComponent implements OnInit {
   
   videoToUpload !:any;
   videoToDisplay !: any;
-  imageUrl : any = '../../assets/images/user-icon.png';
+  imageToDisplay : any = '../../assets/images/user-icon.png';
   fileToUpload!: any;
   profileForm!: FormGroup;
   usernameForm!: FormGroup;
@@ -75,12 +75,14 @@ export class AccountPageComponent implements OnInit {
         this.currentUser.birth_date = response.birth_date;
         this.currentUser.phone = response.phone;
         console.log(response.image)
-        this.imageUrl = response.image;
+        this.imageToDisplay = response.image;
         this.profileForm.controls["first_name"].setValue(response.first_name);
         this.profileForm.controls["last_name"].setValue(response.last_name);
         this.profileForm.controls["email"].setValue(response.email);
         this.profileForm.controls["birthday"].setValue(response.birth_date);
-        this.profileForm.controls["phone"].setValue(response.phone);
+        this.profileForm.controls["phone"].setValue(response.phone?.number);
+        this.selectedCountryCode = response.phone?.country_code || 'us';
+        this.changeSelectedCountryCode(this.selectedCountryCode);
         this.usernameForm.controls["username"].setValue(response.username);
       }
     );
@@ -129,7 +131,7 @@ export class AccountPageComponent implements OnInit {
     var reader = new FileReader();
     reader.readAsDataURL(this.fileToUpload);
     reader.onload = (event : any) => {
-      this.imageUrl = event.target.result;
+      this.imageToDisplay = event.target.result;
     }
 
   }
@@ -209,7 +211,6 @@ export class AccountPageComponent implements OnInit {
       last_name : this.last_name?.value,
       email : this.email?.value,
       birth_date : this.birthday?.value,
-      phone : this.email?.value,
       image : this.fileToUpload,
     };
     this.authService.updateUser(data).subscribe({

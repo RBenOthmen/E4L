@@ -19,7 +19,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDividerModule } from '@angular/material/divider';
-
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   exports: [
@@ -43,6 +43,7 @@ import { MatDividerModule } from '@angular/material/divider';
     MatIconModule,
     MatSliderModule,
     MatDialogModule,
+    MatCardModule,
   ],
 })
 export class MatComponentsModule {}

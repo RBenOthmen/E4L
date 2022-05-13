@@ -1,3 +1,4 @@
+import { LevelComponent } from './components/level/level.component';
 import { StudentProfileComponent } from './components/student-profile/student-profile.component';
 import { StudentsListComponent } from './components/students-list/students-list.component';
 import { CalendarComponent } from './Meet-calendar/calendar/calendar.component';
@@ -61,6 +62,7 @@ const routes: Routes = [
   // {path: 'admin-users/new', component: UserFormComponent},
   // {path: 'admin-users/:id', component: UserFormComponent},
   { path: 'students-list', component: StudentsListComponent },
+  { path: 'level', component: LevelComponent },
 ];
 
 @NgModule({

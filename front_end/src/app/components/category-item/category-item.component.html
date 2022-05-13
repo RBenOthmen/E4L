@@ -1,11 +1,9 @@
-<div class="category">
-    <h2> {{category}} - {{value}}%</h2>
+<div class="">
+  <div class="category">
+    <h2>{{ category }} - {{ value }}%</h2>
+  </div>
+
+  <div *ngFor="let word of words">
+    <button class="circle btn" (click)="viewWord(word)">word</button>
+  </div>
 </div>
-<div *ngFor="let lesson of lessons">
-    <div *ngIf="lesson.category == category" >
-        <app-lesson-item [lesson]="lesson"></app-lesson-item>
-    </div>
-</div>
-
-
-

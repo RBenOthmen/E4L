@@ -1,0 +1,35 @@
+<app-spinner></app-spinner>
+
+<div class="container">
+  <mat-card>
+    <mat-card-content>
+      <h2 class="example-h2">{{level}}</h2>
+
+      <section class="example-section">
+        <mat-progress-bar
+          class="example-margin"
+          [color]="color"
+          [mode]="mode"
+          [value]="progress"
+          [bufferValue]="bufferValue"
+        >
+        </mat-progress-bar>
+      </section>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="example-card">
+    <div>
+      <mat-card-subtitle>Try to speak this word:</mat-card-subtitle>
+      <mat-card-title>{{word}}</mat-card-title>
+      <button class="btn" (click)="toggleMicroState()">
+        <i *ngIf="microState" class="fa fa-microphone fa-5x" aria-hidden="true"></i>
+        <i *ngIf="microState == false" class="fa fa-microphone-slash fa-5x" aria-hidden="true"></i>
+      </button>
+    </div>
+    <button>
+      <i class="fa fa-play fa-5x"></i>
+      <!-- <i class="fa fa-volume-up fa-5x"></i> -->
+    </button>
+  </mat-card>
+</div>

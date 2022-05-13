@@ -87,6 +87,7 @@ import { NgxFlagPickerModule } from 'ngx-flag-picker';
 import { UserCommentsComponent } from './components/admin/user-comments/user-comments.component';
 import { CommentDetailsComponent } from './components/comment-details/comment-details.component';
 import { ConfirmComponent } from './components/dialogs/confirm/confirm.component';
+import { LevelComponent } from './components/level/level.component';
 // import { VideoScreenComponent } from './Zoom/video-screen/video-screen.component';
 
 
@@ -144,6 +145,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     UserCommentsComponent,
     CommentDetailsComponent,
     ConfirmComponent,
+    LevelComponent,
   ],
   imports: [
     BrowserModule,

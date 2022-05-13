@@ -20,7 +20,7 @@ export class AccountPageComponent implements OnInit {
   
   videoToUpload !:any;
   videoToDisplay !: any;
-  imageToDisplay : any = '../../assets/images/user-icon.png';
+  imageToDisplay !: any;
   fileToUpload!: any;
   profileForm!: FormGroup;
   usernameForm!: FormGroup;

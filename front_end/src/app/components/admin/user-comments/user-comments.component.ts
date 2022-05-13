@@ -1,3 +1,4 @@
+import { CommentDetailsComponent } from './../../comment-details/comment-details.component';
 import { AdminService } from 'src/app/services/admin.service';
 import { UiService } from 'src/app/services/ui.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -8,7 +9,7 @@ import { AppError } from 'src/app/exceptions/AppError';
 import { Comment } from 'src/app/interfaces/Comment';
 import { TaskManagerService } from 'src/app/services/task-manager.service';
 import { User } from 'src/app/interfaces/user';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BadInput } from 'src/app/exceptions/BadInput';
 
 @Component({
@@ -19,6 +20,7 @@ import { BadInput } from 'src/app/exceptions/BadInput';
 export class UserCommentsComponent implements OnInit {
   commentForm!: FormGroup;
   comments!: Comment[];
+  commentaire!: Comment;
   user!: User;
   currentUser!: User;
   selectedUser!: User;
@@ -32,13 +34,11 @@ export class UserCommentsComponent implements OnInit {
     private uiService: UiService,
     private adminService: AdminService,
     private taskManagerService: TaskManagerService,
+    private dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public editData: any
   ) {
     this.selectedUser = taskManagerService.selectedUser;
     this.comments = editData.comment;
-    console.log('editData: ');
-    console.log(editData);
-    console.log(editData.comment);
   }
 
   ngOnInit(): void {
@@ -46,8 +46,6 @@ export class UserCommentsComponent implements OnInit {
       comment: new FormControl(null, Validators.required),
     });
     this.state = this.editData.comment.state;
-    // console.log('comments: ');
-    // console.log(this.comments);
   }
 
   get comment() {
@@ -55,17 +53,13 @@ export class UserCommentsComponent implements OnInit {
   }
 
   changeState(comment: Comment) {
-    // console.log("pre comment");
-    // console.log(comment);
-    // console.log("comment.state");
-    // console.log(comment.state);
-    // this.toggleState(comment.state);
-    // console.log("post comment");
-    // console.log(comment);
+    this.toggleState(comment.state);
     let index = this.comments.indexOf(comment);
+
+    console.log("pre comment");
+    console.log(this.comments[index]);
+
     this.comments[index].state = !comment.state;
-    // console.log("here 1"+comment.state)
-    // console.log("here"+!comment.state)
     this.adminService.modifyCommentState(comment.id, comment.state).subscribe({
       next: (result) => {
         this.commentForm.reset();
@@ -84,13 +78,12 @@ export class UserCommentsComponent implements OnInit {
         }
       },
     });
+
+    console.log("post comment");
+    console.log(this.comments[index]);
   }
 
   toggleState(state: boolean) {
-    console.log("-------pre state");
-    console.log(state);
-    console.log("-------pre this.state");
-    console.log(this.state);
     state = !state;
     if (state == true) {
       this.color = 'basic';
@@ -101,11 +94,35 @@ export class UserCommentsComponent implements OnInit {
       this.btnValue = 'Mark as read'
     }
     this.state = state;
-    console.log("-------post state");
-    console.log(state);
-    console.log("-------post this.state");
-    console.log(this.state);
   }
+
+  getComment() {
+    this.dialog.open(CommentDetailsComponent, {
+      width: '30%',
+      data: {
+        comment: this.comments
+      }
+    })
+    .afterClosed().subscribe((val) => {
+      if (val === 'Add') console.log();
+    });
+  }
+
+  // commentDetails(comment: Comment) {
+  //   this.adminService
+  //     .getComment(comment.id)
+  //     .subscribe({
+  //       next: (result) => (
+  //         (console.log(result), this.getComment())
+  //       ),
+  //       error: (err: AppError) => {
+  //         if (err instanceof NotFoundError) {
+  //           console.log(err);
+  //         }
+  //       },
+  //     });
+  // }
+
 
 }
 

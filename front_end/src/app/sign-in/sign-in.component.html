@@ -28,8 +28,11 @@
 
       <a (click)="passwordReset()"><div class="hypertext">{{ 'forgetyourpassword' | translate }} ?</div></a>
 
+      <div *ngIf="uploading" class="spinner">
+        <mat-spinner [diameter]="40"></mat-spinner>
+      </div>
 
-      <div class="button_sign">
+      <div class="button_sign" *ngIf="!uploading">
         <button mat-raised-button color="primary" type="submit"  class="w-full">
           {{ 'login' | translate }}
         </button>

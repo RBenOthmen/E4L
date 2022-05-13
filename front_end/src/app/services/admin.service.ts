@@ -138,6 +138,12 @@ export class AdminService {
       .pipe(catchError(this.handleError));
   }
 
+  deleteUser(user: User): Observable<User> {
+    return this.http
+      .delete<User>(this.urlUsers + user.id, this.httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
   getUsers(): Observable<User[]> {
     return this.http
       .get<User[]>(this.urlUsers, this.httpOptions)

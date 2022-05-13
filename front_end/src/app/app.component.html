@@ -1,11 +1,19 @@
 <!-- authService.isLoggedIn() -->
 <app-nav-bar *ngIf="showNavBar()"></app-nav-bar>
 <app-language-selecteur *ngIf="!showNavBar()"></app-language-selecteur>
+<!-- <app-spinner *ngIf="showLoader"></app-spinner> -->
 <!-- <div *ngIf="showLoader$ | async as showLoader">
-    <app-spinner *ngIf="showLoader"></app-spinner>
+    <mat-spinner [diameter]="100"></mat-spinner>
+    {{showLoader}}
 </div> -->
+<div class="spinner" *ngIf="showSpinner">
+    <mat-spinner [diameter]="100" ></mat-spinner>
+</div>
 
-<router-outlet></router-outlet>
+
+
+<router-outlet [ngClass]="{'display' : showSpinner}">
+</router-outlet>
 
 <p-toast></p-toast>
 

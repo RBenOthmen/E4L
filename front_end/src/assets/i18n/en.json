@@ -10,7 +10,7 @@
     "lessons":"Lessons",
     "home":"Home",
     "messages":"Messages",
-    
+
     "signingin":"Signing In",
     "username":"Username",
     "password":"Password",
@@ -26,15 +26,18 @@
     "email":"Email",
     "birthday":"Birthday",
     "phonenumber":"Phone number",
+    "linkedIn": "LinkedIn",
     "createNewAccount":"Create New Account",
     "alreadyHaveAnAccount":"Already have an account",
-    "signup_error_first_name":"First name should be at least 3 caracters",
-    "signup_error_last_name":"Last name should be at least 3 caracters",
-    "signup_error_username":"username should be at least 3 caracters/numbers",
-    "signup_error_email":"Email should be at this form example@email.com",
-    "signup_error_password":"Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one symbol",
-    "signup_error_birthday":"Enter a valid birthday",
-    "signup_error_phone_number":"Enter a valid phone number",
+
+    "signup_error_first_name":"contains at least 3 characters",
+    "signup_error_last_name":"contains at least 3 characters",
+    "signup_error_username":"contains at least 3 characters/numbers",
+    "signup_error_email":"Input should be at this format <example@email.com>",
+    "signup_error_password":"Minimum eight characters, at least one (uppercase & lowercase) letter, one number and one symbol",
+    "signup_error_birthday":"Age should be over 9 years old",
+    "signup_error_phone_number":"invalid phone number",
+    "signup_error_linkedIn":"contains at least 3 characters",
 
     "task":"Task",
     "limitdate":"Limit date",
@@ -47,10 +50,10 @@
     "exit":"Exit",
     "send":"Send",
     "you":"You"
-    
-    
 
-    
 
-    
+
+
+
+
 }

@@ -14,7 +14,9 @@ import { TranslateService } from '@ngx-translate/core';
 export class AppComponent implements OnInit{
   title = 'E4L';
   // loading : boolean =false;
-  showLoader$ = this.loaderService.loadingAction$;
+  showLoader$ = this.loaderService.getLoader();
+  showSpinner !: boolean;
+  
 
   constructor(public authService :AuthService,
               private loaderService : LoaderService,
@@ -25,7 +27,11 @@ export class AppComponent implements OnInit{
 
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.showLoader$.subscribe(result => {
+      this.showSpinner = result
+    })
+  }
 
   hasRoute(route : string) : boolean {
     return this.router.url == route;

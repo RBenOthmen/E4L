@@ -87,6 +87,7 @@ import { NgxFlagPickerModule } from 'ngx-flag-picker';
 
 import { UserCommentsComponent } from './components/admin/user-comments/user-comments.component';
 import { CommentDetailsComponent } from './components/comment-details/comment-details.component';
+import { ConfirmComponent } from './components/dialogs/confirm/confirm.component';
 // import { VideoScreenComponent } from './Zoom/video-screen/video-screen.component';
 
 import {MatExpansionModule} from '@angular/material/expansion';
@@ -99,8 +100,10 @@ import {MatDividerModule} from '@angular/material/divider';
 import { MeetingComponent } from './Zoom/meeting/meeting.component';
 
 import { SanitizerPipe } from 'src/app/Pipes/sanitizer.pipe';
+import { MicRecordComponent } from './components/mic-record/mic-record.component';
+import { AudioRecorderComponent } from './components/audio-recorder/audio-recorder.component';
 
-
+import { NgAudioRecorderModule } from 'ng-audio-recorder';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -135,7 +138,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     MessengerWindowComponent,
     MessengerUserItemComponent,
     LanguageSelecteurComponent,
-
     AdminComponent,
     AdminTeachersListComponent,
     AdminStudentsComponent,
@@ -143,7 +145,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     CalendarComponent,
     OrganizeMeetingComponent,
     MeetUserItemComponent,
-
     RatingComponent,
     // UserFormComponent,
     AdminUsersComponent,
@@ -161,6 +162,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     PhoneTypeFormComponent,
     UserCommentsComponent,
     CommentDetailsComponent,
+    ConfirmComponent,
+    MicRecordComponent,
+    AudioRecorderComponent,
   ],
   imports: [
     BrowserModule,
@@ -202,6 +206,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatTabsModule,
     MatDividerModule,
     NgxFlagPickerModule,
+    NgAudioRecorderModule,
   ],
   providers: [
     ZoomService,

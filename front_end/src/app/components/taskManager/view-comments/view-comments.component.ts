@@ -7,8 +7,13 @@ import { AppError } from 'src/app/exceptions/AppError';
 import { Comment } from 'src/app/interfaces/Comment';
 import { TaskManagerService } from 'src/app/services/task-manager.service';
 import { User } from 'src/app/interfaces/user';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 import { BadInput } from 'src/app/exceptions/BadInput';
+import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';
 
 @Component({
   selector: 'app-view-comments',
@@ -21,19 +26,20 @@ export class ViewCommentsComponent implements OnInit {
   user!: User;
   currentUser!: User;
   selectedUser!: User;
+  dialogRef!: MatDialogRef<ConfirmComponent>;
 
   constructor(
     private taskManagerService: TaskManagerService,
     private uiService: UiService,
     private authService: AuthService,
+    private dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public editData: any
   ) {
     this.selectedUser = taskManagerService.selectedUser;
     this.comments = editData.comment;
-    console.log("editData: ");
+    console.log('editData: ');
     console.log(editData);
     console.log(editData.comment);
-
   }
 
   ngOnInit(): void {
@@ -41,7 +47,7 @@ export class ViewCommentsComponent implements OnInit {
       comment: new FormControl(null, Validators.required),
     });
     // this.commentForm.get('comment')?.setValue('comments...');
-    console.log("comments: ");
+    console.log('comments: ');
     console.log(this.comments);
     // this.comments = this.taskManagerService.getAllComments();
   }
@@ -53,39 +59,55 @@ export class ViewCommentsComponent implements OnInit {
   updateComment(comment: Comment, newComment: string) {
     console.log(comment.comment);
     console.log('comment: ' + this.comment?.value);
-    this.taskManagerService.updateComment(this.authService.getId(), this.editData.id || 0, newComment, comment.id).subscribe({
-      next: (result) => {
-        this.commentForm.reset();
-        this.uiService.toastSuccess('Comment has been created successfuly');
-      },
-      error: (err: AppError) => {
-        if (err instanceof BadInput) {
-          console.log(err);
-          this.uiService.toastError('Bad input');
-        } else {
-          this.uiService.toastError('Server error');
-        }
-      },
-    });
+    this.taskManagerService
+      .updateComment(
+        this.authService.getId(),
+        this.editData.id || 0,
+        newComment,
+        comment.id
+      )
+      .subscribe({
+        next: (result) => {
+          this.commentForm.reset();
+          this.uiService.toastSuccess('Comment has been created successfuly');
+        },
+        error: (err: AppError) => {
+          if (err instanceof BadInput) {
+            console.log(err);
+            this.uiService.toastError('Bad input');
+          } else {
+            this.uiService.toastError('Server error');
+          }
+        },
+      });
   }
 
   deleteComment(comment: Comment) {
-    console.log(comment.comment);
-    console.log('comment: ' + this.comment?.value);
-    this.taskManagerService.deleteComment(comment.id).subscribe({
-      next: (result) => {
-        this.commentForm.reset();
-        this.uiService.toastSuccess('Comment has been created successfuly');
-      },
-      error: (err: AppError) => {
-        if (err instanceof BadInput) {
-          console.log(err);
-          this.uiService.toastError('Bad input');
-        } else {
-          this.uiService.toastError('Server error');
+    this.dialog
+      .open(ConfirmComponent, {
+        width: '100%',
+        data: 'Are you sure you want to delete this comment?',
+      })
+      .afterClosed()
+      .subscribe((val) => {
+        if (val === 'Ok') {
+          this.taskManagerService.deleteComment(comment.id).subscribe({
+            next: (result) => {
+              this.commentForm.reset();
+              this.uiService.toastSuccess(
+                'Comment has been deleted successfuly'
+              );
+            },
+            error: (err: AppError) => {
+              if (err instanceof BadInput) {
+                console.log(err);
+                this.uiService.toastError('Bad input');
+              } else {
+                this.uiService.toastError('Server error');
+              }
+            },
+          });
         }
-      },
-    });
+      });
   }
-
 }

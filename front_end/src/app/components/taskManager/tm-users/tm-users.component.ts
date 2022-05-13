@@ -96,7 +96,7 @@ export class TmUsersComponent implements OnInit {
     this.taskManagerService.setSelectedUser(user);
     this.dialog
       .open(TmViewProfileComponent, {
-        width: '30%',
+        width: '40%',
         data: user,
       })
       .afterClosed()

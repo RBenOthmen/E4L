@@ -21,7 +21,8 @@ export class SignInComponent implements OnInit {
   loginForm!: FormGroup;
   serverOffline : boolean = false;
   invalidLogin : boolean = false;
-  showLoader$ = this.loaderService.loadingAction$;
+  // showLoader$ = this.loaderService.loadingAction$;
+  uploading = false;
 
   constructor(public authService : AuthService,
     private router :Router,
@@ -51,17 +52,18 @@ export class SignInComponent implements OnInit {
 
 
   signIn() {
-
+    this.uploading = true;
     // this.loaderService.showLoader();
     let credentials = this.getCredentials()
     this.authService.login(credentials)
       .subscribe({
         next : response => {
 
-
+          this.uploading = false;
           this.router.navigate(['/']);
         }
         ,error : (err : AppError) => {
+          this.uploading = false;
           if (err instanceof Unauthorized) {
           // this.loaderService.hideLoader();
           this.invalidLogin= true;

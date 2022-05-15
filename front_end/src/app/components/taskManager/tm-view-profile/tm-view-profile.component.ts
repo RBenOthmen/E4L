@@ -18,6 +18,7 @@ import { User } from 'src/app/interfaces/user';
 import { BadInput } from 'src/app/exceptions/BadInput';
 import { UiService } from 'src/app/services/ui.service';
 import { CommentComponent } from '../comment/comment.component';
+import { GeoService } from 'src/app/services/geo.service';
 
 @Component({
   selector: 'app-tm-view-profile',
@@ -25,6 +26,12 @@ import { CommentComponent } from '../comment/comment.component';
   styleUrls: ['./tm-view-profile.component.css'],
 })
 export class TmViewProfileComponent implements OnInit {
+
+  private day: number | undefined;
+  private month: number | undefined;
+  private year: number | undefined;
+  private isValidDate: boolean | undefined;
+
   actionBtn: string = 'Add';
   isToggled: boolean = false;
   showPassword: string = 'password';
@@ -35,6 +42,11 @@ export class TmViewProfileComponent implements OnInit {
   currentUser!: User;
   comments!: Comment[];
   id!: number;
+  minDate = new Date(1910, 1, 1);
+  maxDate = new Date(2014, 1, 1);
+  selectedCountryCode = 'us';
+  countryCodes = ['us', 'ca', 'de', 'mx', 'br', 'pt', 'cn', 'be', 'jp', 'ph', 'lu', 'bs', 'tn'];
+  phoneCode = '1';
 
   constructor(
     private uiService: UiService,
@@ -43,7 +55,8 @@ export class TmViewProfileComponent implements OnInit {
     private dialogRef: MatDialogRef<TmViewProfileComponent>,
     @Inject(MAT_DIALOG_DATA) public editData: User,
     private dialog: MatDialog,
-    private authService: AuthService
+    private authService: AuthService,
+    private geoService: GeoService
   ) {}
 
   ngOnInit(): void {
@@ -65,6 +78,29 @@ export class TmViewProfileComponent implements OnInit {
       this.userForm.controls['phone'].setValue(this.editData.phone);
     }
     console.log(this.editData);
+  }
+
+  changeSelectedCountryCode(value: string): void {
+    this.selectedCountryCode = value;
+    this.phoneCode = this.geoService.findCountryCodeByTwoLetterAbbreviation(
+      this.selectedCountryCode
+    );
+  }
+
+  dateValidator(date: Date): boolean {
+    this.day = date.getDate();
+    this.month = date.getMonth() + 1;
+    this.year = date.getFullYear();
+
+    this.isValidDate =
+      this.day in [1, 31] && this.month in [1, 12] && this.year in [1920, 2014];
+    console.log(this.isValidDate);
+    console.log(this.day + '/' + this.month + '/' + this.year);
+    return this.isValidDate;
+  }
+
+  get dateInput() {
+    return this.isValidDate;
   }
 
   getCurrentUserInfo() {
@@ -149,6 +185,10 @@ export class TmViewProfileComponent implements OnInit {
 
   get phone() {
     return this.userForm.get('phone');
+  }
+
+  get linkedIn() {
+    return this.userForm.get('linkedIn');
   }
 
   get passwordStatus() {

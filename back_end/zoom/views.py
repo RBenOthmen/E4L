@@ -59,37 +59,13 @@ meetingdetails = {"topic": "The title of your zoom meeting",
 # send a request with headers including
 # a token and meeting details
 
-@api_view(['GET'])
-def createMeeting(request):
-
-    # change email
-	headers = {'authorization': 'Bearer ' + generateToken(),
-			'content-type': 'application/json'}
-    
-	r = requests.post(
-		f'https://api.zoom.us/v2/users/wajdibejaoui26@gmail.com/meetings',
-		headers=headers, data=json.dumps(meetingdetails))
-
-	print("\n creating zoom meeting ... \n")
-	# converting the output into json and extracting the details
-	y = json.loads(r.text)
-	join_URL = y["join_url"]
-	meetingPassword = y["password"]
-
-	print(
-		f'\n here is your zoom meeting link {join_URL} and your \
-		password: "{meetingPassword}"\n')
-    
-	data = {"join_URL" : join_URL , "meetingPassword" : meetingPassword}
-	return Response(y)
-
-# @api_view(['POST'])
+# @api_view(['GET'])
 # def createMeeting(request):
-# 	# email = request.data['email']
 
+#     # change email
 # 	headers = {'authorization': 'Bearer ' + generateToken(),
 # 			'content-type': 'application/json'}
-	
+    
 # 	r = requests.post(
 # 		f'https://api.zoom.us/v2/users/wajdibejaoui26@gmail.com/meetings',
 # 		headers=headers, data=json.dumps(meetingdetails))
@@ -99,15 +75,39 @@ def createMeeting(request):
 # 	y = json.loads(r.text)
 # 	join_URL = y["join_url"]
 # 	meetingPassword = y["password"]
-# 	id = y["id"]
 
 # 	print(
 # 		f'\n here is your zoom meeting link {join_URL} and your \
 # 		password: "{meetingPassword}"\n')
     
+# 	data = {"join_URL" : join_URL , "meetingPassword" : meetingPassword}
+# 	return Response(y)
 
-# 	data = {"meetingPassword" : meetingPassword, "meetingNumber" : id}
-# 	return Response(data)
+@api_view(['POST'])
+def createMeeting(request):
+	# email = request.data['email']
+
+	headers = {'authorization': 'Bearer ' + generateToken(),
+			'content-type': 'application/json'}
+	
+	r = requests.post(
+		f'https://api.zoom.us/v2/users/wajdibejaoui26@gmail.com/meetings',
+		headers=headers, data=json.dumps(meetingdetails))
+
+	print("\n creating zoom meeting ... \n")
+	# converting the output into json and extracting the details
+	y = json.loads(r.text)
+	join_URL = y["join_url"]
+	meetingPassword = y["password"]
+	id = y["id"]
+
+	print(
+		f'\n here is your zoom meeting link {join_URL} and your \
+		password: "{meetingPassword}"\n')
+    
+
+	data = {"meetingPassword" : meetingPassword, "meetingNumber" : id}
+	return Response(data)
     
 
 

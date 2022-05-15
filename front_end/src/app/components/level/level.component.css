@@ -65,3 +65,9 @@
   .flex-row {
     align-items: center;
   }
+
+  footer {
+    bottom :0;
+    background-color: #24262b;
+    Width: 100%;
+  }

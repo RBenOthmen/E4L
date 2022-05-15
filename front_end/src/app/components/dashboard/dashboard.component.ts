@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+  categories = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
 
   constructor() { }
 

@@ -1,5 +1,6 @@
 import { AudioRecorderComponent } from './components/audio-recorder/audio-recorder.component';
 import { MicRecordComponent } from './components/mic-record/mic-record.component';
+import { LevelComponent } from './components/level/level.component';
 import { StudentProfileComponent } from './components/student-profile/student-profile.component';
 import { StudentsListComponent } from './components/students-list/students-list.component';
 import { CalendarComponent } from './Meet-calendar/calendar/calendar.component';
@@ -69,6 +70,7 @@ const routes: Routes = [
   { path: 'meeting/:meeting/:role', component: MeetingComponent },
   // { path: 'record', component: MicRecordComponent },
   { path: 'record', component: AudioRecorderComponent },
+  { path: 'level', component: LevelComponent },
 ];
 
 @NgModule({

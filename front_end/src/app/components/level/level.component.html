@@ -1,0 +1,50 @@
+
+
+<div class="appcontainer">
+
+
+      <section class="example-section">
+        <mat-progress-bar
+          class="example-margin"
+          [color]="color"
+          [mode]="mode"
+          [value]="progress"
+          [bufferValue]="bufferValue"
+        >
+        </mat-progress-bar>
+      </section>
+
+
+
+    <div class="flex-column flex-center">
+
+      <div class="block">
+        <h2 class="title">Try to repeat this word:</h2>
+      </div>
+      <!-- <mat-card-subtitle>Try to speak this word:</mat-card-subtitle> -->
+      <div class="flex-row"> 
+          <h3 class="sentence">{{word}}</h3>
+          <!-- <i class="fa " ngClass="{'fa-volume-up fa-2x' : microState, 'fa-volume-off fa-2x' : !microState}"></i> -->
+          <i  class="fa fa-volume-off fa-3x block" (click)="textToSpeech(word)"></i>
+          <!-- <button (click)="textToSpeech(word)" class="block">
+            <i *ngIf="microState == false" class="fa fa-volume-off fa-2x" ></i>
+          </button> -->
+      </div >
+      <div *ngIf="!recording" (click)="startRecording()" class="mic">
+        <i  class="fa fa-microphone fa-5x" aria-hidden="true" ></i>
+        Start Recording
+      </div>
+      <div *ngIf="recording" (click)="stopRecording()" class="mic">
+        <i  class="fa fa-microphone fa-5x" aria-hidden="true" style="color :  red" ></i>
+        <div style="color: red;">Stop Recording</div>
+      </div>
+      <audio controls="" *ngIf="url">
+        <source [src]="sanitize(url)" type="audio/wav">
+      </audio>
+    </div>
+    <!-- <button>
+      <i class="fa fa-play fa-5x"></i>
+    </button> -->
+    <!-- <i class="fa fa-volume-up fa-5x"></i> -->
+
+</div>

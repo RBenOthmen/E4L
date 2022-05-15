@@ -1,7 +1,6 @@
-
-<div class="container">
-    <app-category-item [category]="'A1'"></app-category-item>
-    <app-category-item [category]="'A2'"></app-category-item>
-    <app-category-item [category]="'B1'"></app-category-item>
-    <app-category-item [category]="'B2'"></app-category-item>
+<div class="appcontainer">
+<div *ngFor="let category of categories" class="container">
+  <app-category-item category="{{ category }}"></app-category-item>
 </div>
+</div>
+

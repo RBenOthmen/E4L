@@ -23,6 +23,7 @@ ul{
   flex-wrap: wrap;
 }
 
+
 .footer{
   background-color: #24262b;
   padding : 70px 0;
@@ -32,7 +33,7 @@ ul{
 }
 
 .footer-col{
-  width: 25%;
+  width: 20%;
   padding: 0 15px;
   color: #FFFFFF;
 }

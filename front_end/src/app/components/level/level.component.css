@@ -1,0 +1,67 @@
+.example-h2 {
+    margin: 10px;
+  }
+
+  .example-section {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    height: 60px;
+  }
+
+  .example-margin {
+    margin: 0 10px;
+  }
+
+  .example-card {
+    height: auto;
+    width: 100%;
+    display: flex;
+    align-content: center;
+    align-items: center;
+  }
+
+  .center {
+    display: flex;
+    /* justify-content: center; */
+    /* align-content: center; */
+    flex-direction: column;
+  }
+
+  .row {
+    display: flex;
+    /* justify-content: center; */
+    /* align-content: center; */
+    /* flex-direction: column; */
+  }
+
+  button {
+   width: 20px;
+  }
+
+  .flex-center {
+    justify-content: center;
+    align-items: center;
+  }
+
+  .mic {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+  .block {
+    margin-bottom: 30px;
+  }
+
+  .title {
+    font-size: 40px;
+  }
+
+  .sentence {
+    font-size: 30px;
+    margin-right: 8px;
+  }
+
+  .flex-row {
+    align-items: center;
+  }

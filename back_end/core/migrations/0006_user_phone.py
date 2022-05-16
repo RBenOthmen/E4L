@@ -5,7 +5,7 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
+    dependencies = [ 
         ('core', '0005_alter_user_role'),
     ]
 

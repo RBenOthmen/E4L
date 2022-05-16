@@ -5,7 +5,7 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
+    dependencies = [ 
         ('core', '0004_remove_user_birth_date_remove_user_phone'),
     ]
 

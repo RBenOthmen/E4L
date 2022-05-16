@@ -5,7 +5,7 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
+    dependencies = [ 
         ('core', '0014_merge_0012_user_image_0013_alter_user_birth_date'),
     ]
 

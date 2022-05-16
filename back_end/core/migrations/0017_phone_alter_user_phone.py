@@ -6,7 +6,7 @@ import django.db.models.deletion
 
 class Migration(migrations.Migration):
 
-    dependencies = [
+    dependencies = [ 
         ('core', '0016_alter_user_image'),
     ]
 

@@ -1,5 +1,6 @@
 from multiprocessing import context
 from operator import truediv
+from unicodedata import category
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 from requests import request
@@ -102,6 +103,63 @@ class ProgressViewSet(ModelViewSet):
 class LessonViewSet(ModelViewSet):
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
+
+    @action(detail=False, methods=['GET'])
+    def A1(self, request, *args, **kwargs):
+        lesson = Lesson.objects.filter(category="A1")
+        if request.method =='GET':
+            serializer = LessonSerializer(lesson, many=True, context={
+            'request':request
+            })
+            return Response (serializer.data)
+
+    @action(detail=False, methods=['GET'])
+    def A2(self, request, *args, **kwargs):
+
+        lesson = Lesson.objects.filter(category="A2")
+        if request.method =='GET':
+            # serializer = LessonSerializer(lesson)
+            serializer = LessonSerializer(lesson, many=True, context={
+            'request':request
+            })
+            return Response (serializer.data)
+
+    @action(detail=False, methods=['GET'])
+    def B1(self, request, *args, **kwargs):
+        lesson = Lesson.objects.filter(category="B1")
+        if request.method =='GET':
+            serializer = LessonSerializer(lesson, many=True, context={
+            'request':request
+            })
+            return Response (serializer.data)
+
+    @action(detail=False, methods=['GET'])
+    def B2(self, request, *args, **kwargs):
+        lesson = Lesson.objects.filter(category="B2")
+        if request.method =='GET':
+            serializer = LessonSerializer(lesson, many=True, context={
+            'request':request
+            })
+            return Response (serializer.data)
+    
+    @action(detail=False, methods=['GET'])
+    def C1(self, request, *args, **kwargs):
+        lesson = Lesson.objects.filter(category="C1")
+        if request.method =='GET':
+            serializer = LessonSerializer(lesson, many=True, context={
+            'request':request
+            })
+            return Response (serializer.data)
+    
+    @action(detail=False, methods=['GET'])
+    def C2(self, request, *args, **kwargs):
+        lesson = Lesson.objects.filter(category="C2")
+        if request.method =='GET':
+            serializer = LessonSerializer(lesson, many=True, context={
+            'request':request
+            })
+            return Response (serializer.data)
+        
 
 class ProgressEleveViewSet(ModelViewSet):
 

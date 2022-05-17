@@ -1,12 +1,7 @@
-<div class="">
-  <div class="category">
-    <h2>{{ category }} - {{ value }}%</h2>
-  </div>
-
+<div>
   <div class="circle-container">
     <div *ngFor="let word of words">
-      <button class="circle btn" (click)="viewWord(word)">{{word}}</button>
-      
+      <button class="circle btn" (click)="viewWord(word)">{{ word }}</button>
     </div>
   </div>
 </div>

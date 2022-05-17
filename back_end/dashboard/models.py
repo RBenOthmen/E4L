@@ -31,12 +31,13 @@ class Professeur (models.Model):
     #phone = models.CharField(max_length=255)
     #birth_date = models.DateField(null=True, blank=True)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    linkedIn = models.CharField(max_length=255, default='linkedIn')
     video = models.FileField(
         upload_to = 'videos',
         null = True)
-        
+
     # review = models.ForeignKey(Review, on_delete=models.PROTECT, related_name='reviews')
-    
+
 class Review (models.Model):
     RATE_CHOICES = [
         (0, '0'),
@@ -52,7 +53,7 @@ class Review (models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=None)
     created_at = models.DateTimeField(auto_now_add=True)
     rate = models.IntegerField(choices=RATE_CHOICES)
-    
+
 
 
     # def num_rating(self):
@@ -64,12 +65,12 @@ class Review (models.Model):
     #     ratings = Review.objects.filter(professeur=self)
     #     for rating in ratings:
     #         sum += rating.rate
-        
+
     #     if len(ratings) > 0:
     #         return sum / len(ratings)
     #     else:
     #         return 0
-    
+
 class Task (models.Model):
     title = models.CharField(max_length=255)
     start_date = models.DateField(auto_now=True)

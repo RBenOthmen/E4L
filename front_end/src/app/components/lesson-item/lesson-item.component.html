@@ -1,4 +1,4 @@
-<app-spinner></app-spinner>
+<!-- <app-spinner></app-spinner>
 <div class="container">
   <div class="item__header" (click)="toggle()">
     <div class="item1">
@@ -24,4 +24,30 @@
     Get started with lesson :
     <button class="btn btn-primary" (click)="goToLevel()">Start</button>
   </div>
+</div> -->
+
+
+<app-spinner></app-spinner>
+<div class="container" >
+    <div class="item__header" (click)="toggle()">
+        <div class="item1">
+            <div class="sub-item">
+                <img class="item__img" src="../../assets/images/user-icon.png" width="60" alt="">
+            </div>
+            <div class="sub-item">
+                <h3>Lesson  :</h3>
+                <!-- <h3>{{lesson.title}}</h3> -->
+            </div>
+        </div>
+        <div class="item2">
+            <h3>0%</h3>
+        </div>
+
+    </div>
+
+
+    <div *ngIf="isExpanded" class="expanded">
+      <app-category-item></app-category-item>
+    </div>
+
 </div>

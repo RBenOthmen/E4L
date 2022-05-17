@@ -1,6 +1,22 @@
 <div class="appcontainer">
-<div *ngFor="let category of categories" class="container">
-  <app-category-item category="{{ category }}"></app-category-item>
-</div>
-</div>
+  <div *ngFor="let category of categories">
+    {{ category }}
+    <!-- <app-category-item category="{{ category }}"></app-category-item> -->
 
+    <app-spinner></app-spinner>
+    <!-- <div class="container">
+      <div class="item__header" (click)="toggle()">
+        <div class="item1">
+          <div class="sub-item">
+            <h3>{{ lesson.title }}</h3>
+          </div>
+        </div>
+        <div class="item2">
+          <h3>10%</h3>
+        </div>
+      </div> -->
+      <app-lesson-item></app-lesson-item>
+
+    <!-- </div> -->
+  </div>
+</div>

@@ -12,7 +12,7 @@ import { CourseService } from 'src/app/services/course.service';
 })
 export class CategoryItemComponent implements OnInit {
   lessons!: Lesson[];
-  @Input('category') category !:string;
+  // @Input('category') category !:string;
   value : number = 0;
   // words!: string[];
   words = ['Hi', 'Hello', 'What', 'Mean', 'This', 'Know', 'No', 'Now', 'Not', 'Me'];

@@ -10,6 +10,7 @@ import { Lesson } from 'src/app/interfaces/Lesson';
 export class LessonItemComponent implements OnInit {
   isExpanded!: boolean;
   @Input('lesson') lesson!: Lesson;
+  
   constructor(private router: Router) {}
 
   ngOnInit(): void {}

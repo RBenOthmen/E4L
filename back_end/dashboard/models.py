@@ -1,3 +1,4 @@
+from tkinter import CASCADE
 from django.conf import settings
 from django.db import models
 from core.models import User
@@ -29,7 +30,9 @@ class Lesson (models.Model):
 
 class LessonElement (models.Model):
     element = models.CharField(max_length=255)
-    lesson = models.OneToOneField(Lesson, on_delete=models.CASCADE)
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
+    # (id, Lesson, field_name='lesson', on_delete=models.CASCADE)
+    # (Lesson, on_delete=models.CASCADE)
 
 
 class Professeur (models.Model):

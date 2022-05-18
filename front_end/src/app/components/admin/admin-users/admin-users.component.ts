@@ -30,11 +30,12 @@ import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';
 })
 export class AdminUsersComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = [
+    'username',
     'first_name',
     'last_name',
-    'phone',
-    'email',
-    'username',
+    // 'phone',
+    // 'email',
+    'role',
     'action',
   ];
   dataSource!: MatTableDataSource<User>;

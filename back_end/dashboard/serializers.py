@@ -15,7 +15,7 @@ class ProfesseurCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Professeur
         # fields  = ['id', 'user_id', 'video', 'user', 'num_rating', 'avg_rating']
-        fields  = ['id', 'user_id', 'video']
+        fields  = ['id', 'user_id', 'linkedIn', 'video']
 
 class ProfesseurSerializer(serializers.ModelSerializer):
     user_id = serializers.IntegerField()
@@ -23,7 +23,7 @@ class ProfesseurSerializer(serializers.ModelSerializer):
     class Meta:
         model = Professeur
         # fields  = ['id', 'user_id', 'video', 'user', 'num_rating', 'avg_rating']
-        fields  = ['id', 'user_id', 'video', 'user']
+        fields  = ['id', 'user_id', 'linkedIn', 'video', 'user']
 
 class LessonSerializer(serializers.ModelSerializer):
 

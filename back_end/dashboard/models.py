@@ -1,3 +1,4 @@
+from tkinter import CASCADE
 from django.conf import settings
 from django.db import models
 from core.models import User
@@ -25,6 +26,13 @@ class Lesson (models.Model):
     title = models.CharField(max_length=255)
     category = models.CharField(
         max_length=2, choices=CATEGORY_CHOICES)
+
+
+class LessonElement (models.Model):
+    element = models.CharField(max_length=255)
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
+    # (id, Lesson, field_name='lesson', on_delete=models.CASCADE)
+    # (Lesson, on_delete=models.CASCADE)
 
 
 class Professeur (models.Model):

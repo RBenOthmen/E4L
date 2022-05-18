@@ -30,6 +30,13 @@ export class LessonsService {
   );
   }
 
+  getLessonsByCategory(category : string) : Observable<Lesson[]>{
+    return this.http.get<Lesson[]>(this.url + category + '/' ,httpOptions)
+    .pipe(
+      catchError(this.handleError)
+  );
+  }
+
   deleteLesson(Lesson:Lesson) : Observable<Lesson> {
     return this.http.delete<Lesson>(this.url + '/' + Lesson.id , httpOptions)
     .pipe(

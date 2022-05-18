@@ -27,7 +27,7 @@ export class TeacherListComponent implements OnInit {
         this.loaderService.hideLoader();
       }
       ,error : (err : AppError) => {
-        // this.loaderService.hideLoader();
+        this.loaderService.hideLoader();
         if (err instanceof NotFoundError){
          console.log(err)
         }

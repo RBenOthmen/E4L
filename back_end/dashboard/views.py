@@ -8,9 +8,9 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from django.db.models import Count
-from .serializers import CommentSerializer, EleveCreateSerializer, EleveSerializer, LessonSerializer, MeetSerializer, MeetingStudentSerializer, MeetingTeacherSerializer, ProfesseurCreateSerializer,ProfesseurSerializer, ProgressEleveSerializer, ProgressSerializer, EleveImageSerializer, ReviewSerializer, TaskSerializer
+from .serializers import CommentSerializer, EleveCreateSerializer, EleveSerializer, LessonElementSerializer, LessonSerializer, MeetSerializer, MeetingStudentSerializer, MeetingTeacherSerializer, ProfesseurCreateSerializer,ProfesseurSerializer, ProgressEleveSerializer, ProgressSerializer, EleveImageSerializer, ReviewSerializer, TaskSerializer
 from dashboard import serializers
-from .models import Comment, Eleve, Lesson, Meet, Meeting, Professeur, Progress, EleveImage, Review ,Task
+from .models import Comment, Eleve, Lesson, LessonElement, Meet, Meeting, Professeur, Progress, EleveImage, Review ,Task
 from rest_framework.mixins import ListModelMixin, CreateModelMixin, RetrieveModelMixin, UpdateModelMixin
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from rest_framework.decorators import api_view,action
@@ -90,7 +90,7 @@ class ProfesseurViewSet(ModelViewSet):
     #         'request':request
     #     })
     #     return Response(serializer.data)
-        
+
 
 
 class ProgressViewSet(ModelViewSet):
@@ -141,7 +141,7 @@ class LessonViewSet(ModelViewSet):
             'request':request
             })
             return Response (serializer.data)
-    
+
     @action(detail=False, methods=['GET'])
     def C1(self, request, *args, **kwargs):
         lesson = Lesson.objects.filter(category="C1")
@@ -150,7 +150,7 @@ class LessonViewSet(ModelViewSet):
             'request':request
             })
             return Response (serializer.data)
-    
+
     @action(detail=False, methods=['GET'])
     def C2(self, request, *args, **kwargs):
         lesson = Lesson.objects.filter(category="C2")
@@ -159,7 +159,7 @@ class LessonViewSet(ModelViewSet):
             'request':request
             })
             return Response (serializer.data)
-        
+
 
 class ProgressEleveViewSet(ModelViewSet):
 
@@ -271,7 +271,7 @@ class ReviewViewSet(ModelViewSet):
         sum= 0
         for rating in ratings:
             sum += rating.rate
-        
+
         if len(ratings) > 0:
             avg_rating = sum / len(ratings)
         else:
@@ -281,9 +281,9 @@ class ReviewViewSet(ModelViewSet):
 @api_view(['POST'])
 def rate_review(request):
     if request.method == "POST":
-        
-        
-        
+
+
+
         professeur_id = request.data['professeur_id']
         user_id = request.data['user_id']
         # queryset = Review.objects.filter(Q(professeur_id=professeur_id) | Q(eleve_id=eleve_id)).all()
@@ -322,4 +322,16 @@ def get_comments_to_admin(request, id):
 
 
 
+class LessonElementViewSet(ModelViewSet):
+    queryset = LessonElement.objects.all()
+    serializer_class = LessonElementSerializer
+
+
+def get_lesson_elements(request, id):
+    if request.method == "GET":
+        queryset = LessonElement.objects.filter(lesson_id=id).all()
+        serializer = LessonElementSerializer(queryset, many=True, context={
+            'request':request
+        })
+        return Response(serializer.data)
 

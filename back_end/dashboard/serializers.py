@@ -7,7 +7,7 @@ from itertools import product
 from rest_framework import serializers
 from core.serializers import UserSerializer
 
-from dashboard.models import Eleve, Lesson, Meet, Meeting, Professeur, Progress, Review, Task, EleveImage, Comment
+from dashboard.models import Eleve, Lesson, LessonElement, Meet, Meeting, Professeur, Progress, Review, Task, EleveImage, Comment
 
 
 class ProfesseurCreateSerializer(serializers.ModelSerializer):
@@ -25,11 +25,20 @@ class ProfesseurSerializer(serializers.ModelSerializer):
         # fields  = ['id', 'user_id', 'video', 'user', 'num_rating', 'avg_rating']
         fields  = ['id', 'user_id', 'linkedIn', 'video', 'user']
 
+
 class LessonSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Lesson
         fields =['id', 'title', 'category']
+
+
+class LessonElementSerializer(serializers.ModelSerializer):
+    lesson_id = serializers.IntegerField()
+    class Meta:
+        model = LessonElement
+        fields =['id', 'element', 'lesson_id']
+
 
 class ProgressSerializer(serializers.ModelSerializer):
     eleve_id = serializers.IntegerField()

@@ -27,6 +27,11 @@ class Lesson (models.Model):
         max_length=2, choices=CATEGORY_CHOICES)
 
 
+class LessonElement (models.Model):
+    element = models.CharField(max_length=255)
+    lesson = models.OneToOneField(Lesson, on_delete=models.CASCADE)
+
+
 class Professeur (models.Model):
     #phone = models.CharField(max_length=255)
     #birth_date = models.DateField(null=True, blank=True)

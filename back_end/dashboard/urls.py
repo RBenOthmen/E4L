@@ -15,6 +15,7 @@ router.register('progress',views.ProgressViewSet)
 router.register('meets',views.MeetViewSet)
 router.register('reviews',views.ReviewViewSet)
 router.register('comments',views.CommentViewSet)
+router.register('lessonElements',views.LessonElementViewSet)
 
 
 
@@ -42,6 +43,7 @@ urlpatterns = [
     path('getstudentreview/', views.rate_review, name='get_review'),
     path('getcomments/', views.get_comments, name='get_comments'),
     path('getusercomments/<int:id>/', views.get_comments_to_admin, name='get_comments_to_admin'),
+    path('getLessonElements/<int:id>/', views.Meetings, name='getLessonElements'),
 ] + router.urls + progress_router.urls + tasks_router.urls + image_router.urls + mettingTeacher_router.urls + mettingsStudent_router.urls
 
 

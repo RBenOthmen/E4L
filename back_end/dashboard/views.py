@@ -105,6 +105,16 @@ class LessonViewSet(ModelViewSet):
     serializer_class = LessonSerializer
 
     @action(detail=False, methods=['GET'])
+    def next(self, request, *args, **kwargs):
+
+        lesson = Lesson.objects.filter()
+        if request.method =='GET':
+            serializer = LessonSerializer(lesson, many=True, context={
+            'request':request
+            })
+            return Response (serializer.data)
+
+    @action(detail=False, methods=['GET'])
     def A1(self, request, *args, **kwargs):
         lesson = Lesson.objects.filter(category="A1")
         if request.method =='GET':
@@ -323,3 +333,11 @@ def get_comments_to_admin(request, id):
 
 
 
+@api_view(['GET'])
+def next_lesson(request,id):
+    if request.method == "GET":
+        queryset = Lesson.objectsfilter(lesson_id=id).all()
+        index = list(queryset.values_list('id', flat=True)).index(id)
+        queryset[id+1]
+        serializer = LessonSerializer(queryset)
+        return Response(index)

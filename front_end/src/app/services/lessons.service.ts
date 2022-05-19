@@ -5,6 +5,7 @@ import { AppError } from '../exceptions/AppError';
 import { BadInput } from '../exceptions/BadInput';
 import { Lesson } from '../interfaces/Lesson';
 import { NotFoundError } from '../exceptions/not-found-error';
+import { LessonElement } from '../interfaces/LessonElement';
 
 
 const httpOptions = {
@@ -17,7 +18,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class LessonsService {
-
+  private baseUrl = 'http://localhost:8000/dashboard/';
   private url = 'http://localhost:8000/dashboard/lessons/';
   constructor(
     private http : HttpClient
@@ -25,6 +26,27 @@ export class LessonsService {
 
   getLessons() : Observable<Lesson[]>{
     return this.http.get<Lesson[]>(this.url,httpOptions)
+    .pipe(
+      catchError(this.handleError)
+  );
+  }
+
+  getElementById(id : string) : Observable<LessonElement>{
+    return this.http.get<LessonElement>(this.baseUrl+"lessonElements/" + id + '/',httpOptions)
+    .pipe(
+      catchError(this.handleError)
+  );
+  }
+
+  getNextLessonElement(element_id : string) : Observable<LessonElement>{
+    return this.http.get<LessonElement>(this.baseUrl+ 'nextElement/' + element_id +'/',httpOptions)
+    .pipe(
+      catchError(this.handleError)
+  );
+  }
+
+  getLessonElements(lesson_id : number) : Observable<LessonElement[]>{
+    return this.http.get<LessonElement[]>(this.baseUrl+ 'getLessonElements/' + lesson_id +'/',httpOptions)
     .pipe(
       catchError(this.handleError)
   );

@@ -105,6 +105,8 @@ import { MicRecordComponent } from './components/mic-record/mic-record.component
 import { AudioRecorderComponent } from './components/audio-recorder/audio-recorder.component';
 
 import { NgAudioRecorderModule } from 'ng-audio-recorder';
+import { LessonListComponent } from './components/lesson-list/lesson-list.component';
+
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -167,6 +169,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     MicRecordComponent,
     AudioRecorderComponent,
     LevelComponent,
+    LessonListComponent,
+    
   ],
   imports: [
     BrowserModule,

@@ -2,6 +2,7 @@ import { Router } from '@angular/router';
 
 import { Component, Input, OnInit } from '@angular/core';
 import { Lesson } from 'src/app/interfaces/Lesson';
+import { LessonElement } from 'src/app/interfaces/LessonElement';
 import { LessonsService } from 'src/app/services/lessons.service';
 import { CourseService } from 'src/app/services/course.service';
 import { AppError } from 'src/app/exceptions/AppError';
@@ -13,16 +14,12 @@ import { NotFoundError } from 'rxjs';
   styleUrls: ['./category-item.component.css']
 })
 export class CategoryItemComponent implements OnInit {
-  lessons!: Lesson[];
   // @Input('category') category !:string;
   value : number = 0;
-  // words!: string[];
-  words = ['Hi', 'Hello', 'What', 'Mean', 'This', 'Know', 'No', 'Now', 'Not', 'Me'];
+  words!: LessonElement[];
+  // words = ['Hi', 'Hello', 'What', 'Mean', 'This', 'Know', 'No', 'Now', 'Not', 'Me'];
 
-  lesson1 !: Lesson[];
-  lesson2 !: Lesson[];
-  lesson3 !: Lesson[];
-  lesson4 !: Lesson[];
+  @Input('lesson') lesson !: Lesson;
 
 
   constructor(private lessonsService : LessonsService,
@@ -31,14 +28,12 @@ export class CategoryItemComponent implements OnInit {
               ) { }
 
   ngOnInit(): void {
-    this.lessonsService.getLessons().subscribe(result => this.lessons = result)
-    this.lessonsService.getLessonsByCategory(this.category).subscribe({
+    
+    // this.lessonsService.getLessons().subscribe(result => this.lessons = result)
+    this.lessonsService.getLessonElements(this.lesson.id || 0).subscribe({
       next: response => {
-        length = (response.length +1)  % 4
-        console.log(length)
-        length =( response.length +1)  / 4
-        console.log(length)
-        // this.lesson1 = response
+        this.words = response;
+        console.log(response)
       }
       , error: (err: AppError) => {
         if (err instanceof NotFoundError) {
@@ -46,11 +41,12 @@ export class CategoryItemComponent implements OnInit {
         }
       }
     })
+    
   }
 
-  viewWord(word: string) {
-    this.courseService.setWord(word);
-    this.router.navigate(['level']);
+  viewWord(element: LessonElement) {
+    // this.courseService.setWord(word);
+    this.router.navigate(['/level/'+this.lesson.id+'/'+element.id]);
   }
 
 }

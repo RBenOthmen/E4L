@@ -27,16 +27,16 @@
 </div> -->
 
 
-<app-spinner></app-spinner>
-<div class="container" >
+<!-- <app-spinner></app-spinner> -->
+<!-- <div class="container" *ngFor="let lesson of lessons"> -->
     <div class="item__header" (click)="toggle()">
         <div class="item1">
             <div class="sub-item">
                 <img class="item__img" src="../../assets/images/user-icon.png" width="60" alt="">
             </div>
             <div class="sub-item">
-                <h3>Lesson  :</h3>
-                <!-- <h3>{{lesson.title}}</h3> -->
+                <!-- <h3>Lesson  :</h3> -->
+                <h3>{{lesson.title}}</h3>
             </div>
         </div>
         <div class="item2">
@@ -47,7 +47,7 @@
 
 
     <div *ngIf="isExpanded" class="expanded">
-      <app-category-item></app-category-item>
+      <app-category-item [lesson]="lesson"></app-category-item>
     </div>
 
-</div>
+<!-- </div> -->

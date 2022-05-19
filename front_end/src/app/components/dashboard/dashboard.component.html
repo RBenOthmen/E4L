@@ -1,9 +1,9 @@
 <div class="appcontainer">
   <div *ngFor="let category of categories">
-    {{ category }}
+    {{ category }} 0% :
     <!-- <app-category-item category="{{ category }}"></app-category-item> -->
 
-    <app-spinner></app-spinner>
+    <!-- <app-spinner></app-spinner> -->
     <!-- <div class="container">
       <div class="item__header" (click)="toggle()">
         <div class="item1">
@@ -15,7 +15,8 @@
           <h3>10%</h3>
         </div>
       </div> -->
-      <app-lesson-item></app-lesson-item>
+      <!-- <app-lesson-item [category]="category"></app-lesson-item> -->
+      <app-lesson-list [category]="category"></app-lesson-list>
 
     <!-- </div> -->
   </div>

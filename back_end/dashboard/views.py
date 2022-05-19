@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 from multiprocessing import context
 from operator import truediv
 from unicodedata import category
@@ -336,20 +337,74 @@ class LessonElementViewSet(ModelViewSet):
     queryset = LessonElement.objects.all()
     serializer_class = LessonElementSerializer
 
-
+@api_view(['GET'])
 def get_lesson_elements(request, id):
     if request.method == "GET":
+        print(id)
         queryset = LessonElement.objects.filter(lesson_id=id).all()
         serializer = LessonElementSerializer(queryset, many=True, context={
             'request':request
         })
         return Response(serializer.data)
 
+
 @api_view(['GET'])
 def next_lesson(request,id):
     if request.method == "GET":
-        queryset = Lesson.objectsfilter(lesson_id=id).all()
-        index = list(queryset.values_list('id', flat=True)).index(id)
-        queryset[id+1]
-        serializer = LessonSerializer(queryset)
-        return Response(index)
+        # nextLesson = get_object_or_404(LessonElement , pk=(id+1))
+        nextLesson = LessonElement.objects.filter(pk = (id+1)).get()
+        # print(len(nextLesson) == 0)
+        print('here',not nextLesson)
+        if not nextLesson:
+            print('nextlesson')
+            queryset = LessonElement.objects.all()
+            index = list(queryset.values_list('id', flat=True)).index(id)
+            nextLesson = queryset[index+1]
+            # nextLesson = LessonElement.objects.filter(pk=index).all()
+
+            serializer = LessonElementSerializer(nextLesson)
+            return Response(serializer.data)
+
+        serializer = LessonElementSerializer(nextLesson)
+        return Response(serializer.data)
+
+@api_view(['GET'])
+def get_lesson_progress(request):
+    if request.method == "GET":
+        eleve_id = 1
+        lesson_id = 5
+        progress = Progress.objects.filter(lesson_id=lesson_id, eleve_id=eleve_id).get()
+        # print('progress')
+        # print(len(progress))
+        # if len(progress) == 0:
+        #     return Response({"percentage" : 0})
+
+        lessonElements = LessonElement.objects.filter(lesson_id=lesson_id).all()
+        index = list(lessonElements.values_list('id', flat=True)).index(progress.progression)
+        validatedElementsNumber = len(lessonElements[0:index+1])
+        allElementsNumber = len(lessonElements)
+        percentage = (validatedElementsNumber * 100) / allElementsNumber 
+
+        # serializer = LessonElementSerializer(lessonElements, many=True, context={
+        #     'request':request
+        # })
+        return Response({"percentage" : percentage})
+
+@api_view(['GET'])
+def get_lesson_elements(request, id):
+    if request.method == "GET":
+        print(id)
+        queryset = LessonElement.objects.filter(lesson_id=id).all()
+        serializer = LessonElementSerializer(queryset, many=True, context={
+            'request':request
+        })
+        return Response(serializer.data)
+
+@api_view(['POST'])
+def getProgress(request):
+    if request.method == "POST":
+        lesson_id = request.data['lesson_id']
+        eleve_id = request.data['eleve_id']
+        queryset = get_object_or_404(Progress, lesson_id=lesson_id, eleve_id= eleve_id)
+        serializer = ProgressSerializer(queryset)
+        return Response(serializer.data)

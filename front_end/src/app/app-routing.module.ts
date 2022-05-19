@@ -71,6 +71,7 @@ const routes: Routes = [
   // { path: 'record', component: MicRecordComponent },
   { path: 'record', component: AudioRecorderComponent },
   { path: 'level', component: LevelComponent },
+  { path: 'level/:lessonid/:elementid', component: LevelComponent },
 ];
 
 @NgModule({

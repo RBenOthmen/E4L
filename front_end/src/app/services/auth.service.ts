@@ -57,6 +57,11 @@ export class AuthService {
     return this.helper.decodeToken(<string>token).user_id;
   }
 
+  getRoleId() : number{
+    const token = localStorage.getItem('token');
+    return this.helper.decodeToken(<string>token).id;
+  }
+
 
 
   login(credentials : User) : Observable<User> {

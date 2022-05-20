@@ -1,3 +1,4 @@
+import { AuthService } from 'src/app/services/auth.service';
 import { Progress } from './../../interfaces/Progress';
 import { ProgressService } from './../../services/progress.service';
 import { LessonElement } from 'src/app/interfaces/LessonElement';
@@ -21,7 +22,7 @@ import { AppError } from 'src/app/exceptions/AppError';
 export class LevelComponent implements OnInit {
   isExpanded!: boolean;
   @Input('lesson') lesson!: Lesson;
-  progress = 20;
+  // progress = 20;
   color: ThemePalette = 'primary';
   mode: ProgressBarMode = 'determinate';
   bufferValue = 75;
@@ -35,15 +36,16 @@ export class LevelComponent implements OnInit {
   recording = false;
   //URL of Blob
   url!: any;
-
-  element !: LessonElement;
+  lessonProgress !: number;
+  element : LessonElement = {};
 
   constructor(private router: Router, private courseService: CourseService,
     private audioRecorderService: NgAudioRecorderService,
     private domSanitizer: DomSanitizer,
     private lessonService : LessonsService,
     private route : ActivatedRoute,
-    private progressService : ProgressService) {}
+    private progressService : ProgressService,
+    private authService : AuthService) {}
 
   ngOnInit(): void {
     console.log(this.word);
@@ -57,6 +59,18 @@ export class LevelComponent implements OnInit {
       next: response => {
         
         this.element = response;
+        console.log(response)
+      }
+      , error: (err: AppError) => {
+        if (err instanceof NotFoundError) {
+          console.log(err)
+        }
+      }
+    });
+
+    this.progressService.getLessonProgress(this.authService.getRoleId(),+this.lessonId).subscribe({
+      next: response => {
+        this.lessonProgress = response;
         console.log(response)
       }
       , error: (err: AppError) => {
@@ -145,7 +159,7 @@ export class LevelComponent implements OnInit {
   }
 
   changeProgress() {
-    let eleve_id = '1';
+    let eleve_id = this.authService.getRoleId();
 
     this.progressService.getCurrentProgess(eleve_id,this.lessonId).subscribe({
       next: response => {
@@ -188,8 +202,8 @@ export class LevelComponent implements OnInit {
   createProgress() {
     let progress : Progress = {
       lesson_id : +this.lessonId,
-      progression : 1,
-      eleve_id : 1,
+      progression : +this.elementId,
+      eleve_id : this.authService.getRoleId(),
 
     };
     this.progressService.createStudentProgess(progress).subscribe({

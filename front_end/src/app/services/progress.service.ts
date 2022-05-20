@@ -38,8 +38,22 @@ export class ProgressService {
   );
   }
 
-  getCurrentProgess(eleve_id : string, lesson_id : string) : Observable<Progress> {
+  getCurrentProgess(eleve_id : number, lesson_id : string) : Observable<Progress> {
     return this.http.post<Progress>(this.baseUrl + 'getProgress/', {eleve_id:eleve_id, lesson_id:lesson_id}, httpOptions)
+    .pipe(
+      catchError(handleError)
+  );
+  }
+
+  getLessonProgress(eleve_id : number, lesson_id : number) : Observable<number> {
+    return this.http.post<number>(this.baseUrl + 'getLessonProgress/', {eleve_id:eleve_id, lesson_id:lesson_id}, httpOptions)
+    .pipe(
+      catchError(handleError)
+  );
+  }
+
+  getCategoryProgress(eleve_id : number, category : string) : Observable<number> {
+    return this.http.post<number>(this.baseUrl + 'getCategoryProgress/', {eleve_id:eleve_id, category:category}, httpOptions)
     .pipe(
       catchError(handleError)
   );

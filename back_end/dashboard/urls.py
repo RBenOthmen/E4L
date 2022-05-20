@@ -37,6 +37,7 @@ mettingTeacher_router.register('meetings', views.MeetingTeacherViewSet, basename
 
 urlpatterns = [
     path('getLessonProgress/', views.get_lesson_progress, name='getLessonProgress'),
+    path('getCategoryProgress/', views.get_category_progress, name='getCategoryProgress'),
     path('nextElement/<int:id>/', views.next_lesson, name='nextElement'),
     path('teacherinfo/<int:id>/', views.TeacherInfo, name='teacherinfo'),
     path('studentinfo/<int:id>/', views.StudentInfo, name='studentinfo'),

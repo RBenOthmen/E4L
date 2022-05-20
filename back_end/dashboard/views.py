@@ -352,10 +352,8 @@ def get_lesson_elements(request, id):
 def next_lesson(request,id):
     if request.method == "GET":
         # nextLesson = get_object_or_404(LessonElement , pk=(id+1))
-        nextLesson = LessonElement.objects.filter(pk = (id+1)).get()
-        # print(len(nextLesson) == 0)
-        print('here',not nextLesson)
-        if not nextLesson:
+        nextLesson = LessonElement.objects.filter(pk = (id+1))
+        if not nextLesson.exists():
             print('nextlesson')
             queryset = LessonElement.objects.all()
             index = list(queryset.values_list('id', flat=True)).index(id)
@@ -365,30 +363,49 @@ def next_lesson(request,id):
             serializer = LessonElementSerializer(nextLesson)
             return Response(serializer.data)
 
+        nextLesson= nextLesson.get()
         serializer = LessonElementSerializer(nextLesson)
         return Response(serializer.data)
 
-@api_view(['GET'])
+def calcul_lesson_progress(lesson_id,eleve_id):
+    progress = Progress.objects.filter(lesson_id=lesson_id, eleve_id=eleve_id)
+    if not progress.exists():
+        return 0
+
+    progress = progress.get()
+    lessonElements = LessonElement.objects.filter(lesson_id=lesson_id).all()
+    index = list(lessonElements.values_list('id', flat=True)).index(progress.progression)
+    validatedElementsNumber = len(lessonElements[0:index+1])
+    allElementsNumber = len(lessonElements)
+    percentage = (validatedElementsNumber * 100) / allElementsNumber 
+
+    return percentage
+
+@api_view(['POST'])
 def get_lesson_progress(request):
-    if request.method == "GET":
-        eleve_id = 1
-        lesson_id = 5
-        progress = Progress.objects.filter(lesson_id=lesson_id, eleve_id=eleve_id).get()
-        # print('progress')
-        # print(len(progress))
-        # if len(progress) == 0:
-        #     return Response({"percentage" : 0})
+    if request.method == "POST":
+        lesson_id = request.data['lesson_id']
+        eleve_id = request.data['eleve_id']
+        percentage = calcul_lesson_progress(lesson_id,eleve_id)
+        return Response(percentage)
 
-        lessonElements = LessonElement.objects.filter(lesson_id=lesson_id).all()
-        index = list(lessonElements.values_list('id', flat=True)).index(progress.progression)
-        validatedElementsNumber = len(lessonElements[0:index+1])
-        allElementsNumber = len(lessonElements)
-        percentage = (validatedElementsNumber * 100) / allElementsNumber 
+@api_view(['POST'])
+def get_category_progress(request):
+    if request.method == "POST":
+        # category = 'A2'
+        # eleve_id = 1
+        eleve_id = request.data['eleve_id']
+        category = request.data['category']
+        lessons = Lesson.objects.filter(category=category).all()
+        
+        sumPercentage = 0
+        for lesson in lessons:
+            sumPercentage = sumPercentage + calcul_lesson_progress(lesson.id,eleve_id)
 
-        # serializer = LessonElementSerializer(lessonElements, many=True, context={
-        #     'request':request
-        # })
-        return Response({"percentage" : percentage})
+        percentage = sumPercentage / len(lessons)
+        return Response(percentage)
+
+        
 
 @api_view(['GET'])
 def get_lesson_elements(request, id):

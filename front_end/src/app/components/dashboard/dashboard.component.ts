@@ -9,7 +9,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class DashboardComponent implements OnInit {
   categories = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
   isExpanded !: boolean;
-  @Input('lesson') lesson :Lesson={title:'Title 1'};
+  @Input('lesson') lesson !:Lesson;
 
   constructor() { }
 

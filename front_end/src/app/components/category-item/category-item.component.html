@@ -1,7 +1,7 @@
 <div>
   <div class="circle-container">
-    <div *ngFor="let word of words">
-      <button class="circle btn" (click)="viewWord(word)">{{ word }}</button>
+    <div *ngFor="let element of words">
+      <button class="circle btn" (click)="viewWord(element)">{{ element.element }}</button>
     </div>
   </div>
 </div>

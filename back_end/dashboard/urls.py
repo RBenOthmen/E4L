@@ -36,14 +36,17 @@ mettingTeacher_router = routers.NestedDefaultRouter(router, 'professeurs', looku
 mettingTeacher_router.register('meetings', views.MeetingTeacherViewSet, basename='teacher-meetings')
 
 urlpatterns = [
+    path('getLessonProgress/', views.get_lesson_progress, name='getLessonProgress'),
+    path('nextElement/<int:id>/', views.next_lesson, name='nextElement'),
     path('teacherinfo/<int:id>/', views.TeacherInfo, name='teacherinfo'),
     path('studentinfo/<int:id>/', views.StudentInfo, name='studentinfo'),
     path('meetings/<int:id>/', views.Meetings, name='meetings'),
     path('getallmeets/<int:id>/', views.getMeetView, name='get_meets'),
     path('getstudentreview/', views.rate_review, name='get_review'),
+    path('getProgress/', views.getProgress, name='getProgress'),
     path('getcomments/', views.get_comments, name='get_comments'),
     path('getusercomments/<int:id>/', views.get_comments_to_admin, name='get_comments_to_admin'),
-    path('getLessonElements/<int:id>/', views.Meetings, name='getLessonElements'),
+    path('getLessonElements/<int:id>/', views.get_lesson_elements, name='getLessonElements'),
 ] + router.urls + progress_router.urls + tasks_router.urls + image_router.urls + mettingTeacher_router.urls + mettingsStudent_router.urls
 
 

@@ -1,11 +1,17 @@
+import { Progress } from './../../interfaces/Progress';
+import { ProgressService } from './../../services/progress.service';
+import { LessonElement } from 'src/app/interfaces/LessonElement';
+import { LessonsService } from 'src/app/services/lessons.service';
 import { CourseService } from 'src/app/services/course.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { ProgressBarMode } from '@angular/material/progress-bar';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Lesson } from 'src/app/interfaces/Lesson';
 import { NgAudioRecorderService, OutputFormat } from 'ng-audio-recorder';
 import { DomSanitizer } from '@angular/platform-browser';
+import { NotFoundError } from 'rxjs';
+import { AppError } from 'src/app/exceptions/AppError';
 
 @Component({
   selector: 'app-level',
@@ -22,20 +28,43 @@ export class LevelComponent implements OnInit {
   word = 'word 3';
   microState = false;
   level = 'Level 1';
+  elementId !: string;
+  lessonId !: string;
 
   //Will use this flag for toggeling recording
   recording = false;
   //URL of Blob
   url!: any;
 
+  element !: LessonElement;
+
   constructor(private router: Router, private courseService: CourseService,
     private audioRecorderService: NgAudioRecorderService,
-    private domSanitizer: DomSanitizer) {}
+    private domSanitizer: DomSanitizer,
+    private lessonService : LessonsService,
+    private route : ActivatedRoute,
+    private progressService : ProgressService) {}
 
   ngOnInit(): void {
     console.log(this.word);
     this.word = this.courseService.getWord();
     console.log(this.word);
+    
+    console.log('ngoninit')
+    this.elementId = this.route.snapshot.paramMap.get('elementid') || '0';
+    this.lessonId = this.route.snapshot.paramMap.get('lessonid') || '0';
+    this.lessonService.getElementById(this.elementId).subscribe({
+      next: response => {
+        
+        this.element = response;
+        console.log(response)
+      }
+      , error: (err: AppError) => {
+        if (err instanceof NotFoundError) {
+          console.log(err)
+        }
+      }
+    });
 
   }
 
@@ -97,6 +126,86 @@ export class LevelComponent implements OnInit {
     } 
     this.microState = false;
   }
+
+  next() {
+    this.lessonService.getNextLessonElement(this.elementId).subscribe({
+      next: response => {
+        console.log('go to level')
+        console.log('/level/'+this.lessonId+'/'+response.id)
+        this.router.navigate(['/level/'+this.lessonId+'/'+response.id]);
+
+        // this.router.navigate(['level']);
+      }
+      , error: (err: AppError) => {
+        if (err instanceof NotFoundError) {
+          console.log(err)
+        }
+      }
+    })
+  }
+
+  changeProgress() {
+    let eleve_id = '1';
+
+    this.progressService.getCurrentProgess(eleve_id,this.lessonId).subscribe({
+      next: response => {
+        let progress : Progress = response;
+        progress.progression = +this.elementId
+        console.log(progress)
+        this.updateProgress(progress)
+        console.log("changeProgress ")
+      }
+      , error: (err: AppError) => {
+        console.log(err)
+        this.createProgress(); // to do
+        if (err instanceof NotFoundError) {
+          console.log('404')
+        }
+        
+      }
+    })
+
+    
+  }
+
+
+  updateProgress(progress : Progress) {
+    
+    this.progressService.updateStudentProgess(progress).subscribe({
+      next: response => {
+        this.next();
+        console.log("updateProgress ")
+      }
+      , error: (err: AppError) => {
+        console.log(err)
+        if (err instanceof NotFoundError) {
+          
+        }
+      }
+    })
+  }
+
+  createProgress() {
+    let progress : Progress = {
+      lesson_id : +this.lessonId,
+      progression : 1,
+      eleve_id : 1,
+
+    };
+    this.progressService.createStudentProgess(progress).subscribe({
+      next: response => {
+        this.next();
+        console.log("createProgress ")
+      }
+      , error: (err: AppError) => {
+        console.log(err)
+        if (err instanceof NotFoundError) {
+          this.createProgress();
+        }
+      }
+    })
+  }
+
 
 
 }

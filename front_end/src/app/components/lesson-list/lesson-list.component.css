@@ -1,0 +1,10 @@
+.container {
+    
+    border-radius: 10px;
+    background-color: #fff;
+    font-size: 20px;
+    padding: 20px;
+    box-shadow: rgb(17, 12, 46, 0.15) 0px
+    48px 100px 0px;
+    margin-bottom: 10px;
+}

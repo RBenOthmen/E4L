@@ -1,3 +1,4 @@
+import { UiService } from './../../services/ui.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Progress } from './../../interfaces/Progress';
 import { ProgressService } from './../../services/progress.service';
@@ -7,12 +8,13 @@ import { CourseService } from 'src/app/services/course.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { ProgressBarMode } from '@angular/material/progress-bar';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Lesson } from 'src/app/interfaces/Lesson';
 import { NgAudioRecorderService, OutputFormat } from 'ng-audio-recorder';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NotFoundError } from 'rxjs';
 import { AppError } from 'src/app/exceptions/AppError';
+
 
 @Component({
   selector: 'app-level',
@@ -31,7 +33,7 @@ export class LevelComponent implements OnInit {
   level = 'Level 1';
   elementId !: string;
   lessonId !: string;
-
+  action : string = '';
   //Will use this flag for toggeling recording
   recording = false;
   //URL of Blob
@@ -45,16 +47,21 @@ export class LevelComponent implements OnInit {
     private lessonService : LessonsService,
     private route : ActivatedRoute,
     private progressService : ProgressService,
-    private authService : AuthService) {}
+    private authService : AuthService,
+    private uiService : UiService) {}
 
   ngOnInit(): void {
-    console.log(this.word);
-    this.word = this.courseService.getWord();
-    console.log(this.word);
+    // console.log(this.word);
+    // this.word = this.courseService.getWord();
+    // console.log(this.word);
     
     console.log('ngoninit')
-    this.elementId = this.route.snapshot.paramMap.get('elementid') || '0';
-    this.lessonId = this.route.snapshot.paramMap.get('lessonid') || '0';
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      this.elementId = <string>params.get('elementid')
+      this.lessonId = <string>params.get('lessonid')
+    })
+    // this.elementId = this.route.snapshot.paramMap.get('elementid') || '0';
+    // this.lessonId = this.route.snapshot.paramMap.get('lessonid') || '0';
     this.lessonService.getElementById(this.elementId).subscribe({
       next: response => {
         
@@ -68,6 +75,11 @@ export class LevelComponent implements OnInit {
       }
     });
 
+    
+    this.getProgress();
+  }
+
+  getProgress(){
     this.progressService.getLessonProgress(this.authService.getRoleId(),+this.lessonId).subscribe({
       next: response => {
         this.lessonProgress = response;
@@ -79,7 +91,6 @@ export class LevelComponent implements OnInit {
         }
       }
     });
-
   }
 
   startRecording() {
@@ -146,8 +157,9 @@ export class LevelComponent implements OnInit {
       next: response => {
         console.log('go to level')
         console.log('/level/'+this.lessonId+'/'+response.id)
-        this.router.navigate(['/level/'+this.lessonId+'/'+response.id]);
-
+        // this.router.navigate(['/level/'+this.lessonId+'/'+response.id]);
+        this.router.navigateByUrl('/', { skipLocationChange: true })
+          .then(() => this.router.navigate(['/level/'+this.lessonId+'/'+response.id]));
         // this.router.navigate(['level']);
       }
       , error: (err: AppError) => {
@@ -182,13 +194,32 @@ export class LevelComponent implements OnInit {
     
   }
 
+  checkProgress() {
+    this.progressService.getLessonProgress(this.authService.getRoleId(),+this.lessonId).subscribe({
+      next: response => {
+        if (response == 100) {
+          this.lessonProgress = response;
+          this.uiService.toastSuccess('this lesson has been completed');
+          this.router.navigate(['/dashboard/']);
+        }
+      }
+      , error: (err: AppError) => {
+        if (err instanceof NotFoundError) {
+          console.log(err)
+        }
+      }
+    });
+  }
 
   updateProgress(progress : Progress) {
+    this.action='success';
     
     this.progressService.updateStudentProgess(progress).subscribe({
       next: response => {
-        this.next();
+        // this.next();
+        this.checkProgress()
         console.log("updateProgress ")
+      
       }
       , error: (err: AppError) => {
         console.log(err)
@@ -200,6 +231,7 @@ export class LevelComponent implements OnInit {
   }
 
   createProgress() {
+    this.action='success';
     let progress : Progress = {
       lesson_id : +this.lessonId,
       progression : +this.elementId,
@@ -208,7 +240,7 @@ export class LevelComponent implements OnInit {
     };
     this.progressService.createStudentProgess(progress).subscribe({
       next: response => {
-        this.next();
+        // this.next();
         console.log("createProgress ")
       }
       , error: (err: AppError) => {

@@ -1,3 +1,4 @@
+import { MessengerFullViewComponent } from './Messenger/messenger-full-view/messenger-full-view.component';
 import { AudioRecorderComponent } from './components/audio-recorder/audio-recorder.component';
 import { MicRecordComponent } from './components/mic-record/mic-record.component';
 import { LevelComponent } from './components/level/level.component';
@@ -30,6 +31,7 @@ import { AdminUsersComponent } from './components/admin/admin-users/admin-users.
 import { RatingComponent } from './components/rating/rating.component';
 import { MeetingComponent } from './Zoom/meeting/meeting.component';
 import { TmUsersComponent } from './components/taskManager/tm-users/tm-users.component';
+import { MessengerMainComponent } from './Messenger/messenger-main/messenger-main.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -72,6 +74,8 @@ const routes: Routes = [
   { path: 'record', component: AudioRecorderComponent },
   { path: 'level', component: LevelComponent },
   { path: 'level/:lessonid/:elementid', component: LevelComponent },
+  // { path: 'wajdi', component: MessengerFullViewComponent },
+  { path: 'wajdi', component: MessengerMainComponent },
 ];
 
 @NgModule({

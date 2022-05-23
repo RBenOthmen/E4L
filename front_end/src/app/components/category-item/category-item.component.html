@@ -1,7 +1,25 @@
 <div>
   <div class="circle-container">
-    <div *ngFor="let element of words">
-      <button class="circle btn" (click)="viewWord(element)">{{ element.element }}</button>
+    <div *ngFor="let element of lessonElements; index as i">
+      <!-- <button class="outer-circle btn" (click)="viewWord(element)">
+        <div class="circle">
+          <div class="inner-circle">
+            <h3>{{ i+1 }}</h3>
+          </div>
+        </div>
+      </button> -->
+      
+      <div *ngIf="element.lesson_id == lesson.id">
+        <div *ngIf="(progress.progression || 0) >= (element.id || 0); else default">
+          <app-circle-button [value]="element.element || ''" [color]="'#128f01'" (click)="viewWord(element)"></app-circle-button>
+        </div>
+        <ng-template #default>
+          <app-circle-button [value]="element.element || ''" [color]="'#dcd9d9'" (click)="viewWord(element)"></app-circle-button>
+
+        </ng-template>
+      </div>
+
+      
     </div>
   </div>
 </div>

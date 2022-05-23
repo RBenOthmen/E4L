@@ -1,0 +1,3 @@
+<div *ngFor="let category of categories">
+<app-lesson-list *ngIf="lessonsProgress" [lessonsProgress]="lessonsProgress"  [lessons]="lessons" [category]="category"></app-lesson-list>
+</div>

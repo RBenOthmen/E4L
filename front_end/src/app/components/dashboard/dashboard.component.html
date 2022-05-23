@@ -1,5 +1,5 @@
 <div class="appcontainer">
-  <div *ngFor="let category of categories">
+  <!-- <div *ngFor="let category of categories"> -->
     <!-- {{ category }} {{categoryProgress}}% : -->
     <!-- <app-category-item category="{{ category }}"></app-category-item> -->
 
@@ -16,8 +16,11 @@
         </div>
       </div> -->
       <!-- <app-lesson-item [category]="category"></app-lesson-item> -->
-      <app-lesson-list [category]="category"></app-lesson-list>
+        <!-- <app-lesson-list  [lessons]="lessons" [category]="category"></app-lesson-list> -->
+        <!-- <app-progress-list [lessons]="lessons" [category]="category"></app-progress-list> -->
+
+        <app-progress-list [lessons]="lessons" [categories]="categories"></app-progress-list>
 
     <!-- </div> -->
-  </div>
+  <!-- </div> -->
 </div>

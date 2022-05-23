@@ -420,8 +420,22 @@ def get_lesson_elements(request, id):
 @api_view(['POST'])
 def getProgress(request):
     if request.method == "POST":
-        lesson_id = request.data['lesson_id']
-        eleve_id = request.data['eleve_id']
+        # lesson_id = request.data['lesson_id']
+        # eleve_id = request.data['eleve_id']
+        lesson_id = 1
+        eleve_id = 1
         queryset = get_object_or_404(Progress, lesson_id=lesson_id, eleve_id= eleve_id)
         serializer = ProgressSerializer(queryset)
         return Response(serializer.data)
+
+@api_view(['GET'])
+def getAllLessonsProgress(request, id):
+    if request.method == "GET":
+        lessons = Lesson.objects.all()
+        percentage = []
+        for lesson in lessons:
+            result = calcul_lesson_progress(lesson.id,id)
+            progress = {'progress': result, 'lesson_id' : lesson.id}
+            percentage.append(progress)
+
+        return Response(percentage)

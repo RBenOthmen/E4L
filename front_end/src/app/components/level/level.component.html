@@ -49,11 +49,27 @@
       <!-- <i class="fa fa-volume-up fa-5x"></i> -->
   </div>
 
-  <footer >
+  <footer *ngIf="action==''">
     <div class="grid-container buttonFooter">
       <!-- <div class="grid-item"><button mat-flat-button color="basic">Previous</button></div> -->
-      <div class="grid-item"><button mat-flat-button color="primary" (click)="changeProgress()">Next</button></div>
+      <div class="grid-item"><button mat-flat-button color="primary" (click)="changeProgress()">Valider</button></div>
       <div class="grid-item"><button mat-flat-button color="warn" (click)="next()">Skip</button></div>
+      
+    </div>
+  </footer>
+
+  <footer *ngIf="action=='success'" style="background-color : rgb(86, 195, 86)">
+    <div class="grid-container buttonFooter" >
+      <!-- <div class="grid-item"><button mat-flat-button color="basic">Previous</button></div> -->
+      <div class="grid-item"><button mat-flat-button color="success" (click)="next()">Next</button></div>
+    </div>
+  </footer>
+
+  <footer *ngIf="action=='failure'" style="background-color : red">
+    <div class="grid-container buttonFooter" >
+      <!-- <div class="grid-item"><button mat-flat-button color="basic">Previous</button></div> -->
+      <div class="grid-item"><button mat-flat-button color="primary" (click)="changeProgress()">Valider</button></div>
+      <div class="grid-item"><button mat-flat-button color="warn" (click)="next()">Next</button></div>
     </div>
   </footer>
 

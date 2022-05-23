@@ -1,0 +1,9 @@
+<div *ngIf="getScreenWidth <= 600; else fullWidth">
+    <app-messenger>
+    </app-messenger>
+</div>
+
+<ng-template #fullWidth>
+    <app-messenger-full-view>
+    </app-messenger-full-view>
+</ng-template>

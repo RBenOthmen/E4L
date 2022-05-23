@@ -1,12 +1,3 @@
-.appcontainer {
-    background-color: aqua;
-}
-
-.category {
-    margin-top: 30px;
-    text-align: left;
-}
-
 .inner-circle {
     display: flex;
     justify-content: center;
@@ -17,7 +8,7 @@
     padding: 3px;
     text-align: center;
     /* float: left; */
-    background-color: #d9dcd9;
+    /* background-color: #dcd9d9; */
     /* margin-left: 100px;
     margin-bottom: 50px; */
 }
@@ -47,16 +38,7 @@
     padding: 3px;
     text-align: center;
     /* float: left; */
-    background-color: #dcd9d9;
+    /* background-color: #dcd9d9; */
     /* margin-left: 100px;
     margin-bottom: 50px; */
 }
-/* border: 2px solid blue; */
-
-.circle-container {
-
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    gap: 30px;
-}
-

@@ -31,6 +31,13 @@ export class LessonsService {
   );
   }
 
+  getAllLessonsElements() : Observable<Lesson[]>{
+    return this.http.get<Lesson[]>(this.baseUrl+ 'lessonElements/',httpOptions)
+    .pipe(
+      catchError(this.handleError)
+  );
+  }
+
   getElementById(id : string) : Observable<LessonElement>{
     return this.http.get<LessonElement>(this.baseUrl+"lessonElements/" + id + '/',httpOptions)
     .pipe(

@@ -78,7 +78,8 @@ footer {
 
 .buttonFooter {
   margin-top: 30px;
-  margin-left: 21%;
+  /* margin-left: 21%; */
+  /* margin :auto; */
 }
 
 .grid-container {

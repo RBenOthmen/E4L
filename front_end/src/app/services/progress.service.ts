@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError, tap } from 'rxjs';
 import { handleError } from './../exceptions/handleError';
+import { ProgressPercentage } from '../interfaces/ProgressPercentage';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -40,6 +41,13 @@ export class ProgressService {
 
   getCurrentProgess(eleve_id : number, lesson_id : string) : Observable<Progress> {
     return this.http.post<Progress>(this.baseUrl + 'getProgress/', {eleve_id:eleve_id, lesson_id:lesson_id}, httpOptions)
+    .pipe(
+      catchError(handleError)
+  );
+  }
+
+  getAllLessonsProgress(lesson_id : number) : Observable<ProgressPercentage[]> {
+    return this.http.get<ProgressPercentage[]>(this.baseUrl + 'getAllLessonsProgress/' + lesson_id + '/', httpOptions)
     .pipe(
       catchError(handleError)
   );

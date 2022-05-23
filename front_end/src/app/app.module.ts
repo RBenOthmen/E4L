@@ -106,7 +106,10 @@ import { AudioRecorderComponent } from './components/audio-recorder/audio-record
 
 import { NgAudioRecorderModule } from 'ng-audio-recorder';
 import { LessonListComponent } from './components/lesson-list/lesson-list.component';
-import { CongratsComponent } from './components/congrats/congrats.component';
+import { CircleButtonComponent } from './components/circle-button/circle-button.component';
+import { ProgressListComponent } from './components/progress-list/progress-list.component';
+import { MessengerFullViewComponent } from './Messenger/messenger-full-view/messenger-full-view.component';
+import { MessengerMainComponent } from './Messenger/messenger-main/messenger-main.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -171,8 +174,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     AudioRecorderComponent,
     LevelComponent,
     LessonListComponent,
-    CongratsComponent,
-    
+    CircleButtonComponent,
+    ProgressListComponent,
+    MessengerFullViewComponent,
+    MessengerMainComponent,
+
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,10 @@
-{{ category }} {{categoryProgress}}% :
-<div class="container" *ngFor="let lesson of lessons">
-    <app-lesson-item [lesson]="lesson"></app-lesson-item>
+<div class="category">
+    <div class="category-title">{{ category }} {{categoryProgress}}% :</div>
+    <div *ngFor="let lesson of lessons">
+        <div *ngIf="lessonElements">
+            <div *ngIf="lesson.category == category" class="container">
+                <app-lesson-item  [lessonElements]="filterElements(lesson)" [lessonProgress]="findProgress(lesson)" [lesson]="lesson"></app-lesson-item>
+            </div>
+        </div>
+    </div>
 </div>

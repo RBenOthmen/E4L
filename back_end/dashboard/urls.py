@@ -36,6 +36,7 @@ mettingTeacher_router = routers.NestedDefaultRouter(router, 'professeurs', looku
 mettingTeacher_router.register('meetings', views.MeetingTeacherViewSet, basename='teacher-meetings')
 
 urlpatterns = [
+    path('getAllLessonsProgress/<int:id>/', views.getAllLessonsProgress, name='getAllLessonsProgress'),
     path('getLessonProgress/', views.get_lesson_progress, name='getLessonProgress'),
     path('getCategoryProgress/', views.get_category_progress, name='getCategoryProgress'),
     path('nextElement/<int:id>/', views.next_lesson, name='nextElement'),

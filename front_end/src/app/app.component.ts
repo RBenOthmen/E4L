@@ -30,6 +30,7 @@ export class AppComponent implements OnInit{
   ngOnInit(): void {
     this.showLoader$.subscribe(result => {
       this.showSpinner = result
+      console.log(result)
     })
   }
 

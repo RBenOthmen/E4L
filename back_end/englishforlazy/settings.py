@@ -106,8 +106,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'englishforlazy',
         'HOST': 'localhost',
-        'USER': 'root',
-        'PASSWORD': 'W@jdi1999',
+        'USER': 'user_e4l',
+        'PASSWORD': '09/11/99',
         'OPTIONS': {
          "init_command": "SET foreign_key_checks = 0;"
     }
@@ -184,7 +184,7 @@ DJOSER = {
     'EMAIL': {
             'password_reset' : 'core.email.PasswordResetEmail',
             'activation': 'core.email.ActivationEmail',
-            
+
     },
     'SERIALIZERS' : {
         'user_create' : 'core.serializers.UserCreateSerializer',

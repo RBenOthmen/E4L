@@ -29,6 +29,16 @@ const httpOptions = {
 })
 export class AuthService {
 
+  isAuth! : boolean;
+
+  signIn(){
+      this.isAuth = true;
+  }
+
+  signOut(){
+    this.isAuth = false;
+  }
+
   // private _LoggedIn = new BehaviorSubject<boolean>(false);
   // LoggedIn = this._LoggedIn.asObservable();
 
@@ -98,7 +108,7 @@ export class AuthService {
         //   credentials.user_id = response.id;
         //   this.createTeacher(credentials)
         // }
-          
+
 
       })
   );
@@ -113,7 +123,7 @@ export class AuthService {
   }
 
 
-  // return teacher info 
+  // return teacher info
   getCurrentTeacherInfo() : Observable<Teacher> {
     let token = localStorage.getItem('token');
     let Authorization = {
@@ -141,7 +151,7 @@ export class AuthService {
     if (this.currentUser.role == 'S')
       return this.http.get<User>(this.url + 'dashboard/studentinfo/' + id +'/' , httpOptions);
     return this.http.get<User>(this.url + 'dashboard/teacherinfo/' + id +'/', httpOptions);
-    
+
   }
 
 
@@ -164,7 +174,7 @@ export class AuthService {
             );
       })
       );
-    
+
   }
 
   // tap( response => {
@@ -201,7 +211,7 @@ export class AuthService {
     return !isExpired;
   }
 
-  
+
   updateUser(data : any):Observable<User>{
     let token = localStorage.getItem('token');
     let authorization = {
@@ -271,7 +281,7 @@ export class AuthService {
     return this.http.post<User>(this.url+"auth/users/set_password/", user, authorization).pipe(
       catchError(this.handleError));
     }
-    
+
   changeUsername(user : any):Observable<User>{
     let token = localStorage.getItem('token');
     let authorization = {
@@ -290,14 +300,14 @@ export class AuthService {
   // returns 204 no content || 400 bad request
   resetPassword(email : string) {
     console.log(email)
-    
+
     return this.http.post<User>(this.url+"auth/users/reset_password/", {email:email}, httpOptions).pipe(
       catchError(this.handleError));
   }
 
   //returns 204 no content || 400 bad request
   resetPasswordConfirm(uid : string,token : string,new_password : string,re_new_password : string ) {
-    
+
     return this.http.post<User>(this.url+"auth/users/reset_password_confirm/",
      {uid : uid, token : token , new_password : new_password , re_new_password : re_new_password},
      httpOptions).pipe(
@@ -309,11 +319,11 @@ export class AuthService {
     if (err.status == 400) {
       return throwError (() => new BadInput(err));
     }
-  
+
     if (err.status == 404) {
       return throwError (() => new NotFoundError(err));
     }
-  
+
     if (err.status == 401) {
       return throwError (() => new Unauthorized(err));
     }
@@ -325,7 +335,7 @@ export class AuthService {
     if (err.status == 403) {
       return throwError (() => new Forbidden(err));
     }
-  
+
     return throwError(() => new AppError(err));
   }
 }

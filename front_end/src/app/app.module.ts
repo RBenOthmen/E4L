@@ -178,7 +178,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ProgressListComponent,
     MessengerFullViewComponent,
     MessengerMainComponent,
-    
+
   ],
   imports: [
     BrowserModule,

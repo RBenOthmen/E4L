@@ -42,7 +42,7 @@ export class StudentService {
 
   getStudent(id: string): Observable<Student> {
     return this.http
-      .get<Student>(this.urlStudent + '/' + id, httpOptions)
+      .get<Student>(this.urlStudent + id + '/', httpOptions)
       .pipe(catchError(this.handleError));
   }
 

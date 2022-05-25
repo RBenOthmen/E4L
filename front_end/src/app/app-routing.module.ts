@@ -32,6 +32,8 @@ import { RatingComponent } from './components/rating/rating.component';
 import { MeetingComponent } from './Zoom/meeting/meeting.component';
 import { TmUsersComponent } from './components/taskManager/tm-users/tm-users.component';
 import { MessengerMainComponent } from './Messenger/messenger-main/messenger-main.component';
+import { AuthGuardService } from './services/auth-guard.service';
+import { AdminAuthGuard } from './guards/admin-auth.guard';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -62,12 +64,12 @@ const routes: Routes = [
   { path: 'tm-users', component: TmUsersComponent },
 
   { path: 'admin', component: AdminStudentsComponent },
-  { path: 'app-admin', component: AdminComponent }, // canActivate: [AuthGuardService]
-  { path: 'admin-users', component: AdminUsersComponent },
+  { path: 'app-admin', component: AdminComponent },
+  { path: 'admin-users', component: AdminUsersComponent, canActivate: [AdminAuthGuard] },
   // {path: 'admin-users/new', component: UserFormComponent},
   // {path: 'admin-users/:id', component: UserFormComponent},
   { path: 'students-list', component: StudentsListComponent },
-  
+
   { path: 'zoom', loadChildren: () => import('src/app/Zoom/zoom.module').then(m => m.ZoomModule) },
   { path: 'meeting/:meeting/:role', component: MeetingComponent },
   // { path: 'record', component: MicRecordComponent },

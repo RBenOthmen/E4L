@@ -25,6 +25,9 @@ export class LessonListComponent implements OnInit {
   // lessonsProgress !: ProgressPercentage[];
   // @Input('lessonElements') lessonElements !: LessonElement[];
   lessonElements !: LessonElement[];
+
+  loading1=true;
+  loading2=true;
   
   constructor(private router: Router, private lessonsService :LessonsService,
     private authService :AuthService,
@@ -51,6 +54,7 @@ export class LessonListComponent implements OnInit {
       next: response => {
         this.lessonElements = response;
         // console.log(response)
+        this.loading1 = false;
       }
       , error: (err: AppError) => {
         if (err instanceof NotFoundError) {
@@ -77,6 +81,7 @@ export class LessonListComponent implements OnInit {
       next: response => {
         this.categoryProgress = response;
         console.log(response)
+        this.loading2 = false;
       }
       , error: (err: AppError) => {
         if (err instanceof NotFoundError) {

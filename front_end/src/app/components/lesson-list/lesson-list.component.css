@@ -1,4 +1,5 @@
 .container {
+    border-left: 2px solid rgb(44, 6, 180);
     /* border: 1px solid black; */
     border-radius: 10px;
     /* background-color: rgb(220, 220, 220); */
@@ -7,6 +8,12 @@
     box-shadow: rgb(17, 12, 46, 0.15) 0px
     48px 100px 0px;
     margin-bottom: 10px;
+}
+
+.spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .category-title {

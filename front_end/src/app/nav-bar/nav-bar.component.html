@@ -187,7 +187,7 @@
           <a routerLink="students" class="nav-link text-white">{{ 'Students' | translate }}</a>
         </li>
 
-        <li *ngIf="authService.isLoggedIn()">
+        <li *ngIf="authService.isLoggedIn() && authService.getRole() == 'T'">
           <a routerLink="tasks" class="nav-link text-white" >
 
             {{ 'todolist' | translate }}
@@ -199,6 +199,13 @@
             {{ 'messages' | translate }}
           </a>
         </li>
+
+        <li *ngIf="authService.isLoggedIn()">
+          <a routerLink="calendar" class="nav-link text-white" >
+
+            {{ 'calendar' | translate }}
+          </a>
+        </li>
       </ul>
 
       <!-- <div class="lang">
@@ -208,6 +215,8 @@
           <option value="ar" [selected]="lang == 'ar'">Arabic</option>
         </select>
       </div> -->
+
+      
       <app-language-selecteur></app-language-selecteur>
 
       <div class="text-end" *ngIf="!authService.isLoggedIn()">
@@ -215,6 +224,18 @@
         <button mat-raised-button color="primary" type="button" class="btn btn-warning" routerLink="signup">{{ 'signup' | translate }}</button>
       </div>
       <ul class="navbar-nav" *ngIf="authService.isLoggedIn()">
+        <li *ngIf="authService.getRole() == 'A' && authService.isLoggedIn()">
+          <a routerLink="admin-users" class="nav-link text-white" >
+  
+            {{ 'admin' | translate }}
+          </a>
+        </li>
+        <li *ngIf="authService.getRole() == 'TM' && authService.isLoggedIn()">
+          <a routerLink="tm-users" class="nav-link text-white" >
+  
+            {{ 'taskmanager' | translate }}
+          </a>
+        </li>
         <!-- Settings -->
         <li class="nav-item dropdown settings-li">
           <a class="nav-link text-white dropdown" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">

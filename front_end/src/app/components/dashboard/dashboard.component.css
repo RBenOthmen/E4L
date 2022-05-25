@@ -1,4 +1,8 @@
 
+.progress {
+    width: 200px;
+}
+
 .container {
 
     border-radius: 10px;

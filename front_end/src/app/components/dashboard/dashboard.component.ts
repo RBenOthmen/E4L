@@ -25,7 +25,7 @@ export class DashboardComponent implements OnInit {
     private progressService : ProgressService,
     private lessonsService :LessonsService,
     private loaderService : LoaderService) { 
-      // this.loaderService.showLoader();
+      this.loaderService.showLoader();
     }
 
   ngOnInit(): void {

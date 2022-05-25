@@ -27,9 +27,9 @@ export class ProgressListComponent implements OnInit {
 
 
   ngOnInit(): void {
-    // this.loaderService.hideLoader()
     this.progressService.getAllLessonsProgress(this.authService.getRoleId()).subscribe({
       next: response => {
+        this.loaderService.hideLoader()
         this.lessonsProgress = response;
         console.log(response)
       }

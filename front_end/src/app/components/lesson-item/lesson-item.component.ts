@@ -21,6 +21,7 @@ export class LessonItemComponent implements OnInit {
   @Input('lessonElements') lessonElements!: LessonElement[];
   @Input('lessonProgress') lessonProgress: number = 0;
   progress !:Progress;
+  loading = true;
   
   // lessons!: Lesson[]
   // lessonProgress : number = 0;
@@ -41,7 +42,7 @@ export class LessonItemComponent implements OnInit {
       next: response => {
         this.progress = response;
         console.log(response)
-
+        this.loading = false;
       }
       , error: (err: AppError) => {
         this.progress = {progression : 0};

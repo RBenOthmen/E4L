@@ -49,7 +49,12 @@
 
       <ng-container matColumnDef="role">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Role </th>
-        <td mat-cell *matCellDef="let row"> {{row.role}} </td>
+        <td mat-cell *matCellDef="let row"> 
+          <span *ngIf="row.role=='T'">Teacher</span>
+          <span *ngIf="row.role=='S'">Student</span>
+          <span *ngIf="row.role=='TM'">Task Manager</span>
+          <span *ngIf="row.role=='A'">Admin</span>
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="action">

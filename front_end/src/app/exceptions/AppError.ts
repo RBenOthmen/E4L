@@ -1,5 +1,11 @@
 export class AppError {
-  constructor(originalError? : any) {
+  error !: Response;
 
-  }
+    constructor(error : Response) {
+        
+
+    }
+  // constructor(originalError? : any) {
+
+  // }
 }

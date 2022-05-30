@@ -129,7 +129,7 @@ class MeetSerializer(serializers.ModelSerializer):
     recipient_id = serializers.IntegerField()
     class Meta:
         model = Meet
-        fields =['id', 'start', 'title', 'recipient_id', 'organizer_id', 'status', 'username_organizer', 'username_recipient', 'meetingNumber', 'password']
+        fields =['id', 'start', 'title', 'recipient_id', 'organizer_id', 'status', 'username_organizer', 'username_recipient', 'meetingNumber', 'password', 'join_URL']
 
 
 

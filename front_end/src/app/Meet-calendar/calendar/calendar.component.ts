@@ -377,13 +377,15 @@ export class CalendarComponent implements OnInit {
 
   joinMeeting(event : CalendarEvent) {
     console.log(event)
-    if (event.organizer_id == this.authService.getId()) {
-      // this.router.navigateByUrl('/meeting/'+event.id+'/1')
-      this.router.navigateByUrl('/zoom/'+event.meetingNumber+'/'+event.password+'/1')
-    } else {
-      // this.router.navigateByUrl('/meeting/'+event.id+'/0')
-      this.router.navigateByUrl('/zoom/'+event.meetingNumber+'/'+event.password+'/0')
-    }
+    console.log(event.join_URL)
+    window.location.href = <string>event.join_URL;
+    // if (event.organizer_id == this.authService.getId()) {
+    //   // this.router.navigateByUrl('/meeting/'+event.id+'/1')
+    //   this.router.navigateByUrl('/zoom/'+event.meetingNumber+'/'+event.password+'/1')
+    // } else {
+    //   // this.router.navigateByUrl('/meeting/'+event.id+'/0')
+    //   this.router.navigateByUrl('/zoom/'+event.meetingNumber+'/'+event.password+'/0')
+    // }
     
     
   }

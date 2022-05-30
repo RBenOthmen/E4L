@@ -126,6 +126,7 @@ class Meet (models.Model):
         max_length=1, choices=STATUS_CHOICES, default='P')
     meetingNumber = models.CharField(max_length=255, null=True)
     password = models.CharField(max_length=255, null=True)
+    join_URL = models.CharField(max_length=255, null=True)
 
 
 

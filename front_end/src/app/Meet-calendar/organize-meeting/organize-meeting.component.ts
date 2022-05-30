@@ -82,7 +82,7 @@ export class OrganizeMeetingComponent implements OnInit {
           let password : string = <string>data.meetingPassword;
           console.log()
           // this.getSignature(1,meetingNumber, password);
-          this.createDbMeeting(meeting,user,meetingNumber,password)
+          this.createDbMeeting(meeting,user,meetingNumber,password,join_URL)
         } else {
           console.log(data)
         }
@@ -94,11 +94,12 @@ export class OrganizeMeetingComponent implements OnInit {
       
   }
 
-  createDbMeeting(meeting : CalendarEvent, user : User, meetingNumber : string, password : string) {
+  createDbMeeting(meeting : CalendarEvent, user : User, meetingNumber : string, password : string,join_URL:string) {
     meeting.recipient_id = user.user_id;
     meeting.title = user.user?.username || '';
     meeting.meetingNumber = meetingNumber;
     meeting.password = password;
+    meeting.join_URL = join_URL;
     // meeting.username_recipient
     console.log(meeting)
   this.meetingService.createMeeting(meeting).subscribe({

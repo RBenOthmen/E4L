@@ -11,7 +11,7 @@
       
       <div *ngIf="element.lesson_id == lesson.id">
         <div *ngIf="(progress?.progression || 0) >= (element.id || 0); else default">
-          <app-circle-button [value]="element.element || ''" [color]="'#128f01'" (click)="viewWord(element)"></app-circle-button>
+          <app-circle-button [value]="element.element || ''" [color]="'#77dd77'" (click)="viewWord(element)"></app-circle-button>
         </div>
         <ng-template #default>
           <app-circle-button [value]="element.element || ''" [color]="'#dcd9d9'" (click)="viewWord(element)"></app-circle-button>

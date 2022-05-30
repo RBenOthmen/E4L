@@ -21,7 +21,7 @@ export class MessengerComponent implements OnInit {
   currentUser : User = {}
   
   constructor(private chatService: ChatService, private teacherService : TeacherService,
-    private authService :AuthService,
+    public authService :AuthService,
     private studentService:StudentService) {
       chatService.messages.subscribe(msg => {
           this.messages.push(msg);
@@ -34,24 +34,14 @@ export class MessengerComponent implements OnInit {
   
   ngOnInit(): void {
   
-   this.authService.getUserDetails().subscribe({
-     next: result => {
-       this.currentUser = result
-      this.getListUsers()
-      }
-      ,error : (err : AppError) => {
-        if (err instanceof NotFoundError){
-          console.log(err)
-        }
-      }
-    });
-
+   
+    this.getListUsers();
     
 
   }
 
   getListUsers() {
-    if (this.authService.currentUser.role =="S") {
+    if (this.authService.getRole() =="S") {
     
       this.teacherService.getTeachers().subscribe({
        next: result => this.users = result
@@ -61,7 +51,7 @@ export class MessengerComponent implements OnInit {
          }
        }
      });
-    } else if (this.authService.currentUser.role =="T") {
+    } else if (this.authService.getRole() =="T") {
       this.studentService.getStudents().subscribe({
         next: result => this.users = result
         ,error : (err : AppError) => {
@@ -85,11 +75,12 @@ export class MessengerComponent implements OnInit {
     // console.log(roomName)
     // this.chatService.setChatUrl(roomName);
     this.receiver = user;
-
-    this.chatService.getAllMessages(<number>this.currentUser.id,<number>this.receiver.id)
+    console
+    this.chatService.getAllMessages(this.authService.getId(),<number>this.receiver.user?.id)
       .subscribe({
         next: result => {
           this.messages = result;
+          console.log(result)
          }
          ,error : (err : AppError) => {
            if (err instanceof NotFoundError){

@@ -43,9 +43,7 @@ export class ZoomService {
   }
 
   createMeeting(email : string) : Observable<ZoomMeeting> {
-    return this.httpClient.post<ZoomMeeting>(this.createMeetingEndPoint, {
-	    email : email,
-    });
+    return this.httpClient.get<ZoomMeeting>(this.createMeetingEndPoint);
   }
 
 

@@ -1,3 +1,4 @@
+import { UiService } from './../services/ui.service';
 import { PhoneService } from './../services/phone.service';
 import { Phone } from './../interfaces/Phone';
 import { GeoService } from './../services/geo.service';
@@ -45,7 +46,8 @@ export class SignUpComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private geoService: GeoService,
-    private phoneService: PhoneService
+    private phoneService: PhoneService,
+    private uiService : UiService,
   ) {}
 
   goToSignin() {
@@ -220,32 +222,53 @@ export class SignUpComponent implements OnInit {
   //   else if (this.user?.value == 'student') this.isToggled = true;
   // }
 
+  checkPassword(password: string,username: string,firstname: string,lastname : string) {
+    
+    if (lastname.indexOf(password) == -1) {
+      return false;
+    } else if (firstname.indexOf(password) == -1) {
+      return false;
+    } else if (username.indexOf(password) == -1) {
+      return false;
+    }
+
+    return true;
+  }
+
   togglePassword() {
     if (this.showPassword == 'password') this.showPassword = 'text';
     else if (this.showPassword == 'text') this.showPassword = 'password';
   }
 
   register() {
+
     this.uploading = true;
     let phone : Phone= {
       number : this.phone?.value,
       country_code : this.selectedCountryCode
     }
 
-    this.phoneService.createPhone(phone).subscribe({
-      next: (response) => {
-        this.signup(response.id || 0);
-      },
-      error: (err: AppError) => {
-        this.uploading = false;
-        if (err instanceof BadInput) {
-          console.log(err);
-          this.invalidSignup = true;
-        } else {
-          this.serverOffline = true;
-        }
-      },
-    });
+    let user: User = this.getUser();
+    console.log(this.checkPassword(user.password || '',user.first_name || '',user.first_name || '',user.last_name || ''))
+    if (this.checkPassword(user.password || '',user.first_name || '',user.first_name || '',user.last_name || '')) {
+      this.phoneService.createPhone(phone).subscribe({
+        next: (response) => {
+          this.signup(response.id || 0);
+        },
+        error: (err: AppError) => {
+          this.uploading = false;
+          if (err instanceof BadInput) {
+            console.log(err);
+            this.invalidSignup = true;
+          } else {
+            this.serverOffline = true;
+          }
+        },
+      });
+   } else {
+      this.uploading = false;
+      this.uiService.toastError("Password is similar to username/firstname/lastname")
+   }
   }
 
   signup(phone_id :number) {

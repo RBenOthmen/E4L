@@ -55,14 +55,24 @@ export class MessengerFullViewComponent implements OnInit {
     }
   }
 
+  getDate(message : Message) {
+    let date = message.sent_date || new Date();
+    let hour = date.getHours();
+    let minutes = date.getMinutes();
+    let seconds = date.getSeconds();
+    return hour+'-'+minutes+'-'+seconds;
+  }
+
   onMessageUser(user : User) {
     
     this.receiver = user;
-
-    this.chatService.getAllMessages(this.authService.getId(),<number>this.receiver.id)
+    console.log(this.authService.getId())
+    console.log(<number>this.receiver.id)
+    this.chatService.getAllMessages(this.authService.getId(),<number>this.receiver.user?.id)
       .subscribe({
         next: result => {
           this.messages = result;
+          console.log(result)
          }
          ,error : (err : AppError) => {
            if (err instanceof NotFoundError){

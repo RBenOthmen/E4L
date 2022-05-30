@@ -48,7 +48,7 @@ meetingdetails = {"topic": "The title of your zoom meeting",
 								},
 				"settings": {"host_video": "true",
 							"participant_video": "true",
-							"join_before_host": "False",
+							"join_before_host": "true",
 							"mute_upon_entry": "False",
 							"watermark": "true",
 							"audio": "voip",
@@ -83,7 +83,7 @@ meetingdetails = {"topic": "The title of your zoom meeting",
 # 	data = {"join_URL" : join_URL , "meetingPassword" : meetingPassword}
 # 	return Response(y)
 
-@api_view(['POST'])
+@api_view(['GET'])
 def createMeeting(request):
 	# email = request.data['email']
 
@@ -106,7 +106,7 @@ def createMeeting(request):
 		password: "{meetingPassword}"\n')
     
 
-	data = {"meetingPassword" : meetingPassword, "meetingNumber" : id}
+	data = {"meetingPassword" : meetingPassword, "meetingNumber" : id, 'join_URL' : join_URL}
 	return Response(data)
     
 

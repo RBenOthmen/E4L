@@ -110,6 +110,11 @@ import { CircleButtonComponent } from './components/circle-button/circle-button.
 import { ProgressListComponent } from './components/progress-list/progress-list.component';
 import { MessengerFullViewComponent } from './Messenger/messenger-full-view/messenger-full-view.component';
 import { MessengerMainComponent } from './Messenger/messenger-main/messenger-main.component';
+import { Page1Component } from './home/page1/page1.component';
+import { Page4Component } from './home/page4/page4.component';
+import { Page5Component } from './home/page5/page5.component';
+import { Page3Component } from './home/page3/page3.component';
+import { Page2Component } from './home/page2/page2.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -178,6 +183,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     ProgressListComponent,
     MessengerFullViewComponent,
     MessengerMainComponent,
+    Page1Component,
+    Page4Component,
+    Page5Component,
+    Page3Component,
+    Page2Component,
 
   ],
   imports: [

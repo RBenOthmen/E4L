@@ -25,7 +25,7 @@
                 <div class="messages">
                     <div *ngFor="let item of messages">
                         <!-- *ngIf="item.type =='sent'" -->
-                        <div class="message my-message" *ngIf="currentUser.id == item.sender && receiver.user?.id == item.receiver">
+                        <div class="message my-message" *ngIf="authService.getId()  == item.sender && receiver.user?.id == item.receiver">
                             <div>
                                 <div class="name">{{'you' | translate}}</div>
                                 <div id="currentUser" class="text">{{ item.message }}</div>
@@ -35,7 +35,7 @@
                                 abc is joined the conversation
                             </div> -->
                             <!-- *ngIf="item.type =='received'" -->
-                        <div class="message other-message" *ngIf="currentUser.id == item.receiver && receiver.user?.id == item.sender">
+                        <div class="message other-message" *ngIf="authService.getId()  == item.receiver && receiver.user?.id == item.sender">
                             <div>
                                 <div class="name">{{ receiver.user?.username }}</div>
                                 <div class="text">{{ item.message }}</div>

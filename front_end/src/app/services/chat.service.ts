@@ -23,6 +23,7 @@ export interface Message {
     message: string;
     sender?: number,
     receiver?: number,
+    sent_date ? : Date
 }
 
 @Injectable({

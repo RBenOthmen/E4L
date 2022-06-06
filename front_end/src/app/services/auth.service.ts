@@ -14,6 +14,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../interfaces/user';
 import { Router } from '@angular/router';
+import { Phone } from '../interfaces/Phone';
 
 
 
@@ -49,7 +50,8 @@ export class AuthService {
     username : ''
   }
 
-
+  private baseUrl = 'http://localhost:8000/';
+  private urlUsers = this.baseUrl + 'core/users/';
   private url = 'http://localhost:8000/';
   constructor(private http : HttpClient) {
       // const token = localStorage.getItem('token');
@@ -75,6 +77,11 @@ export class AuthService {
   getRole() : string{
     const token = localStorage.getItem('token');
     return this.helper.decodeToken(<string>token).role;
+  }
+
+  getUsername() : string{
+    const token = localStorage.getItem('token');
+    return this.helper.decodeToken(<string>token).username;
   }
 
 
@@ -169,9 +176,11 @@ export class AuthService {
       catchError(this.handleError),
       tap( response => {
         this.currentUser = response
-        this.getUserId(<number>response.id).subscribe(
-              response => this.currentUser.user_id = response.id
-            );
+        if (response.role=="T" || "S") {
+          this.getUserId(<number>response.id).subscribe(
+            response => this.currentUser.user_id = response.id
+          );
+        }
       })
       );
 
@@ -211,8 +220,22 @@ export class AuthService {
     return !isExpired;
   }
 
-
   updateUser(data : any):Observable<User>{
+    let token = localStorage.getItem('token');
+    let authorization = {
+      headers: new HttpHeaders({
+        'Content-Type' : 'application/json',
+        'Authorization' : 'JWT '+token
+      }),
+    }
+    console.log(data)
+
+    return this.http.put<User>(this.url+"core/users/accountUpdate/", data, authorization).pipe(
+      catchError(this.handleError));
+    }
+
+
+  updateItemUser(data : any):Observable<User>{
     let token = localStorage.getItem('token');
     let authorization = {
       headers: new HttpHeaders({
@@ -225,6 +248,47 @@ export class AuthService {
     return this.http.patch<User>(this.url+"auth/users/me/", data, authorization).pipe(
       catchError(this.handleError));
     }
+
+    // deleteUser(password : string):Observable<any>{
+    //   let token = localStorage.getItem('token');
+    //   let authorization = {
+    //     headers: new HttpHeaders({
+    //       'Content-Type' : 'application/json',
+    //       'Authorization' : 'JWT '+token
+    //     }),
+    //   }
+  
+  
+    //   return this.http.delete<any>(this.url+"auth/users/me/", {current_password : password}, authorization).pipe(
+    //     catchError(this.handleError));
+    //   }
+
+    deleteUser(id: number): Observable<any> {
+      let token = localStorage.getItem('token');
+      let authorization = {
+        headers: new HttpHeaders({
+          'Content-Type' : 'application/json',
+          'Authorization' : 'JWT '+token
+        }),
+      }
+      return this.http
+        .delete<User>(this.urlUsers + id + '/', authorization)
+        .pipe(catchError(this.handleError));
+    }
+
+    updatePhone(phone : Phone, phone_id : number):Observable<User>{
+      let token = localStorage.getItem('token');
+      let authorization = {
+        headers: new HttpHeaders({
+          'Content-Type' : 'application/json',
+          'Authorization' : 'JWT '+token
+        }),
+      }
+  
+  
+      return this.http.put<User>(this.url+"core/phones/" + phone_id + '/', phone, authorization).pipe(
+        catchError(this.handleError));
+      }
 
     updateUserVideo(data : any):Observable<User>{
       let token = localStorage.getItem('token');

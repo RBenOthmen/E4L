@@ -1,3 +1,4 @@
+import { LoaderService } from './../services/loader.service';
 import { UiService } from './../services/ui.service';
 import { PhoneService } from './../services/phone.service';
 import { Phone } from './../interfaces/Phone';
@@ -20,9 +21,11 @@ import { Teacher } from '../interfaces/Teacher';
 })
 export class SignUpComponent implements OnInit {
   phoneType: string = 'HOME';
-  selectedCountryCode = 'us';
-  phoneCode = '1';
-  countryCodes = ['us', 'ca', 'de', 'mx', 'br', 'pt', 'cn', 'be', 'jp', 'ph', 'lu', 'bs', 'tn'];
+  selectedCountryCode = 'tn';
+  phoneCode = '216';
+  // countryCodes = ['us', 'ca', 'de', 'mx', 'br', 'pt', 'cn', 'be', 'jp', 'ph', 'lu', 'bs', 'tn','fr'];
+  countryCodes = ['tn'];
+
 
   // isToggled: boolean = false;
   showPassword: string = 'password';
@@ -48,7 +51,10 @@ export class SignUpComponent implements OnInit {
     private geoService: GeoService,
     private phoneService: PhoneService,
     private uiService : UiService,
-  ) {}
+    private loaderService :LoaderService,
+  ) {
+    loaderService.hideLoader();
+  }
 
   goToSignin() {
     this.router.navigate(['/login']);
@@ -82,8 +88,9 @@ export class SignUpComponent implements OnInit {
       birthday: new FormControl(null, Validators.required),
       phone: new FormControl(null, [
         Validators.required,
-        Validators.min(10000000),
-        Validators.max(99999999),
+        Validators.minLength(8),
+        Validators.pattern('^[2,5,9]+[0-9]*'),
+        Validators.maxLength(8),
       ]),
       user: new FormControl(null, Validators.required),
       linkedIn: new FormControl(null, Validators.required),
@@ -132,22 +139,26 @@ export class SignUpComponent implements OnInit {
     );
   }
 
-  //only number will be add
-  keyPress(phone: HTMLElement) {
-    // const pattern = /[0-9\+\-\ ]/;
 
-    // let inputChar = String.fromCharCode(event.charCode);
-    // if (event.keyCode != 8 && !pattern.test(inputChar)) {
-    //   event.preventDefault();
-    // }
-
-    console.log(this.phonenumber?.value.toString().length);
-    console.log(this.phonenumber?.value.toString().length != this.digits);
-    if (this.phonenumber?.value.toString().length != this.digits) {
+  keyPress(phone: any) {
+    if (this.phone?.value.toString().length != this.getAllowedPhoneDigits()) {
       this.isPhoneNumber = false;
+      // this.phone?.markAsDirty
     } else this.isPhoneNumber = true;
 
     console.log(this.isPhoneNumber);
+  }
+
+  getAllowedPhoneDigits() {
+    if (this.selectedCountryCode == 'tn') {
+      return 8;
+    } else if (this.selectedCountryCode == 'us') {
+      return 10;
+    } else if (this.selectedCountryCode == 'fr') {
+      return 9;
+    }
+
+    return 0;
   }
 
   private day: number | undefined;
@@ -215,22 +226,13 @@ export class SignUpComponent implements OnInit {
     return this.registerForm.get('linkedIn');
   }
 
-  // end getters
-
-  // onToggle() {
-  //   if (this.user?.value == 'teacher') this.isToggled = false;
-  //   else if (this.user?.value == 'student') this.isToggled = true;
-  // }
 
   checkPassword(password: string,username: string,firstname: string,lastname : string) {
-    
-    if (lastname.indexOf(password) == -1) {
-      return false;
-    } else if (firstname.indexOf(password) == -1) {
-      return false;
-    } else if (username.indexOf(password) == -1) {
+
+    if (password.indexOf(lastname) != -1 || password.indexOf(firstname) != -1 || password.indexOf(username) != -1) {
       return false;
     }
+    console.log('password')
 
     return true;
   }
@@ -249,8 +251,8 @@ export class SignUpComponent implements OnInit {
     }
 
     let user: User = this.getUser();
-    console.log(this.checkPassword(user.password || '',user.first_name || '',user.first_name || '',user.last_name || ''))
-    if (this.checkPassword(user.password || '',user.first_name || '',user.first_name || '',user.last_name || '')) {
+    console.log(this.checkPassword(user.password || '',user.username || '',user.first_name || '',user.last_name || ''))
+    if (this.checkPassword(user.password || '',user.username || '',user.first_name || '',user.last_name || '') == true) {
       this.phoneService.createPhone(phone).subscribe({
         next: (response) => {
           this.signup(response.id || 0);
@@ -265,10 +267,12 @@ export class SignUpComponent implements OnInit {
           }
         },
       });
-   } else {
+    } else {
       this.uploading = false;
-      this.uiService.toastError("Password is similar to username/firstname/lastname")
-   }
+      this.uiService.toastError("Password is similar to username/firstname/lastname");
+      // this.uiService.toastError("passwordSimilar");
+      
+    }
   }
 
   signup(phone_id :number) {
@@ -277,7 +281,13 @@ export class SignUpComponent implements OnInit {
 
     this.authService.signup(user).subscribe({
       next: (response) => {
-        this.createTeacher(response.id || 0);
+        if (user.role == 'T') {
+          this.createTeacher(response.id || 0);
+        } else {
+          this.uploading = false;
+          this.router.navigate(['/login']);
+          this.uiService.toastSuccess("Please confirm your email")
+        }
       },
       error: (err: AppError) => {
         this.uploading = false;
@@ -304,6 +314,7 @@ export class SignUpComponent implements OnInit {
         this.uploading = false;
         this.registerForm.reset();
         this.router.navigate(['/login']);
+        this.uiService.toastSuccess("Please confirm your email")
       },
       error: (err: AppError) => {
         this.uploading = false;
@@ -347,11 +358,11 @@ export class SignUpComponent implements OnInit {
     );
     return {
       first_name: this.first_name?.value,
-      last_name: this.first_name?.value,
+      last_name: this.last_name?.value,
       email: this.email?.value,
       password: this.password?.value,
       username: this.username?.value,
-      // phone: this.phone?.value,
+      phone: this.phone?.value,
       birth_date: newdate,
       type: this.user?.value,
     };

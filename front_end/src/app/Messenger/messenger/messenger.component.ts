@@ -7,6 +7,7 @@ import { ChatService, Message } from 'src/app/services/chat.service';
 import { User } from 'src/app/interfaces/user';
 import { AppError } from 'src/app/exceptions/AppError';
 import { NotFoundError } from 'src/app/exceptions/not-found-error';
+import { LoaderService } from 'src/app/services/loader.service';
 
 @Component({
   selector: 'app-messenger',
@@ -22,7 +23,9 @@ export class MessengerComponent implements OnInit {
   
   constructor(private chatService: ChatService, private teacherService : TeacherService,
     public authService :AuthService,
-    private studentService:StudentService) {
+    private studentService:StudentService,
+    private loaderService : LoaderService) {
+      loaderService.hideLoader()
       chatService.messages.subscribe(msg => {
           this.messages.push(msg);
           console.log('messages')

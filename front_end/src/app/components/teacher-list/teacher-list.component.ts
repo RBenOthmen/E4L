@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth.service';
 import { TeacherService } from './../../services/teacher.service';
 import { Component, OnInit } from '@angular/core';
 import { Teacher } from 'src/app/interfaces/Teacher';
@@ -15,15 +16,18 @@ export class TeacherListComponent implements OnInit {
   
 
   constructor(private teacherService : TeacherService,
-              private loaderService : LoaderService) {
+              private loaderService : LoaderService,
+              public authService : AuthService) {
+                this.loaderService.hideLoader();
                 this.loaderService.showLoader();
                }
 
   ngOnInit(): void {
     
+    
     this.teacherService.getTeachers().subscribe({
       next: result => {
-        this.teachers = result
+        this.teachers = result.filter(element => element.user_id != this.authService.getId())
         this.loaderService.hideLoader();
       }
       ,error : (err : AppError) => {

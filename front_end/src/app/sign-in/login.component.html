@@ -12,8 +12,8 @@
 
         <!--Password-->
         <mat-form-field class="example-full-width" appearance="fill" >
-          <mat-label>{{ 'username' | translate }}:</mat-label>
-          <input matInput placeholder="{{ 'username' | translate }}:" formControlName="password" [type]="showPassword" id="password" name="password">
+          <mat-label>{{ 'password' | translate }}:</mat-label>
+          <input matInput placeholder="{{ 'password' | translate }}:" formControlName="password" [type]="showPassword" id="password" name="password">
         </mat-form-field>
 
         <small class="text-danger" *ngIf="invalidLogin">Incorrect username/password</small>
@@ -24,14 +24,16 @@
         <a (click)="passwordReset()"><div class="hypertext">{{ 'forgetyourpassword' | translate }} ?</div></a>
 
 
-        <div class="button_sign">
+        <div class="button_sign" *ngIf="!uploading">
           <button mat-raised-button color="primary" type="submit"  class="w-full">
             {{ 'login' | translate }}
           </button>
         </div>
       </form>
 
-
+      <div *ngIf="uploading" class="spinner">
+        <mat-spinner [diameter]="40"></mat-spinner>
+      </div>
 
       <br>
       <div class="button_sign">

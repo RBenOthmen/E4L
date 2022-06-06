@@ -5,7 +5,7 @@
   <div class="flex-row">
     
     <mat-tab-group mat-align-tabs="center" dynamicHeight>
-      <mat-tab label="Account">
+      <mat-tab label="{{ 'account' | translate }}">
         <form [formGroup]="profileForm">
           <!-- <div class="flex-row"> -->
             
@@ -17,9 +17,9 @@
                   (changedCountryCode)="changeSelectedCountryCode($event)">
                 </ngx-flag-picker>
                 (+{{phoneCode}})
-                <input matInput placeholder="{{ 'phonenumber' | translate }}" formControlName="phone" type="number" id="phone" class="left-space">
+                <input matInput placeholder="{{ 'phonenumber' | translate }}" formControlName="phone" type="text" name="phone" id="phone" class="left-space">
               </div>
-              <mat-error *ngIf="phone?.touched && phone!.invalid">Please enter a valid phone number</mat-error>
+              <mat-error *ngIf="phone?.touched && phone!.invalid">{{ 'signup_error_phone_number' | translate }}</mat-error>
               </mat-form-field>
   
 
@@ -54,7 +54,7 @@
               
 
               <mat-form-field class="example-full-width">
-                <mat-label>Choose a date</mat-label>
+                <mat-label>{{ 'date' | translate }}</mat-label>
                 <input [min]="minDate" [max]="maxDate" matInput [matDatepicker]="picker" formControlName="birthday" id="birthday" name="birthday" readonly="true"> 
                 <mat-hint>MM/DD/YYYY</mat-hint>
                   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -71,12 +71,20 @@
           
           <!-- </div> -->
         <div>
-            <button class="btn btn-success" (click)="save()">Save</button>
+          <div *ngIf="uploading" class="spinner">
+            <mat-spinner [diameter]="40"></mat-spinner>
+          </div>
+          <div *ngIf="!uploading" class="spinner">
+            <button class="btn btn-success" (click)="save()">{{ 'save' | translate }}</button>
+          </div>
+
+          <div style="color: red; margin-top : 15px;" (click)="delete()">{{ 'delete' | translate }}</div>
+            
           </div>
           
         </form>
         </mat-tab>
-        <mat-tab label="Username">
+        <mat-tab label="{{ 'username' | translate }}">
           <form [formGroup]="usernameForm" >
           <mat-form-field  appearance="fill" class="example-full-width">
             <mat-label>{{ 'username' | translate }} </mat-label>
@@ -88,7 +96,7 @@
           <div class="example-container">
             <mat-form-field appearance="fill" class="example-full-width">
               <mat-error *ngIf="usernamePassword!.invalid && usernamePassword?.touched">{{ 'signup_error_password' | translate }}</mat-error>
-              <mat-label>{{ 'password' | translate }}</mat-label>
+              <mat-label>{{ 'newpassword' | translate }}</mat-label>
               <input matInput [type]="hide ? 'password' : 'text'" formControlName="usernamePassword">
               <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                 <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
@@ -97,17 +105,17 @@
           </div>
   
           <div>
-            <button class="btn btn-success" (click)="updateUsername()">Save</button>
+            <button class="btn btn-success" (click)="updateUsername()">{{ 'save' | translate }}</button>
           </div>
         </form>
         </mat-tab>
   
-        <mat-tab label="Password">
+        <mat-tab label="{{ 'password' | translate }}">
           <form [formGroup]="passwordForm">
           <div class="example-container">
             <mat-form-field appearance="fill" class="example-full-width">
               <mat-error *ngIf="currentPassword!.invalid && currentPassword?.touched">{{ 'signup_error_password' | translate }}</mat-error>
-              <mat-label>{{ 'password' | translate }}</mat-label>
+              <mat-label>{{ 'currentpassword' | translate }}</mat-label>
               <input matInput [type]="hide ? 'password' : 'text'" formControlName="currentPassword">
               <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                 <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
@@ -117,7 +125,7 @@
           <div class="example-container">
             <mat-form-field appearance="fill" class="example-full-width">
               <mat-error *ngIf="newPassword!.invalid && newPassword?.touched">{{ 'signup_error_password' | translate }}</mat-error>
-              <mat-label>{{ 'password' | translate }}</mat-label>
+              <mat-label>{{ 'newpassword' | translate }}</mat-label>
               <input matInput [type]="hide ? 'password' : 'text'" formControlName="newPassword">
               <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                 <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
@@ -127,7 +135,7 @@
           <div class="example-container">
             <mat-form-field appearance="fill" class="example-full-width">
               <mat-error *ngIf="confirmPassword!.invalid && confirmPassword?.touched">{{ 'signup_error_password' | translate }}</mat-error>
-              <mat-label>{{ 'password' | translate }}</mat-label>
+              <mat-label>{{ 'newpassword' | translate }}</mat-label>
               <input matInput [type]="hide ? 'password' : 'text'" formControlName="confirmPassword">
               <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                 <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
@@ -135,7 +143,7 @@
             </mat-form-field>
           </div>
           <div>
-            <button class="btn btn-success" (click)="updatePassword()">Save</button>
+            <button class="btn btn-success" (click)="updatePassword()">{{ 'save' | translate }}</button>
           </div>
         </form>
         </mat-tab>
@@ -150,8 +158,14 @@
           <input type="file" #image accept="image/*" (change)="handleFileInput($event)">
           <!-- <input type="file" #image (change)="handleFileInput($event)"> -->
           <!-- <video [src]="videoToDisplay" style="width:250px;height:200px" controls type="video/*"></video>
-          <input type="file" #image (change)="handleVideoInput($event)">
-          <button class="btn btn-success" (click)="updateUserVideo()">Save</button> -->
+          <input type="file" #image (change)="handleVideoInput($event)"> -->
+          <div *ngIf="imageIsUploading" class="spinner">
+            <mat-spinner [diameter]="40"></mat-spinner>
+          </div>
+          <div *ngIf="!imageIsUploading" class="spinner">
+            <button class="btn btn-success" (click)="updateUserImage()">{{ 'save' | translate }}</button>
+          </div>
+          
         </div>
       </div>
   </div>

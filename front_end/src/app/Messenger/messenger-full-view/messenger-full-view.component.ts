@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { LoaderService } from './../../services/loader.service';
+import { UserService } from 'src/app/services/user.service';
+import { AdminService } from './../../services/admin.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { NotFoundError } from 'rxjs';
 import { AppError } from 'src/app/exceptions/AppError';
 import { User } from 'src/app/interfaces/user';
@@ -14,11 +18,14 @@ import { TeacherService } from 'src/app/services/teacher.service';
 })
 export class MessengerFullViewComponent implements OnInit {
   users !: User[];
-  receiver !:User;
+  @Input('receiver') receiver!: User;
+  // receiver !:User;
   messages : Message[] = [];
-  constructor(private chatService: ChatService, private teacherService : TeacherService,
+  constructor(private route : ActivatedRoute,private userService : UserService,private chatService: ChatService, private teacherService : TeacherService,
     public authService :AuthService,
-    private studentService:StudentService) { 
+    private studentService:StudentService,
+    private loaderService : LoaderService) { 
+      loaderService.hideLoader()
       chatService.messages.subscribe(msg => {
         this.messages.push(msg);
         console.log('messages')
@@ -30,6 +37,41 @@ export class MessengerFullViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.getListUsers()
+    let receiverid : string = '';
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      receiverid = <string>params.get('receiverid')
+    });
+
+    if (receiverid != '') {
+      this.getReceiver(receiverid);
+    }
+  }
+
+  getReceiver(receiverid : string) {
+    this.teacherService.getTeacher(receiverid).subscribe({
+      next: result => {
+        this.receiver = result
+        this.chatService.getAllMessages(this.authService.getId(),<number>this.receiver.user?.id)
+      .subscribe({
+        next: result => {
+          this.messages = result;
+          console.log(result)
+         }
+         ,error : (err : AppError) => {
+           if (err instanceof NotFoundError){
+             console.log(err)
+           }
+         }
+       });
+      }
+      ,error : (err : AppError) => {
+        if (err instanceof NotFoundError){
+         console.log(err)
+        }
+      }
+    });
+          
+         
   }
 
   getListUsers() {

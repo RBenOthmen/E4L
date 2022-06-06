@@ -25,10 +25,12 @@ export class DashboardComponent implements OnInit {
     private progressService : ProgressService,
     private lessonsService :LessonsService,
     private loaderService : LoaderService) { 
+      this.loaderService.hideLoader();
       this.loaderService.showLoader();
     }
 
   ngOnInit(): void {
+    
     this.lessonsService.getLessons().subscribe({
       next: response => {
         this.lessons = response;

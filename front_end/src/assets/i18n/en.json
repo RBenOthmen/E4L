@@ -10,6 +10,7 @@
     "lessons":"Lessons",
     "home":"Home",
     "messages":"Messages",
+    "calendar" : "Calendar",
 
     "signingin":"Signing In",
     "username":"Username",
@@ -36,7 +37,7 @@
     "signup_error_email":"Input should be at this format <example@email.com>",
     "signup_error_password":"Minimum eight characters, at least one (uppercase & lowercase) letter, one number and one symbol",
     "signup_error_birthday":"Age should be over 9 years old",
-    "signup_error_phone_number":"invalid phone number",
+    "signup_error_phone_number":"Phone number must be 8 digits",
     "signup_error_linkedIn":"contains at least 3 characters",
 
     "task":"Task",
@@ -49,10 +50,80 @@
     "choiceAUser":"Choice a user",
     "exit":"Exit",
     "send":"Send",
-    "you":"You"
+    "you":"You",
 
 
+    "date" : "Choose a date",
+    "save" : "Save",
+    "delete" : "Delete",
+    "newpassword" : "New password",
+    "currentpassword" : "Current password",
 
+
+    "previous" : "Previous",
+    "today" : "Today",
+    "next" : "Next",
+    "month" : "Month",
+    "week" : "Week",
+    "day" : "Day",
+    "meetings" : "Meetings",
+    "onganizeAMeeting" : "Organize a meeting",
+    "scheduledAt": "Scheduled at",
+    "joinMeet" : "Join the meeting",
+    "remove" : "Remove",
+    "status" : "Status",
+    "join" : "Join",
+    "accept" : "Accept",
+    "refuse" : "Refuser",
+    "accepted" : "Accepted",
+    "refused" : "Refused",
+    "pending" : "Pending",
+
+
+    "typeAMessage" : "Type a message",
+    "pickAUser" : "Pick a user",
+    "users" : "Users",
+
+    "page_1_bigTitle": "Meet E4L – your personal AI-Powered English-speaking coach",
+    "page_1_paragraph": "Speak English in short and lazy way. Get instant feedback from our proprietary artificial intelligence technology.",
+    "page_1_btn": "Start Learning",
+
+    "page_3_paragraph": "E4L, English Language Speech Assistant, is a fun and attractive app mainly designed that will help you improve your English pronunciation. E4L&#39;s artificial intelligence generation became evolved the use of voice statistics of people talking English with various accents. This allows E4L to apprehend the speech patterns of non-native speakers, placing it other than maximum different voice recognition technologies",
+    "page_3_science": "SCIENCE",
+    "page_3_behind": "BEHIND",
+    "page_3_e4l": "E4L",
+
+    "page_4_title_1": "Real-Time Speech Recognition Feedback",
+    "page_4_paragraph_1": "we are the best speech reputation app designed to evaluate and supply on the spot, special remarks on pronunciation and fluency. This allows the learner to speedy discover and learn the ideal pronunciation.",
+    "page_4_title_2": "An Intelligent, Adaptive Learning System",
+    "page_4_paragraph_2": "E4L receives smarter each day! conventional language learning is converted by way of our personalized English teaching generation. Our self-evolving AI analyzes performance and behavioral records to customize each man or woman's daily curriculum.",
+
+    "page_5_title": "Subscribe to Pro Access",
+    "page_5_paragraph": "E4L Рrо users gаin full ассess tо аll оf E4L's exсlusive lessоns аnd reсeive dаily сustоmized lessоn рlаns frоm the E4L АI Соасh. They even get а detаiled reроrt аnаlyzing their рrоnunсiаtiоn, аllоwing them tо imрrоve quiсkly аnd effiсiently.",
+    "page_5_btn": "Learn More About E4L Pro",
+
+    "e4l": "English for lazy",
+    "about": "About",
+    "shop": "Shop",
+    "stories": "Stories",
+    "hiring": "We're Hiring",
+    "catalog": "Catalog",
+    "full_catalog": "Full Catalog",
+    "by_accent": "By Accent",
+    "american": "American",
+    "british": "British",
+    "by_language": "By Language",
+    "english": "English",
+    "resources": "Resources",
+    "articles": "Articles",
+    "forums": "Forums",
+    "blog": "Blog",
+    "help_center": "Help Center",
+    "follow_us": "follow us",
+
+    "ViewProfile": "View Profile",
+
+    "sendMessage": "  Send Message"
 
 
 

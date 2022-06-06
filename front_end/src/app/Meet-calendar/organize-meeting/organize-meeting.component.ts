@@ -39,12 +39,14 @@ export class OrganizeMeetingComponent implements OnInit {
 
   currentUser !: User;
 
+  uploading : boolean = false;
+
   constructor(private modal: NgbModal,
     @Inject(MAT_DIALOG_DATA) public data : any,
     private dialogRef : MatDialogRef<OrganizeMeetingComponent>,
     private meetingService : MeetingService,
     private teacherService : TeacherService,
-    private authService :AuthService,
+    public authService :AuthService,
     private studentService:StudentService,
     private zoomService : ZoomService) {
     // this.users = data;
@@ -69,6 +71,7 @@ export class OrganizeMeetingComponent implements OnInit {
   
 
   createMeeting(meeting : CalendarEvent, user : User) {
+      this.uploading = true;
       console.log(this.currentUser.email)
       this.zoomService.createMeeting(<string>this.currentUser.email).subscribe({
         next : (data : ZoomMeeting) => {
@@ -105,7 +108,7 @@ export class OrganizeMeetingComponent implements OnInit {
   this.meetingService.createMeeting(meeting).subscribe({
     next: result => {
       console.log(result)
-      
+      this.uploading = false;
       this.dialogRef.close();
      }
      ,error : (err : AppError) => {
@@ -117,7 +120,7 @@ export class OrganizeMeetingComponent implements OnInit {
   }
 
   updateMeeting(meeting : CalendarEvent, user : User) {
-    
+    this.uploading = true;
 
     if (this.authService.getId() == this.event.organizer_id) {
       meeting.recipient_id = user.user_id;
@@ -135,6 +138,7 @@ export class OrganizeMeetingComponent implements OnInit {
     this.meetingService.updateMeeting(meeting,this.authService.getId() || 0).subscribe({
       next: result => {
         console.log(result)
+        this.uploading = false;
         this.dialogRef.close();
        }
        ,error : (err : AppError) => {

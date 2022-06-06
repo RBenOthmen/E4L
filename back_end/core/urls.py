@@ -10,7 +10,7 @@ router.register('create',views.CustomCreateUserViewSet, basename='create') #loca
 router.register('users',views.CustomUserViewSet, basename='users') #localhost;8000/core/users GET
 router.register('teachers',views.TeacherViewSet, basename='teacher') #localhost/core/teachers
 router.register('students',views.StudentViewSet, basename='student') #localhost/core/students
-router.register('phones',views.PhoneViewSet, basename='student') #localhost/core/students
+router.register('phones',views.PhoneViewSet, basename='phone') #localhost/core/phones
 
 urlpatterns = [
     re_path(r"^jwt/create/?", views.CustomTokenObtainPairView.as_view(), name="jwt-custom-create"),

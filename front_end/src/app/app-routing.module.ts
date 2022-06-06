@@ -25,20 +25,14 @@ import { TeacherListComponent } from './components/teacher-list/teacher-list.com
 import { TeacherProfileComponent } from './components/teacher-profile/teacher-profile.component';
 import { PasswordResetComponent } from './components/password-reset/password-reset.component';
 import { PasswordResetConfirmComponent } from './components/password-reset-confirm/password-reset-confirm.component';
-import { MessengerComponent } from './Messenger/messenger/messenger.component';
 
-import { UserDetailsComponent } from './components/admin-components/user-details/user-details.component';
-import { AdminStudentsComponent } from './components/admin-students/admin-students.component';
-import { AdminComponent } from './components/admin/admin.component';
-// import {AuthGuardService} from "./services/auth-guard.service";
 import { AdminUsersComponent } from './components/admin/admin-users/admin-users.component';
-// import {UserFormComponent} from "./components/admin/user-form/user-form.component";
-import { RatingComponent } from './components/rating/rating.component';
-import { MeetingComponent } from './Zoom/meeting/meeting.component';
+
 import { TmUsersComponent } from './components/taskManager/tm-users/tm-users.component';
 import { MessengerMainComponent } from './Messenger/messenger-main/messenger-main.component';
-import { AuthGuardService } from './services/auth-guard.service';
+
 import { AdminAuthGuard } from './guards/admin-auth.guard';
+import { PricingComponent } from './components/pricing/pricing.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -51,7 +45,7 @@ const routes: Routes = [
   { path: 'account', component: AccountPageComponent , canActivate: [UserGuard]},
   { path: 'settings', component: AccountPageComponent , canActivate: [UserGuard]},
   { path: 'teachers', component: TeacherListComponent },
-  { path: 'students', component: StudentsListComponent },
+  // { path: 'students', component: StudentsListComponent },
   { path: 'students/:id', component: StudentProfileComponent },
   { path: 'teachers/:id', component: TeacherProfileComponent },
   // { path: 'spinner', component: SpinnerComponent },
@@ -62,27 +56,21 @@ const routes: Routes = [
   },
   { path: 'activate/:uid/:token', component: ActivateEmailComponent },
   { path: 'tasks', component: TasksComponent , canActivate: [TeacherGuard]},
-  // { path: 'chat', component: MessengerComponent },
-  // { path: 'user-details', component: UserDetailsComponent },
+
   { path: 'calendar', component: CalendarComponent , canActivate: [UserGuard] },
-  // { path: 'rating', component: RatingComponent },
   { path: 'tm-users', component: TmUsersComponent , canActivate: [TaskManagerGuard]},
 
-  // { path: 'admin', component: AdminStudentsComponent },
-  // { path: 'app-admin', component: AdminComponent },
   { path: 'admin-users', component: AdminUsersComponent, canActivate: [AdminAuthGuard] },
   // {path: 'admin-users/new', component: UserFormComponent},
-  // {path: 'admin-users/:id', component: UserFormComponent},
-  // { path: 'students-list', component: StudentsListComponent },
-
+  
   { path: 'zoom', loadChildren: () => import('src/app/Zoom/zoom.module').then(m => m.ZoomModule) },
-  { path: 'meeting/:meeting/:role', component: MeetingComponent },
-  // { path: 'record', component: MicRecordComponent },
-  // { path: 'record', component: AudioRecorderComponent },
-  // { path: 'level', component: LevelComponent },
+  // { path: 'meeting/:meeting/:role', component: MeetingComponent },
+
   { path: 'level/:lessonid/:elementid', component: LevelComponent },
-  // { path: 'wajdi', component: MessengerFullViewComponent },
+
   { path: 'chat', component: MessengerMainComponent , canActivate: [TsGuard] },
+  { path: 'chat/:receiverid', component: MessengerMainComponent , canActivate: [TsGuard] },
+  { path: 'pricing', component: PricingComponent },
 ];
 
 @NgModule({

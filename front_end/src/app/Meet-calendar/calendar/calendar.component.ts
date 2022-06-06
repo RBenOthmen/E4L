@@ -1,3 +1,4 @@
+import { LoaderService } from './../../services/loader.service';
 import { Router } from '@angular/router';
 
 import { OrganizeMeetingComponent } from '../organize-meeting/organize-meeting.component';
@@ -115,7 +116,10 @@ export class CalendarComponent implements OnInit {
     private teacherService : TeacherService,
     public authService :AuthService,
     private studentService:StudentService,
-    private router : Router) {}
+    private loaderService : LoaderService,
+    private router : Router) {
+      this.loaderService.hideLoader();
+    }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
@@ -134,6 +138,7 @@ export class CalendarComponent implements OnInit {
   ngOnInit(): void {
     this.getMeetings();
     this.getUserDetails();
+    this.getListUsers();
     
   }
 
@@ -270,13 +275,9 @@ export class CalendarComponent implements OnInit {
       // color: colors.red,
       status : 'P',
       organizer_id : this.authService.getId(),
-      username_organizer : this.authService.currentUser.username,
+      username_organizer : this.authService.getUsername(),
     }
-    // if (this.authService.currentUser.role =="T") {
-      //   meeting.professeur_id = this.authService.currentUser.user_id
-      // } else if (this.authService.currentUser.role =="S") {
-        //   meeting.eleve_id = this.authService.currentUser.user_id
-        // }
+
 
         this.events = [
           ...this.events,
@@ -332,7 +333,7 @@ export class CalendarComponent implements OnInit {
         next: result => {
           this.currentUser = result
           // this.authService.getUserId(result.id).subscribe()
-          this.getListUsers();
+          
         // this.getUserId();
         
       }
@@ -346,7 +347,7 @@ export class CalendarComponent implements OnInit {
     
     getListUsers() {
       
-      if (this.authService.currentUser.role =="S") {
+      if (this.authService.getRole() =="S") {
         this.teacherService.getTeachers().subscribe({
           next: result => {
             
@@ -358,7 +359,7 @@ export class CalendarComponent implements OnInit {
         }
       }
     });
-  } else if (this.authService.currentUser.role =="T") {
+  } else if (this.authService.getRole() =="T") {
     this.studentService.getStudents().subscribe({
       next: result => {
         this.users = result

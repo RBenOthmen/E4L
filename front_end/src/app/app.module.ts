@@ -54,10 +54,7 @@ import { MessengerWindowComponent } from './Messenger/messenger-window/messenger
 import { MessengerUserItemComponent } from './Messenger/messenger-user-item/messenger-user-item.component';
 import { LanguageSelecteurComponent } from './components/language-selecteur/language-selecteur.component';
 
-import { AdminComponent } from './components/admin/admin.component';
 import { AdminTeachersListComponent } from './components/admin-teachers-list/admin-teachers-list.component';
-import { AdminStudentsComponent } from './components/admin-students/admin-students.component';
-import { UserDetailsComponent } from './components/admin-components/user-details/user-details.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DataTablesModule } from 'angular-datatables';
 
@@ -115,6 +112,7 @@ import { Page4Component } from './home/page4/page4.component';
 import { Page5Component } from './home/page5/page5.component';
 import { Page3Component } from './home/page3/page3.component';
 import { Page2Component } from './home/page2/page2.component';
+import { PricingComponent } from './components/pricing/pricing.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -150,10 +148,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MessengerWindowComponent,
     MessengerUserItemComponent,
     LanguageSelecteurComponent,
-    AdminComponent,
     AdminTeachersListComponent,
-    AdminStudentsComponent,
-    UserDetailsComponent,
     CalendarComponent,
     OrganizeMeetingComponent,
     MeetUserItemComponent,
@@ -188,6 +183,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     Page5Component,
     Page3Component,
     Page2Component,
+    PricingComponent,
 
   ],
   imports: [

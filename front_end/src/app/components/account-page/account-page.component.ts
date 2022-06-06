@@ -1,3 +1,6 @@
+import { LoaderService } from './../../services/loader.service';
+import { UiService } from './../../services/ui.service';
+import { Phone } from './../../interfaces/Phone';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Event, Router } from '@angular/router';
@@ -6,6 +9,8 @@ import { BadInput } from 'src/app/exceptions/BadInput';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { GeoService } from 'src/app/services/geo.service';
+import { ConfirmComponent } from '../dialogs/confirm/confirm.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-account-page',
@@ -14,9 +19,9 @@ import { GeoService } from 'src/app/services/geo.service';
 })
 export class AccountPageComponent implements OnInit {
   phoneType: string = 'HOME'
-  selectedCountryCode = 'us';
-  phoneCode = '1';
-  countryCodes = ['us', 'ca', 'de', 'mx', 'br', 'pt', 'cn', 'be', 'jp', 'ph', 'lu', 'bs', 'tn'];
+  selectedCountryCode = 'tn';
+  phoneCode = '216';
+  countryCodes = ['tn'];
   
   videoToUpload !:any;
   videoToDisplay !: any;
@@ -29,23 +34,35 @@ export class AccountPageComponent implements OnInit {
   maxDate = new Date(2014, 1, 1);
   hide = true;
 
+  imageIsUploading : boolean = false;
+  uploading : boolean = false;
+
   currentUser : User = {
   }
   isImageLoading!: boolean;
 
   constructor(public authService : AuthService,
     private router :Router,
-    private geoService : GeoService) {
+    private geoService : GeoService,
+    private dialog: MatDialog,
+    private uiService : UiService,
+    private loaderService : LoaderService) {
   }
 
 
   ngOnInit(): void {
+    this.loaderService.hideLoader();
     this.profileForm = new FormGroup({
       "first_name": new FormControl(null, [Validators.required, Validators.minLength(4)]),
       "last_name": new FormControl(null, [Validators.required, Validators.minLength(4)]),
       "email": new FormControl(null, [Validators.required, Validators.email]),
       "birthday": new FormControl(null, Validators.required),
-      "phone": new FormControl(null, [Validators.required, Validators.min(10000000), Validators.max(99999999)]),
+      "phone": new FormControl(null, [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.pattern('^[2,5,9]+[0-9]*'),
+        Validators.maxLength(8),
+      ]),
     });
 
     this.passwordForm = new FormGroup({
@@ -71,9 +88,9 @@ export class AccountPageComponent implements OnInit {
         this.currentUser.username = response.username;
         this.currentUser.first_name = response.first_name;
         this.currentUser.last_name = response.last_name;
-        this.currentUser.password = response.password;
         this.currentUser.birth_date = response.birth_date;
         this.currentUser.phone = response.phone;
+        this.currentUser.phone_id = response.phone_id;
         console.log(response.image)
         this.imageToDisplay = response.image;
         this.profileForm.controls["first_name"].setValue(response.first_name);
@@ -205,15 +222,10 @@ export class AccountPageComponent implements OnInit {
    });
   }
 
-  updateUser(data : any) : void {
-    let user : User = {
-      first_name : this.first_name?.value,
-      last_name : this.last_name?.value,
-      email : this.email?.value,
-      birth_date : this.birthday?.value,
-      image : this.fileToUpload,
-    };
-    this.authService.updateUser(data).subscribe({
+  updatePhone(phone : Phone) : void {
+    console.log(this.currentUser.phone_id || 0)
+    // console.log(this.currentUser.phone.id)
+    this.authService.updatePhone(phone,this.currentUser.phone_id || 0).subscribe({
       next : response => {
         console.log("update success")
       },
@@ -223,12 +235,35 @@ export class AccountPageComponent implements OnInit {
     });
   }
 
-  updateUserImage(data : any) : void {
-    this.authService.updateUserImage(data).subscribe({
+  updateUser(data : any) : void {
+    // let user : User = {
+    //   first_name : this.first_name?.value,
+    //   last_name : this.last_name?.value,
+    //   email : this.email?.value,
+    //   birth_date : this.birthday?.value,
+    //   image : this.fileToUpload,
+    // };
+    this.authService.updateUser(data).subscribe({
       next : response => {
+        console.log("update success")
+        this.uploading = false;
+      },
+        error : (err : AppError) => {
+          console.log(err)
+          this.uploading = false;
+       }
+    });
+  }
+
+  updateUserImage() : void {
+    this.imageIsUploading = true;
+    this.authService.updateUserImage(this.fileToUpload).subscribe({
+      next : response => {
+        this.imageIsUploading = false;
         console.log("file update success")
       },
         error : (err : AppError) => {
+          this.imageIsUploading = false;
           console.log(err)
        }
     });
@@ -246,46 +281,88 @@ export class AccountPageComponent implements OnInit {
   }
 
   save() {
+    this.uploading = true;
     // document.getElementById("first_name").innerHTML = <string>this.authService.currentUser.first_name;
     console.log(this.authService.currentUser.first_name)
 
-    this.updateUserImage(this.fileToUpload);
+    console.log(this.phone?.value)
+
+    // this.updateUserImage(this.fileToUpload);
+    console.log(this.email?.value)
+
+    let user : User = {
+      email : this.currentUser.email,
+      first_name : this.currentUser.first_name,
+      last_name : this.currentUser.last_name,
+      birth_date : this.currentUser.birth_date,
+      phone_id : this.currentUser.phone_id
+    }
 
     if (this.email?.value != this.currentUser.email) {
-      this.updateUser({email : this.email?.value});
+      // this.updateUser({email : this.email?.value});
+      user.email = this.email?.value;
     }
 
     if (this.first_name?.value !== this.currentUser.first_name) {
-      this.updateUser({first_name : this.first_name?.value});
+      // this.updateUser({first_name : this.first_name?.value});
+      user.first_name = this.first_name?.value;
     }
+
+    console.log(this.last_name?.value !== this.currentUser.last_name)
+    console.log(this.last_name?.value)
+    console.log(this.currentUser.last_name)
 
     if (this.last_name?.value !== this.currentUser.last_name) {
-      this.updateUser({last_name : this.last_name?.value});
-    }
-
-    if (this.phone?.value !== this.currentUser.phone) {
-      this.updateUser({phone : this.phone?.value});
+      // this.updateUser({last_name : this.last_name?.value});
+      user.last_name = this.last_name?.value;
+      
     }
 
     if (this.birthday?.value !== this.currentUser.birth_date) {
-      this.updateUser({birth_date : this.birthday?.value});
+      // this.updateUser({birth_date : this.birthday?.value});
+      user.birth_date = this.birthday?.value;
+
     }
 
+    if (this.phone?.value !== this.currentUser.phone?.number) {
+      let phoneObject : Phone = {
+        number : this.phone?.value,
+        country_code : this.selectedCountryCode,
+      }
+      this.updatePhone(phoneObject);
+    }
 
+    console.log(user)
 
-    // if (this.email?.value !== this.currentUser.email ||
-    //   this.first_name?.value !== this.currentUser.first_name ||
-    //   this.last_name?.value !== this.currentUser.last_name ||
-    //   this.phone?.value !== this.currentUser.phone ||
-    //   this.birthday?.value !== this.currentUser.birth_date) {
-    //   if (!!this.currentPassword?.value) {
-    //     console.log(this.email?.value)
-    //     console.log(this.currentUser.email)
-    //     console.log(this.email?.value != this.currentUser.email)
-    //     this.updateUser()
-    //   }
-    // }
+    this.updateUser(user)
 
+  }
+
+  deleteUser() {
+    
+    this.authService.deleteUser(this.authService.getId()).subscribe({
+      next : response => {
+        this.uiService.toastSuccess('This account deleted succesfully')
+      },
+        error : (err : AppError) => {
+          console.log(err)
+          this.uiService.toastError('Error, Try again ..')
+       }
+    });
+  }
+
+  delete() {
+    this.dialog
+      .open(ConfirmComponent, {
+        width: '40%',
+        data: 'Are you sure you want to delete this account?',
+      })
+      .afterClosed()
+      .subscribe((val) => {
+        if (val === 'Ok') {
+          this.deleteUser();
+        }
+      });
   }
 
 

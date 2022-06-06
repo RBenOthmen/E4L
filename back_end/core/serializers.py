@@ -24,6 +24,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
+        id = 0
         if user.role == 'S':
             eleve = Eleve.objects.filter(user_id=user.id).get()
             id = eleve.id
@@ -31,7 +32,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
             professeur = Professeur.objects.filter(user_id=user.id).get()
             id = professeur.id
 
-        if id :
+        if id !=0:
             token['id'] = id
         token['role'] = user.role
         token['first_name'] = user.first_name
@@ -41,11 +42,26 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         token['is_superuser'] = user.is_superuser
         return token
 
-class AdminUserCreateSerializer(BaseUserCreateSerializer):
+class AdminUserCreateSerializer(BaseUserSerializer):
     phone_id = serializers.IntegerField()
     # phone = PhoneSerializer()
     class Meta(BaseUserCreateSerializer.Meta):
-        fields = ['id', 'username', 'password', 'email', 'first_name', 'last_name', 'role', 'birth_date', 'image', 'phone_id']
+        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'role', 'birth_date', 'image', 'phone_id']
+
+    def perform_create(self, validated_data):
+        with transaction.atomic():
+            user = User.objects.create_user(**validated_data)
+
+            user.is_active = True
+            user.save(update_fields=["is_active"])
+        return user
+
+class UserUpdateSerializer(BaseUserSerializer):
+    phone_id = serializers.IntegerField()
+    # phone = PhoneSerializer()
+    class Meta(BaseUserCreateSerializer.Meta):
+        fields = ['id', 'email', 'first_name', 'last_name', 'birth_date', 'phone_id']
+
 
 
     def perform_create(self, validated_data):

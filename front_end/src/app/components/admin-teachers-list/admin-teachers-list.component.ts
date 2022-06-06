@@ -1,3 +1,4 @@
+import { PhoneService } from './../../services/phone.service';
 import { GeoService } from './../../services/geo.service';
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -10,6 +11,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { User } from 'src/app/interfaces/user';
 import { BadInput } from 'src/app/exceptions/BadInput';
 import { UiService } from 'src/app/services/ui.service';
+import { formatDate } from '@angular/common';
+import { Phone } from 'src/app/interfaces/Phone';
 
 @Component({
   selector: 'app-admin-teachers-list',
@@ -30,9 +33,9 @@ export class AdminTeachersListComponent implements OnInit {
   @Input('teacher') teacher!: Teacher;
   minDate = new Date(1910, 1, 1);
   maxDate = new Date(2014, 1, 1);
-  selectedCountryCode = 'us';
-  countryCodes = ['us', 'ca', 'de', 'mx', 'br', 'pt', 'cn', 'be', 'jp', 'ph', 'lu', 'bs', 'tn'];
-  phoneCode = '1';
+  selectedCountryCode = 'tn';
+  countryCodes = ['tn'];
+  phoneCode = '216';
 
 
   constructor(
@@ -42,7 +45,8 @@ export class AdminTeachersListComponent implements OnInit {
     private adminService: AdminService,
     @Inject(MAT_DIALOG_DATA) public editData: User,
     private dialogRef: MatDialogRef<AdminTeachersListComponent>,
-    private geoService: GeoService
+    private geoService: GeoService,
+    private phoneService : PhoneService
   ) {}
 
   ngOnInit(): void {
@@ -74,8 +78,9 @@ export class AdminTeachersListComponent implements OnInit {
       birthday: new FormControl(null, Validators.required),
       phone: new FormControl(null, [
         Validators.required,
-        Validators.min(10000000),
-        Validators.max(99999999),
+        Validators.minLength(8),
+        Validators.pattern('^[2,5,9]+[0-9]*'),
+        Validators.maxLength(8),
       ]),
       role: new FormControl(null, Validators.required),
       linkedIn: new FormControl(null, Validators.required),
@@ -88,7 +93,7 @@ export class AdminTeachersListComponent implements OnInit {
       this.userForm.controls['username'].setValue(this.editData.username);
       this.userForm.controls['email'].setValue(this.editData.email);
       this.userForm.controls['birthday'].setValue(this.editData.birth_date);
-      this.userForm.controls['phone'].setValue(this.editData.phone);
+      this.userForm.controls['phone'].setValue(this.editData.phone?.number);
       // this.userForm.controls["user"].setValue(this.editData.first_name);
     }
   }
@@ -104,8 +109,30 @@ export class AdminTeachersListComponent implements OnInit {
   }
 
   addUser() {
+    let phone : Phone= {
+      number : this.phone?.value,
+      country_code : this.selectedCountryCode
+    }
+    this.phoneService.createPhone(phone).subscribe({
+      next: (response) => {
+        this.signup(response.id || 0);
+      },
+      error: (err: AppError) => {
+        if (err instanceof BadInput) {
+          console.log(err);
+        } else {
+        }
+      },
+    });
     let user: User = this.getUser();
     user.role = 'S';
+
+    
+  }
+
+  signup(phone_id :number) {
+    let user: User = this.getUser();
+    user.phone_id = phone_id;
 
     this.adminService.CreateUser(user).subscribe({
       next: (response) => {
@@ -123,13 +150,16 @@ export class AdminTeachersListComponent implements OnInit {
         }
       },
     });
+
   }
 
   updateUser() {
+    
     let user: User = this.getUser();
 
     user.id = this.editData.id;
     user.role = this.editData.role;
+    user.phone_id =this.editData.phone_id
 
     this.adminService.updateUser(user).subscribe({
       next: (response) => {
@@ -163,15 +193,35 @@ export class AdminTeachersListComponent implements OnInit {
   }
 
   getUser(): User {
+    let date = formatDate(new Date(this.birthday?.value), 'yyyy/MM/dd', 'en');
+    let newdate: Date = <Date>(
+      (<unknown>(
+        (date[0] +
+          date[1] +
+          date[2] +
+          date[3] +
+          '-' +
+          date[5] +
+          date[6] +
+          '-' +
+          date[8] +
+          date[9])
+      ))
+    );
+    // let password;
+    // if(this.actionBtn = 'Update') {
+    //   password = 
+    // }
     return {
       first_name: this.first_name?.value,
       last_name: this.last_name?.value,
       email: this.email?.value,
-      password: this.password?.value,
+      password: this.actionBtn != 'Update' ? this.password?.value : null,
       username: this.username?.value,
       phone: this.phone?.value,
-      birth_date: this.birthday?.value,
+      birth_date: newdate,
       type: this.role?.value,
+      role : this.role?.value,
     };
   }
 

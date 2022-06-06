@@ -86,6 +86,10 @@ export class TeacherProfileComponent implements OnInit {
 
   }
 
+  goToChat() {
+    
+  }
+
   rate(rate : number) {
     console.log(rate || 0)
     this.teacherReview.rate = rate;

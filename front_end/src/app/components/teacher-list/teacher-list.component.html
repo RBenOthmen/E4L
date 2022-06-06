@@ -1,6 +1,13 @@
 <div class="appcontainer">
     
     <div class="list-container">
-        <app-user-item  *ngFor="let teacher of teachers" [teacher]="teacher"></app-user-item>
+        <div *ngFor="let teacher of teachers">
+            <!-- <div *ngIf="teacher.user_id != authService.getId()"> -->
+
+                <app-user-item   [teacher]="teacher"></app-user-item>
+            <!-- </div> -->
+        </div>
+        
+        
     </div>
 </div>

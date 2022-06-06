@@ -1,7 +1,15 @@
 <div mat-dialog-content>
-    <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
-    <app-meet-user-item *ngFor="let item of users" [user]="item" (onChoiceUser)="onChoiceUser(item)">
+    <div *ngIf="uploading" class="spinner">
+        <mat-spinner [diameter]="40"></mat-spinner>
+      </div>
+    <!-- <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search"> -->
+    <div *ngIf="!uploading" >
+        <div *ngFor="let item of users">
 
-    </app-meet-user-item>
+            <app-meet-user-item *ngIf="item.user_id != authService.getId()" [user]="item" (onChoiceUser)="onChoiceUser(item)">
+    
+            </app-meet-user-item>
+        </div>
+    </div>
 </div>
 

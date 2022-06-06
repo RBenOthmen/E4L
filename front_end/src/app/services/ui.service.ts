@@ -9,6 +9,7 @@ export class UiService {
 
   private showAddTask : boolean = false;
   private subject = new Subject<any>();
+  //  en : String[] = [{'password' : 'wa'}];
 
   constructor(private messageService : MessageService) { }
 
@@ -22,7 +23,10 @@ export class UiService {
   }
 
   toastSuccess(msg : string) {
-    this.messageService.add({severity:'success', summary:'Success', detail:msg});
+    // let lang = localStorage.getItem('lang');
+    // if (lang == 'en')
+     this.messageService.add({severity:'success', summary:'Success', detail:msg});
+    
   }
 
   toastError(msg : string) {

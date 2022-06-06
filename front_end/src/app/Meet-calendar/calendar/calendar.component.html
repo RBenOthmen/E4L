@@ -9,14 +9,14 @@
           [(viewDate)]="viewDate"
           (viewDateChange)="closeOpenMonthViewDay()"
         >
-          Previous
+          {{ 'previous' | translate }}
         </div>
         <div
           class="btn btn-outline-secondary"
           mwlCalendarToday
           [(viewDate)]="viewDate"
         >
-          Today
+          {{ 'today' | translate }}
         </div>
         <div
           class="btn btn-primary"
@@ -25,7 +25,7 @@
           [(viewDate)]="viewDate"
           (viewDateChange)="closeOpenMonthViewDay()"
         >
-          Next
+        {{ 'next' | translate }}
         </div>
       </div>
     </div>
@@ -39,21 +39,21 @@
           (click)="setView(CalendarView.Month)"
           [class.active]="view === CalendarView.Month"
         >
-          Month
+        {{ 'month' | translate }}
         </div>
         <div
           class="btn btn-primary"
           (click)="setView(CalendarView.Week)"
           [class.active]="view === CalendarView.Week"
         >
-          Week
+        {{ 'week' | translate }}
         </div>
         <div
           class="btn btn-primary"
           (click)="setView(CalendarView.Day)"
           [class.active]="view === CalendarView.Day"
         >
-          Day
+        {{ 'day' | translate }}
         </div>
       </div>
     </div>
@@ -178,10 +178,10 @@
 
   <div class="meetings">
     <h3>
-      Meetings
+      {{ 'meetings' | translate }}
     </h3>
     <button class="btn btn-primary" (click)="addMeeting()">
-      Organize a meeting
+      {{ 'onganizeAMeeting' | translate }}
     </button>
   </div>
   
@@ -189,12 +189,12 @@
     <table class="table table-bordered">
       <thead>
         <tr>
-          <th>Student</th>
+          <th>{{ 'student' | translate }}</th>
           <!-- <th>Color</th> -->
-          <th>Scheduled for</th>
-          <th>Join Meet</th>
-          <th>Remove</th>
-          <th>Status</th>
+          <th>{{ 'scheduledAt' | translate }}</th>
+          <th>{{ 'joinMeet' | translate }}</th>
+          <th>{{ 'remove' | translate }}</th>
+          <th>{{ 'status' | translate }}</th>
         </tr>
       </thead>
   
@@ -234,30 +234,30 @@
           </td>
           <td>
             <button class="btn btn-danger" (click)="joinMeeting(event)">
-              Join
+              <th>{{ 'join' | translate }}</th>
             </button>
           </td>
           <td>
             <button class="btn btn-danger" (click)="deleteEvent(event)">
-              Delete
+              <th>{{ 'delete' | translate }}</th>
             </button>
           </td>
           <td *ngIf="event.status == 'P'  && event.recipient_id == this.authService.getId()">
             <button class="btn btn-success" (click)="acceptMeeting(event)">
-              Accepter
+              {{ 'accept' | translate }}
             </button>
             <button class="btn btn-warning" (click)="refuseMeeting(event)">
-              Refuser
+              {{ 'refuse' | translate }}
             </button>
           </td>
           <td *ngIf="event.status == 'P'  && event.organizer_id == this.authService.getId()">
-            Pending
+            {{ 'pending' | translate }}
           </td>
           <td *ngIf="event.status == 'R'">
-            Refuser
+            {{ 'refused' | translate }}
           </td>
           <td *ngIf="event.status == 'A'">
-            Accepter
+            {{ 'accepted' | translate }}
           </td>
         </tr>
       </tbody>

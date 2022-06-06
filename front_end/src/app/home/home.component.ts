@@ -10,7 +10,9 @@ import { Router } from '@angular/router';
 export class HomeComponent implements OnInit {
   loading : boolean =true;
   constructor(private router:Router,
-    private loaderService : LoaderService) { }
+    private loaderService : LoaderService) { 
+      this.loaderService.hideLoader();
+    }
 
   ngOnInit(): void {
 

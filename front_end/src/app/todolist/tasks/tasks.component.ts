@@ -1,3 +1,4 @@
+import { LoaderService } from './../../services/loader.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -20,7 +21,8 @@ export class TasksComponent implements OnInit {
   id !: number;
   showAddTask : boolean = false;
   subscription !: Subscription;
-  constructor(private uiService : UiService,private router : Router, private taskService : TaskService,private authService : AuthService) { 
+  constructor(private uiService : UiService,private router : Router, private taskService : TaskService,private authService : AuthService,private loaderService : LoaderService) { 
+    loaderService.hideLoader();
     this.subscription = this.uiService.onToggle().subscribe(value => this.showAddTask = value);
     
   }

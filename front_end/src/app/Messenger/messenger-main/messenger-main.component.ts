@@ -1,3 +1,4 @@
+import { LoaderService } from './../../services/loader.service';
 import { Component, HostListener, OnInit } from '@angular/core';
 
 @Component({
@@ -10,7 +11,9 @@ export class MessengerMainComponent implements OnInit {
   
   public getScreenWidth: any;
   public getScreenHeight: any;
-  constructor() { }
+  constructor(private loaderService : LoaderService) { 
+    loaderService.hideLoader()
+  }
   
   ngOnInit() {
       this.getScreenWidth = window.innerWidth;

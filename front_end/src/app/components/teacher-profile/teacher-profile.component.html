@@ -25,20 +25,25 @@
 
         <!-- ----------------------------------------------end rating -->
         <div>
-          <button class="btn btn-primary">
+          <!-- <button class="btn btn-primary" (click)="goToChat()">
             <i class="bi bi-chat-left-text-fill"></i> Send Message
-          </button>
+          </button> -->
+          <a [routerLink]="['/chat',teacher.id]">
+            <button class="btn btn-primary">
+              <i class="bi bi-chat-left-text-fill"></i> {{"sendMessage" | translate}}
+            </button>
+         </a>
         </div>
       </div>
-      <div class="about"><i class="bi bi-person-fill"></i> About</div>
+      <div class="about"><i class="bi bi-person-fill"></i> {{"about" | translate}}</div>
       <div>
         <td>
           <tr>
             E-mail:
           </tr>
-          <tr>
+          <!-- <tr>
             Phone:
-          </tr>
+          </tr> -->
           <tr>
             LinkedIn:
           </tr>
@@ -49,9 +54,9 @@
               teacher.user?.email
             }}
           </tr>
-          <tr>
+          <!-- <tr>
             12345678
-          </tr>
+          </tr> -->
           <tr>
             LinkedIn
           </tr>

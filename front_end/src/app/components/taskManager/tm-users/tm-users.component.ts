@@ -1,3 +1,4 @@
+import { LoaderService } from './../../../services/loader.service';
 import { TmViewProfileComponent } from './../tm-view-profile/tm-view-profile.component';
 import { Router } from '@angular/router';
 import { CommentComponent } from './../comment/comment.component';
@@ -27,8 +28,11 @@ export class TmUsersComponent implements OnInit {
   constructor(
     private taskManagerService: TaskManagerService,
     private dialog: MatDialog,
-    private router: Router
-  ) {}
+    private router: Router,
+    private loaderService :LoaderService,
+  ) {
+    loaderService.hideLoader();
+  }
 
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();

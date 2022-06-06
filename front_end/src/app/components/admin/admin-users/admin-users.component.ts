@@ -1,3 +1,4 @@
+import { LoaderService } from './../../../services/loader.service';
 import { UserCommentsComponent } from './../user-comments/user-comments.component';
 import { AdminTeachersListComponent } from './../../admin-teachers-list/admin-teachers-list.component';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -57,8 +58,11 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private taskManagerService: TaskManagerService,
     private http: HttpClient,
-    private authService: AuthService
-  ) {}
+    private authService: AuthService,
+    private loaderService :LoaderService,
+  ) {
+    loaderService.hideLoader();
+  }
 
   allComments(user: User) {
     this.dialog
@@ -190,7 +194,7 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
       })
       .afterClosed()
       .subscribe((val) => {
-        if (val === 'save') this.getStudents();
+        if (val === 'save') this.getUsers();
         console.log();
       });
   }
@@ -202,7 +206,7 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
       })
       .afterClosed()
       .subscribe((val) => {
-        if (val === 'add') this.getStudents();
+        if (val === 'add') this.getUsers();
         console.log();
       });
   }

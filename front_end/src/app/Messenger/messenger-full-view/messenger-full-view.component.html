@@ -18,15 +18,16 @@
             <div class="inbox_people">
               <div class="headind_srch">
                 <div class="recent_heading">
-                  <h4>Recent</h4>
+                  <h4>{{'users' | translate}}</h4>
                 </div>
-                <div class="srch_bar">
+                <!-- <div class="srch_bar">
                   <div class="stylish-input-group">
                     <input type="text" class="search-bar"  placeholder="Search" >
                     <span class="input-group-addon">
                     <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
                     </span> </div>
-                </div>
+                </div> -->
+                
               </div>
               <div class="inbox_chat">
                 <div *ngFor="let item of users">
@@ -85,13 +86,13 @@
                 </div>
                 <div class="type_msg">
                   <div class="input_msg_write">
-                    <input type="text" class="write_msg" placeholder="Type a message" #msg />
+                    <input type="text" class="write_msg" placeholder="{{'typeAMessage' | translate}}" #msg />
                     <button class="msg_send_btn" type="button" (click)="sendMsg(msg.value)"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
                   </div>
                 </div>
               </div>
               <ng-template #default>
-                <h3>Pick a user</h3>
+                <h3>{{'pickAUser' | translate}}</h3>
               </ng-template>
 
             </div>

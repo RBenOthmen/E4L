@@ -10,6 +10,7 @@
     "lessons":"Cours",
     "home":"Accueil",
     "messages":"Messages",
+    "calendar" : "Calendrier",
 
     "signingin":"Connectez-vous",
     "username":"Nom d'utilisateur",
@@ -35,7 +36,7 @@
     "signup_error_email":"L'e-mail doit être sous cette forme example@email.com",
     "signup_error_password":"Minimum huit caractères, au moins une lettre (majuscule et minuscule), un chiffre et un symbole",
     "signup_error_birthday":"Age doit être supérieur à 9 ans",
-    "signup_error_phone_number":"Numéro de téléphone invalide",
+    "signup_error_phone_number":"Le numéro de téléphone doit être composé de 8 chiffres",
     "signup_error_linkedIn":"contient au moins 3 caractères",
 
     "task":"Tache",
@@ -48,5 +49,79 @@
     "choiceAUser":"Choisissez un utilisateur",
     "exit":"Sortie",
     "send":"Envoyer",
-    "you":"Tu"
+    "you":"Tu",
+
+
+    "date" : "Choisir une date",
+    "save" : "Sauvegarder",
+    "delete" : "Supprimer",
+    "newpassword" : "Nouveau mot de passe",
+    "currentpassword" : "Mot de passe actuel",
+
+
+    "previous" : "Précédent",
+    "today" : "Aujourd'hui",
+    "next" : "Prochain",
+    "month" : "Mois",
+    "week" : "Semaine",
+    "day" : "Jour",
+    "meetings" : "Réunions",
+    "onganizeAMeeting" : "Organiser une réunion",
+    "scheduledAt": "prévue à",
+    "joinMeet" : "Rejoignez la réunion",
+    "remove" : "Retirer",
+    "status" : "Statut",
+    "join" : "Rejoindre",
+    "accept" : "Accepter",
+    "refuse" : "Refuser",
+    "accepted" : "Accepté",
+    "refused" : "Refusé",
+    "pending" : "En attente",
+
+
+    "typeAMessage" : "Taper un message",
+    "pickAUser" : "Choisissez un utilisateur",
+    "users" : "Utilisateurs",
+
+    "page_1_bigTitle": "Rencontrez E4L - votre coach anglophone personnel alimenté par l'IA",
+    "page_1_paragraph": "Parlez anglais de manière courte et paresseuse. Obtenez des commentaires instantanés de notre technologie exclusive d'intelligence artificielle.",
+    "page_1_btn": "Commencer à apprendre",
+
+    "page_3_paragraph": "E4L, English Language Speech Assistant, est une application amusante et attrayante principalement conçue pour vous aider à améliorer votre prononciation en anglais. La génération d'intelligence artificielle d'E4L est devenue l'utilisation évoluée des statistiques vocales des personnes parlant anglais avec divers accents. Cela permet à E4L d'appréhender les modèles de parole des locuteurs non natifs, en les plaçant à l'écart des différentes technologies de reconnaissance vocale.",
+    "page_3_science": "SCIENCE",
+    "page_3_behind": "DERRIÈRE",
+    "page_3_e4l": "E4L",
+
+    "page_4_title_1": "Retour d'information sur la reconnaissance vocale en temps réel",
+    "page_4_paragraph_1": "nous sommes la meilleure application de réputation vocale conçue pour évaluer et fournir sur place des remarques spéciales sur la prononciation et la fluidité. Cela permet à l'apprenant de découvrir et d'apprendre rapidement la prononciation idéale.",
+    "page_4_title_2": "Un système d'apprentissage intelligent et adaptatif",
+    "page_4_paragraph_2": "E4L reçoit chaque jour plus intelligemment ! l'apprentissage des langues conventionnelles est converti par le biais de notre génération d'enseignement de l'anglais personnalisé. Notre IA auto-évolutive analyse les performances et les enregistrements comportementaux pour personnaliser le programme quotidien de chaque homme ou femme.",
+
+    "page_5_title": "Abonnez-vous à l'Accès Pro",
+    "page_5_paragraph": "Les utilisateurs d'E4L Рrо obtiennent un accès complet à toutes les leçons exclusives d'E4L et reçoivent des plans de cours personnalisés quotidiens de l'E4L АI Соасh. Ils reçoivent même un rapport détaillé analysant leur prononciation, leur permettant de s'améliorer rapidement et efficacement.",
+    "page_5_btn": "En savoir plus sur E4L Pro",
+
+    "e4l": "English for lazy",
+    "about": "A propos",
+    "shop": "Boutique",
+    "stories": "Histoires",
+    "hiring": "Nous embauchons",
+    "catalog": "Catalogue",
+    "full_catalog": "Catalogue complet",
+    "by_accent": "Par accent",
+    "american": "américain",
+    "british": "Britanique",
+    "by_language": "Par langue",
+    "english": "Anglais",
+    "resources": "Ressources",
+    "articles": "Articles",
+    "forums": "Forums",
+    "blog": "Blog",
+    "help_center": "Centre d'aide",
+    "follow_us": "Suivez-nous",
+
+    "ViewProfile": "Voir le profil",
+
+    "sendMessage": "  Envoyer le message"
+    
 }

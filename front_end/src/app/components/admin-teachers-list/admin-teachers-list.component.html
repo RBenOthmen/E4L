@@ -9,7 +9,7 @@
       <option value="TM">Task Manager</option>
     </select> -->
 
-    <mat-form-field>
+    <mat-form-field *ngIf="this.actionBtn != 'Update'">
       <mat-label><div style="color : black">Type</div></mat-label>
       <mat-select formControlName="role" name="role">
         <mat-option value="S"><div style="color : black">Student</div></mat-option>
@@ -55,11 +55,11 @@
     </mat-form-field>
 
     <!--Password-->
-    <mat-form-field class="example-full-width" appearance="fill" >
+    <!-- <mat-form-field class="example-full-width" appearance="fill" >
       <mat-label>{{ 'password' | translate }}</mat-label>
       <input matInput placeholder="{{ 'password' | translate }}" formControlName="password" [type]="showPassword" id="password" name="password">
       <mat-error *ngIf="password!.invalid && password?.touched">{{ 'signup_error_password' | translate }}</mat-error>
-    </mat-form-field>
+    </mat-form-field> -->
 
     <!-- Birthday -->
     <mat-form-field >
@@ -90,7 +90,7 @@
           (changedCountryCode)="changeSelectedCountryCode($event)">
         </ngx-flag-picker>
           (+{{phoneCode}})
-        <input matInput placeholder="{{ 'phonenumber' | translate }}" formControlName="phone" type="number" id="phone" class="left-space">
+        <input matInput placeholder="{{ 'phonenumber' | translate }}" formControlName="phone" type="text" name="phone" id="phone" class="left-space">
       </div>
       <mat-error *ngIf="phone?.touched && phone!.invalid">{{ 'signup_error_phone_number' | translate }}</mat-error>
     </mat-form-field>

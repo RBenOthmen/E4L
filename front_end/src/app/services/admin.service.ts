@@ -150,6 +150,12 @@ export class AdminService {
       .pipe(catchError(this.handleError));
   }
 
+  getUser(id : string): Observable<User[]> {
+    return this.http
+      .get<User[]>(this.urlUsers + id + '/', this.httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
   activateUser(user: User): Observable<User> {
     return this.http
       .post<User>(

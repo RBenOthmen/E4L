@@ -34,8 +34,12 @@ def getChatView(request):
     if request.method == "POST":
         senderid = request.data['sender_id']
         receiverid = request.data['receiver_id']
-        queryset = ChatView.objects.filter(Q(receiver__id=receiverid, sender__id=senderid) | Q(receiver__id=senderid, sender__id=receiverid)).all()
-        serializer = ChatViewSerializer(queryset, many=True, context={
-            'request':request
-        })
-        return Response(serializer.data)
+        if (receiverid):
+            
+            queryset = ChatView.objects.filter(Q(receiver__id=receiverid, sender__id=senderid) | Q(receiver__id=senderid, sender__id=receiverid)).all()
+            serializer = ChatViewSerializer(queryset, many=True, context={
+                'request':request
+            })
+            return Response(serializer.data)
+        else:
+            return Response()

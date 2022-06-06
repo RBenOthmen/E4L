@@ -60,6 +60,7 @@
         <mat-label>{{ 'password' | translate }}</mat-label>
         <input matInput placeholder="{{ 'password' | translate }}" formControlName="password" [type]="showPassword" id="password" name="password">
         <mat-error *ngIf="password!.invalid && password?.touched">{{ 'signup_error_password' | translate }}</mat-error>
+        <div>{{password!.invalid}}  {{password?.touched}}</div>
       </mat-form-field>
       <!-- <small *ngIf="password!.invalid && password?.touched" class="text-danger">{{ 'signup_error_password' | translate }}</small> -->
 
@@ -95,6 +96,7 @@
           <mat-error *ngIf="(birthday?.invalid && birthday?.touched) || (birthday?.touched && this.dateInput)">
           {{ 'signup_error_birthday' | translate }}
         </mat-error>
+        
       </mat-form-field>
 
       
@@ -105,10 +107,13 @@
           (changedCountryCode)="changeSelectedCountryCode($event)">
         </ngx-flag-picker>
         (+{{phoneCode}})
-        <input matInput placeholder="{{ 'phonenumber' | translate }}" formControlName="phone" type="number" id="phone" class="left-space">
+        <input matInput  placeholder="{{ 'phonenumber' | translate }}" formControlName="phone" type="text" name="phone" id="phone" class="left-space" #element (keyup)="keyPress($event)">
       </div>
-      <mat-error *ngIf="phone?.touched && phone!.invalid">{{ 'signup_error_phone_number' | translate }}</mat-error>
+      <mat-error *ngIf="phone!.invalid && phone?.touched">{{ 'signup_error_phone_number' | translate }}</mat-error>
+      
+
     </mat-form-field>
+    
     
     <!-- LinkedIn -->
     <mat-form-field class="example-full-width" appearance="fill" *ngIf="user?.value == 'teacher'">

@@ -27,7 +27,9 @@ export class SignInComponent implements OnInit {
   constructor(public authService : AuthService,
     private router :Router,
     private loaderService : LoaderService,
-    private messageService : MessageService) {
+    private messageService : MessageService,
+    ) {
+      loaderService.hideLoader();
   }
 
   goToSignup() {

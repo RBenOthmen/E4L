@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404, render
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth import get_user_model
 from core.models import Phone
-from core.serializers import AdminUserCreateSerializer, CustomTokenObtainPairSerializer, PhoneSerializer, UserCreateSerializer, UserSerializer
+from core.serializers import AdminUserCreateSerializer, CustomTokenObtainPairSerializer, PhoneSerializer, UserCreateSerializer, UserSerializer, UserUpdateSerializer
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from djoser.views import UserViewSet as BaseUserViewSet
 from rest_framework import status
@@ -56,11 +56,28 @@ class CustomUserViewSet(ModelViewSet):
     def get_serializer_class(self):
         if self.request.method == 'POST':
             return AdminUserCreateSerializer
+        elif self.request.method == 'PUT' and self.action =='accountUpdate':
+            return UserUpdateSerializer
         elif self.request.method == 'PUT':
             return AdminUserCreateSerializer
         else :
             return UserSerializer 
     
+    @action(detail=False, methods=['PUT'])
+    def accountUpdate(self, request):
+        print(request.user)
+        print(request.user.id)
+        user = User.objects.filter(pk=request.user.id).get()
+        print('im here')
+        if request.method == 'PUT':
+            serializer = UserUpdateSerializer(user, data=request.data)
+            print('im here 2')
+            serializer.is_valid(raise_exception=True)
+            print('im here 3')
+            serializer.save()
+            print('im here 4')
+            return Response(serializer.data)
+
 
 
 

@@ -9,7 +9,9 @@
                     <!-- <button id="exit-chat">{{'exit' | translate}}</button> -->
                 </div>
                 <div class="messages">
-                    <app-messenger-user-item *ngFor="let item of users" [user]="item" (onMessage)="onMessageUser(item)"></app-messenger-user-item>
+                    <div *ngFor="let item of users">
+                    <app-messenger-user-item *ngIf="item.user?.id != authService.getId()"  [user]="item" (onMessage)="onMessageUser(item)"></app-messenger-user-item>
+                    </div>
                 </div>
             </div>
         </div>

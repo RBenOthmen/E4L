@@ -40,9 +40,9 @@
             </div>
         </div>
         <div class="item2">
-          <div class="progress">
+          <!-- <div class="progress">
             <div class="progress-bar bg-success" role="progressbar" [ngStyle]="{'width' : lessonProgress }"  aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-          </div>
+          </div> -->
             <div *ngIf="lessonProgress != 0">
               <h3 style="color: rgb(2, 177, 34);">{{lessonProgress}}%</h3>
             </div>
@@ -58,7 +58,10 @@
       <div class="spinner" *ngIf="loading">
         <mat-spinner [diameter]="50" ></mat-spinner>
       </div>
-      <app-category-item [progress]="progress" [lessonElements]="lessonElements" [lesson]="lesson" ></app-category-item>
+      <div *ngIf="!loading">
+        <!-- <mat-spinner [diameter]="50" ></mat-spinner> -->
+        <app-category-item [progress]="progress" [lessonElements]="lessonElements" [lesson]="lesson" ></app-category-item>
+      </div>
     </div>
 
 <!-- </div> -->

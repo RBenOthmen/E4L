@@ -45,6 +45,7 @@ export class LessonItemComponent implements OnInit {
         this.loading = false;
       }
       , error: (err: AppError) => {
+        this.loading = false;
         this.progress = {progression : 0};
         if (err instanceof NotFoundError) {
           console.log(err)
